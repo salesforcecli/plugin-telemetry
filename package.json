@@ -1,13 +1,14 @@
 {
-  "name": "@salesforce/plugin-template",
-  "description": "A template repository for sfdx plugins",
-  "version": "1.0.0",
+  "name": "@salesforce/plugin-telemetry",
+  "description": "Command usage and error telemetry for the Salesforce CLI",
+  "version": "1.13.0",
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/cli/issues",
   "dependencies": {
     "@oclif/config": "^1",
     "@salesforce/command": "^3.0.3",
     "@salesforce/core": "^2.6.0",
+    "@salesforce/telemetry": "^2.0.4",
     "tslib": "^1"
   },
   "devDependencies": {
@@ -52,10 +53,10 @@
   },
   "files": [
     "/lib",
-    "/messages",
+    "/processes",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/salesforcecli/plugin-template",
+  "homepage": "https://github.com/salesforcecli/plugin-telemetry",
   "keywords": [
     "force",
     "salesforce",
@@ -67,16 +68,15 @@
   "oclif": {
     "commands": "./lib/commands",
     "bin": "sfdx",
+    "hooks": {
+      "init": "./lib/hooks/analyticsInit.js",
+      "prerun": "./lib/hooks/analyticsPrerun.js"
+    },
     "devPlugins": [
       "@oclif/plugin-help",
       "@oclif/plugin-command-snapshot",
       "@salesforce/plugin-command-reference"
-    ],
-    "topics": {
-      "hello": {
-        "description": "Commands to say hello."
-      }
-    }
+    ]
   },
   "repository": "salesforcecli/plugin-template",
   "scripts": {
@@ -91,7 +91,7 @@
     "postpack": "shx rm -f oclif.manifest.json",
     "posttest": "yarn lint && yarn test:deprecation-policy && yarn test:command-reference",
     "test:deprecation-policy": "./bin/run snapshot:compare",
-    "test:command-reference": "./bin/run commandreference:generate -p @salesforce/plugin-templates --erroronwarnings",
+    "test:command-reference": "./bin/run commandreference:generate -p @salesforce/plugin-telemetry --erroronwarnings",
     "prepack": "sf-build",
     "prepare": "sf-install",
     "pretest": "sf-compile-test",
