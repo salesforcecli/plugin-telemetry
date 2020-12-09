@@ -16,7 +16,6 @@ import { MyCommand } from '../helpers/myCommand';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const args: any = { argv: [], Command: MyCommand };
 
-// tslint:disable:no-unused-expression
 describe('analytics init hook', () => {
   let sandbox: sinon.SinonSandbox;
 

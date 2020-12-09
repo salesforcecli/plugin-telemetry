@@ -10,7 +10,6 @@ import * as systemFs from 'fs';
 import { EOL } from 'os';
 import { fs } from '@salesforce/core';
 import { stubMethod } from '@salesforce/ts-sinon';
-// import { Dictionary } from '@salesforce/ts-types';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import Analytics from '../src/analytics';
