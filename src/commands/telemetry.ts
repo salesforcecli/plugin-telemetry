@@ -7,19 +7,19 @@
 
 import { Command } from '@oclif/command';
 import TelemetryReporter from '@salesforce/telemetry';
-import Analytics from '../analytics';
-import { AnalyticsGlobal } from '../analyticsGlobal';
+import Telemetry from '../telemetry';
+import { TelemetryGlobal } from '../telemetryGlobal';
 
-declare const global: AnalyticsGlobal;
+declare const global: TelemetryGlobal;
 
-export default class AnalyticsGet extends Command {
+export default class TelemetryGet extends Command {
   public static hidden = true;
 
   public async run(): Promise<void> {
     const enabled = await TelemetryReporter.determineSfdxTelemetryEnabled();
 
     this.log(`Telemetry is ${enabled ? 'enabled' : 'disabled'}.`);
-    this.log(`Telemetry tmp directory is ${Analytics.tmpDir}.`);
+    this.log(`Telemetry tmp directory is ${Telemetry.tmpDir}.`);
     this.log(`Telemetry cache directory is ${this.config.cacheDir}.`);
     this.log();
     this.log(`Salesforce CLI ID is ${global.cliTelemetry?.getCLIId()}.`);

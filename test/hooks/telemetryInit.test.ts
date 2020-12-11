@@ -9,14 +9,14 @@ import { Hook, IConfig } from '@oclif/config';
 import { StubbedType, stubInterface } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import hook, { InitData } from '../../src/hooks/analyticsInit';
+import hook, { InitData } from '../../src/hooks/telemetryInit';
 import { MyCommand } from '../helpers/myCommand';
 
 // The hook doesn't like the stubInterface type, so just set it to any.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const args: any = { argv: [], Command: MyCommand };
 
-describe('analytics init hook', () => {
+describe('telemetry init hook', () => {
   let sandbox: sinon.SinonSandbox;
 
   let config: StubbedType<IConfig>;

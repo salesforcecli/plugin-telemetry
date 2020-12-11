@@ -7,4 +7,4 @@
 
 import * as Debug from 'debug';
 
-export const debug = Debug('sfdx:analytics');
+export const debug = Debug('sfdx:telemetry');

@@ -5,8 +5,8 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import Analytics from './analytics';
+import Telemetry from './telemetry';
 
-export interface AnalyticsGlobal extends NodeJS.Global {
-  cliTelemetry?: Analytics;
+export interface TelemetryGlobal extends NodeJS.Global {
+  cliTelemetry?: Telemetry;
 }

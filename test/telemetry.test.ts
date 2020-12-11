@@ -12,9 +12,9 @@ import { fs } from '@salesforce/core';
 import { stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import Analytics from '../src/analytics';
+import Telemetry from '../src/telemetry';
 
-describe('analytics', () => {
+describe('telemetry', () => {
   let sandbox: sinon.SinonSandbox;
   let openStub: sinon.SinonStub;
   let readFileSyncStub: sinon.SinonStub;
@@ -44,7 +44,7 @@ describe('analytics', () => {
     readFileSyncStub.withArgs('test/CLIID.txt').returns('testCliID');
 
     // Reset caches
-    Analytics['acknowledged'] = false;
+    Telemetry['acknowledged'] = false;
   });
 
   afterEach(() => {
@@ -55,8 +55,8 @@ describe('analytics', () => {
   it('shows telemetry warning', async () => {
     const warn = stubMethod(sandbox, console, 'warn');
     // Access private property and method
-    Analytics['cacheDir'] = 'test';
-    await Analytics['acknowledgeDataCollection']();
+    Telemetry['cacheDir'] = 'test';
+    await Telemetry['acknowledgeDataCollection']();
     expect(accessStub.called).to.equal(true);
     expect(warn.called).to.equal(false);
   });
@@ -65,8 +65,8 @@ describe('analytics', () => {
     const warn = stubMethod(sandbox, console, 'warn');
     accessStub.throws({ code: 'ENOENT' });
     // Access private property and method
-    Analytics['cacheDir'] = 'test';
-    await Analytics['acknowledgeDataCollection']();
+    Telemetry['cacheDir'] = 'test';
+    await Telemetry['acknowledgeDataCollection']();
     expect(accessStub.called).to.equal(true);
     expect(mkdirpStub.called).to.equal(true);
     expect(writeJsonStub.called).to.equal(true);
@@ -76,8 +76,8 @@ describe('analytics', () => {
     const warn = stubMethod(sandbox, console, 'warn');
     accessStub.throws({ code: 'ACCESS' });
     // Access private property and method
-    Analytics['cacheDir'] = 'test';
-    await Analytics['acknowledgeDataCollection']();
+    Telemetry['cacheDir'] = 'test';
+    await Telemetry['acknowledgeDataCollection']();
     expect(accessStub.called).to.equal(true);
     expect(mkdirpStub.called).to.equal(false);
     expect(writeJsonStub.called).to.equal(false);
@@ -86,12 +86,12 @@ describe('analytics', () => {
 
   describe('record', () => {
     it('sets defaults', async () => {
-      const analytics = await Analytics.create({ cacheDir: 'test' });
-      analytics.record({});
+      const telemetry = await Telemetry.create({ cacheDir: 'test' });
+      telemetry.record({});
 
       expect(writeStub.calledOnce).to.equal(true);
       const logLine = JSON.parse(writeStub.firstCall.args[1]);
-      expect(logLine.type).to.contains(Analytics.EVENT);
+      expect(logLine.type).to.contains(Telemetry.EVENT);
       expect(logLine.eventName).to.contains('UNKNOWN');
       expect(logLine).to.be.haveOwnProperty('requestorLocation');
       expect(logLine).to.be.haveOwnProperty('cliId').and.equal('testCliID');
@@ -109,8 +109,8 @@ describe('analytics', () => {
 
     it('shows jenkins CI', async () => {
       process.env.JENKINS_WORKSPACE = 'test';
-      const analytics = await Analytics.create({ cacheDir: 'test' });
-      analytics.record({});
+      const telemetry = await Telemetry.create({ cacheDir: 'test' });
+      telemetry.record({});
       expect(writeStub.calledOnce).to.equal(true);
       const logLine = JSON.parse(writeStub.firstCall.args[1]);
       expect(logLine.ci).to.equal('jenkins');
@@ -118,40 +118,40 @@ describe('analytics', () => {
 
     it('shows travis CI', async () => {
       process.env.TRAVIS = 'true';
-      const analytics = await Analytics.create({ cacheDir: 'test' });
-      analytics.record({});
+      const telemetry = await Telemetry.create({ cacheDir: 'test' });
+      telemetry.record({});
       expect(writeStub.calledOnce).to.equal(true);
       const logLine = JSON.parse(writeStub.firstCall.args[1]);
       expect(logLine.ci).to.equal('travisci');
     });
     it('shows circle CI', async () => {
       process.env.CIRCLE_BRANCH = 'master';
-      const analytics = await Analytics.create({ cacheDir: 'test' });
-      analytics.record({});
+      const telemetry = await Telemetry.create({ cacheDir: 'test' });
+      telemetry.record({});
       expect(writeStub.calledOnce).to.equal(true);
       const logLine = JSON.parse(writeStub.firstCall.args[1]);
       expect(logLine.ci).to.equal('circleci');
     });
     it('shows github actions CI', async () => {
       process.env.GITHUB_ACTIONS = 'test';
-      const analytics = await Analytics.create({ cacheDir: 'test' });
-      analytics.record({});
+      const telemetry = await Telemetry.create({ cacheDir: 'test' });
+      telemetry.record({});
       expect(writeStub.calledOnce).to.equal(true);
       const logLine = JSON.parse(writeStub.firstCall.args[1]);
       expect(logLine.ci).to.equal('github_actions');
     });
     it('shows CI', async () => {
       process.env.CI = 'true';
-      const analytics = await Analytics.create({ cacheDir: 'test' });
-      analytics.record({});
+      const telemetry = await Telemetry.create({ cacheDir: 'test' });
+      telemetry.record({});
       expect(writeStub.calledOnce).to.equal(true);
       const logLine = JSON.parse(writeStub.firstCall.args[1]);
       expect(logLine.ci).to.equal('unknown');
     });
 
     it('scrubs non valid types', async () => {
-      const analytics = await Analytics.create({ cacheDir: 'test' });
-      analytics.record({
+      const telemetry = await Telemetry.create({ cacheDir: 'test' });
+      telemetry.record({
         a: 'test',
         b: false,
         c: 0,
@@ -166,7 +166,7 @@ describe('analytics', () => {
       expect(logLine.d).to.equal(undefined);
     });
     it('does not scrub error exceptions', async () => {
-      const analytics = await Analytics.create({ cacheDir: 'test' });
+      const telemetry = await Telemetry.create({ cacheDir: 'test' });
       class MyError extends Error {
         public additionalErrorInfo = 'testInfo';
       }
@@ -174,7 +174,7 @@ describe('analytics', () => {
       error.name = 'testName';
       error.stack = 'testStack';
 
-      analytics.recordError(error, { additionalInfo: 'testing' });
+      telemetry.recordError(error, { additionalInfo: 'testing' });
 
       expect(writeStub.calledOnce).to.equal(true);
       const logLine = JSON.parse(writeStub.firstCall.args[1]);
@@ -187,15 +187,15 @@ describe('analytics', () => {
   });
 
   it('clear deletes file', async () => {
-    const analytics = await Analytics.create({ cacheDir: 'test' });
-    await analytics.clear();
+    const telemetry = await Telemetry.create({ cacheDir: 'test' });
+    await telemetry.clear();
     expect(unlinkStub.called).to.equal(true);
   });
 
   it('read file parses lines properly', async () => {
     readFileStub.returns(`{ "eventName": "test1" }${EOL}{ "eventName": "test2" }`);
-    const analytics = await Analytics.create({ cacheDir: 'test' });
-    const data = await analytics.read();
+    const telemetry = await Telemetry.create({ cacheDir: 'test' });
+    const data = await telemetry.read();
     expect(data[0].eventName).to.equal('test1');
     expect(data[1].eventName).to.equal('test2');
   });
@@ -203,8 +203,8 @@ describe('analytics', () => {
   it('upload spawns completely detached process', async () => {
     const unref = sinon.stub();
     const stub = stubMethod(sandbox, cp, 'spawn').returns({ unref });
-    const analytics = await Analytics.create({ cacheDir: 'test' });
-    analytics.upload();
+    const telemetry = await Telemetry.create({ cacheDir: 'test' });
+    telemetry.upload();
     expect(stub.called).to.equal(true);
     // True detached process
     expect(stub.firstCall.args[2].detached).to.equal(true);

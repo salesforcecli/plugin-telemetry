@@ -8,30 +8,30 @@
 import { Org } from '@salesforce/core';
 import TelemetryReporter from '@salesforce/telemetry';
 import { asString, Dictionary } from '@salesforce/ts-types';
-import Analytics from './analytics';
+import Telemetry from './telemetry';
 import { debug } from './debuger';
 
-import { AnalyticsGlobal } from './analyticsGlobal';
+import { TelemetryGlobal } from './telemetryGlobal';
 
-declare const global: AnalyticsGlobal;
+declare const global: TelemetryGlobal;
 
 const PROJECT = 'salesforce-cli';
 const APP_INSIGHTS_KEY = '2ca64abb-6123-4c7b-bd9e-4fe73e71fe9c';
 
 export class Uploader {
-  private constructor(private analytics: Analytics) {}
+  private constructor(private telemetry: Telemetry) {}
 
   /**
-   * Sends events from analytics to telemetry.
+   * Sends events from telemetry.
    */
-  public static async upload(cacheDir: string, analyticsFilePath: string): Promise<void> {
-    const analytics = (global.cliTelemetry = await Analytics.create({ cacheDir, analyticsFilePath }));
-    const uploader = new Uploader(analytics);
+  public static async upload(cacheDir: string, telemetryFilePath: string): Promise<void> {
+    const telemetry = (global.cliTelemetry = await Telemetry.create({ cacheDir, telemetryFilePath }));
+    const uploader = new Uploader(telemetry);
     await uploader.sendToTelemetry();
   }
 
   /**
-   * Reads the analytics events from file and sends them to the telemetry service.
+   * Reads the telemetry events from file and sends them to the telemetry service.
    */
   private async sendToTelemetry(): Promise<void> {
     let reporter;
@@ -39,25 +39,25 @@ export class Uploader {
       reporter = await TelemetryReporter.create({
         project: PROJECT,
         key: APP_INSIGHTS_KEY,
-        userId: this.analytics.getCLIId(),
+        userId: this.telemetry.getCLIId(),
         waitForConnection: true,
       });
     } catch (error) {
       debug(`Error creating reporter: ${error.message as string}`);
-      // We can't do much without a reporter, so clear the analytics file and move on.
-      await this.analytics.clear();
+      // We can't do much without a reporter, so clear the telemetry file and move on.
+      await this.telemetry.clear();
       return;
     }
 
     try {
-      const events = await this.analytics.read();
+      const events = await this.telemetry.read();
       for (const event of events) {
-        const eventType = asString(event.type) || Analytics.EVENT;
+        const eventType = asString(event.type) || Telemetry.EVENT;
         const eventName = asString(event.eventName) || 'UNKNOWN';
         delete event.type;
         delete event.eventName;
 
-        if (eventType === Analytics.EVENT) {
+        if (eventType === Telemetry.EVENT) {
           // Resolve orgs for all events.
           event.orgId = await this.getOrgId(false, asString(event.orgUsername));
           event.devHubId = await this.getOrgId(true, asString(event.devHubUsername));
@@ -66,7 +66,7 @@ export class Uploader {
           delete event.devHubUsername;
 
           reporter.sendTelemetryEvent(eventName, event);
-        } else if (eventType === Analytics.EXCEPTION) {
+        } else if (eventType === Telemetry.EXCEPTION) {
           const error = new Error();
           // We know this is an object because it is logged as such
           const errorObject = (event.error as unknown) as Dictionary;
@@ -89,7 +89,7 @@ export class Uploader {
         debug(`Error stopping telemetry reporter: ${error.message as string}`);
       } finally {
         // We alway want to clear the file.
-        await this.analytics.clear();
+        await this.telemetry.clear();
       }
     }
   }

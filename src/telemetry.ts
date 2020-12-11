@@ -19,9 +19,9 @@ import { debug } from './debuger';
 const CLI_ID_FILE_NAME = 'CLIID.txt';
 const USAGE_ACKNOWLEDGEMENT_FILE_NAME = 'acknowledgedUsageCollection.json';
 
-export type AnalyticsOptions = {
+export type TelemetryOptions = {
   cacheDir?: string;
-  analyticsFilePath?: string;
+  telemetryFilePath?: string;
 };
 
 export type CI =
@@ -41,7 +41,7 @@ export type CI =
   | 'appveyor'
   | 'unknown';
 
-export default class Analytics extends AsyncCreatable {
+export default class Telemetry extends AsyncCreatable {
   /**
    * The name of event telemetry type.
    */
@@ -53,27 +53,27 @@ export default class Analytics extends AsyncCreatable {
   public static EXCEPTION = 'EXCEPTION';
 
   /**
-   * The temporary directory where analytic log files are stored.
+   * The temporary directory where telemetry log files are stored.
    */
-  public static tmpDir = env.getString('SFDX_TELEMETRY_PATH', join(tmpdir(), 'sfdx-analytics'));
+  public static tmpDir = env.getString('SFDX_TELEMETRY_PATH', join(tmpdir(), 'sfdx-telemetry'));
 
   private static cacheDir: string;
-  private static analyticsTmpFile: string = join(Analytics.tmpDir, `analytics-${Analytics.generateRandomId()}.log`);
+  private static telemetryTmpFile: string = join(Telemetry.tmpDir, `telemetry-${Telemetry.generateRandomId()}.log`);
   private static acknowledged = false;
 
   public firstRun = false;
   private fileDescriptor!: number;
   private cliId?: string;
 
-  public constructor(options: AnalyticsOptions) {
+  public constructor(options: TelemetryOptions) {
     super(options);
 
-    if (options.cacheDir && !Analytics.cacheDir) {
-      Analytics.cacheDir = options.cacheDir;
+    if (options.cacheDir && !Telemetry.cacheDir) {
+      Telemetry.cacheDir = options.cacheDir;
     }
-    // We want to run off of a specific analytics file, so override.
-    if (options.analyticsFilePath) {
-      Analytics.analyticsTmpFile = options.analyticsFilePath;
+    // We want to run off of a specific telemetry file, so override.
+    if (options.telemetryFilePath) {
+      Telemetry.telemetryTmpFile = options.telemetryFilePath;
     }
   }
 
@@ -82,16 +82,16 @@ export default class Analytics extends AsyncCreatable {
    */
   public static async acknowledgeDataCollection(): Promise<void> {
     // Only check once per process, regardless of how often this is instantiated.
-    if (Analytics.acknowledged) {
+    if (Telemetry.acknowledged) {
       return;
     }
 
-    if (!Analytics.cacheDir) {
-      debug('Unable to check acknowledgment path because Analytics.cacheDir is not set yet');
+    if (!Telemetry.cacheDir) {
+      debug('Unable to check acknowledgment path because Telemetry.cacheDir is not set yet');
       return;
     }
 
-    const acknowledgementFilePath = join(Analytics.cacheDir, USAGE_ACKNOWLEDGEMENT_FILE_NAME);
+    const acknowledgementFilePath = join(Telemetry.cacheDir, USAGE_ACKNOWLEDGEMENT_FILE_NAME);
     try {
       await fs.access(acknowledgementFilePath, fs.constants.R_OK);
       debug('Usage acknowledgement file already exists');
@@ -106,8 +106,8 @@ export default class Analytics extends AsyncCreatable {
             EOL
           );
         }
-        Analytics.acknowledged = true;
-        await fs.mkdirp(Analytics.cacheDir);
+        Telemetry.acknowledged = true;
+        await fs.mkdirp(Telemetry.cacheDir);
         await fs.writeJson(acknowledgementFilePath, { acknowledged: true });
         debug('Wrote usage acknowledgement file', acknowledgementFilePath);
       } else {
@@ -169,20 +169,20 @@ export default class Analytics extends AsyncCreatable {
     return randomBytes(20).toString('hex');
   }
 
-  public getAnalyticsLogFilePath(): string {
-    return Analytics.analyticsTmpFile;
+  public getTelemetryFilePath(): string {
+    return Telemetry.telemetryTmpFile;
   }
 
   public getCLIId(): string {
     if (this.cliId) return this.cliId;
 
-    const cliIdPath = join(Analytics.cacheDir, CLI_ID_FILE_NAME);
+    const cliIdPath = join(Telemetry.cacheDir, CLI_ID_FILE_NAME);
 
     try {
       this.cliId = systemFs.readFileSync(cliIdPath, 'utf8');
     } catch (err) {
       debug('Unique CLI ID not found, generating and writing new ID to ', cliIdPath);
-      this.cliId = Analytics.generateRandomId();
+      this.cliId = Telemetry.generateRandomId();
       systemFs.writeFileSync(cliIdPath, this.cliId, 'utf8');
 
       // If there is not a unique ID for this CLI, consider it a first run.
@@ -192,14 +192,14 @@ export default class Analytics extends AsyncCreatable {
   }
 
   /**
-   * Record data to the analytics file. Only valid properties will be recorded to the file, which
+   * Record data to the telemetry file. Only valid properties will be recorded to the file, which
    * are strings, numbers, and booleans. All booleans get logged to App Insights as string representations.
    */
   public record(data: JsonMap): void {
     // Only store valid telemetry attributes to the log file.
     const dataToRecord = Object.keys(data).reduce((map, key) => {
       const value = data[key];
-      const isException = data.type === Analytics.EXCEPTION && key === 'error';
+      const isException = data.type === Telemetry.EXCEPTION && key === 'error';
       const validType = isString(value) || isBoolean(value) || isNumber(value);
 
       if (isException || validType) {
@@ -210,7 +210,7 @@ export default class Analytics extends AsyncCreatable {
     }, {} as JsonMap);
 
     if (!dataToRecord.type) {
-      dataToRecord.type = Analytics.EVENT;
+      dataToRecord.type = Telemetry.EVENT;
     }
 
     if (!dataToRecord.eventName) {
@@ -231,16 +231,16 @@ export default class Analytics extends AsyncCreatable {
 
     // Unique to this CLI installation
     dataToRecord.cliId = this.getCLIId();
-    dataToRecord.ci = Analytics.guessCISystem();
+    dataToRecord.ci = Telemetry.guessCISystem();
     try {
       systemFs.writeSync(this.fileDescriptor, JSON.stringify(dataToRecord) + EOL);
     } catch (error) {
-      debug(`Error saving analytics line to file: ${error.message as string}`);
+      debug(`Error saving telemetry line to file: ${error.message as string}`);
     }
   }
 
   public recordError(error: Error, data: JsonMap): void {
-    data.type = Analytics.EXCEPTION;
+    data.type = Telemetry.EXCEPTION;
     // Also have on custom attributes since app insights might parse differently
     data.errorName = error.name;
     data.errorMessage = error.message;
@@ -256,14 +256,14 @@ export default class Analytics extends AsyncCreatable {
   }
 
   public async clear(): Promise<void> {
-    debug('Deleting the log file', this.getAnalyticsLogFilePath());
-    await fs.unlink(this.getAnalyticsLogFilePath());
+    debug('Deleting the log file', this.getTelemetryFilePath());
+    await fs.unlink(this.getTelemetryFilePath());
   }
 
   public async read(): Promise<Attributes[]> {
     try {
-      debug(`Reading ${this.getAnalyticsLogFilePath()}`);
-      const data = await fs.readFile(this.getAnalyticsLogFilePath(), 'utf8');
+      debug(`Reading ${this.getTelemetryFilePath()}`);
+      const data = await fs.readFile(this.getTelemetryFilePath(), 'utf8');
       const events = data
         .split(EOL)
         .filter((line) => !!line)
@@ -285,35 +285,35 @@ export default class Analytics extends AsyncCreatable {
 
     // Don't spawn if we are in telemetry debug. This allows us to run the process manually with --inspect-brk.
     if (!telemetryDebug) {
-      debug(`Spawning "${nodePath} ${processPath} ${Analytics.cacheDir} ${this.getAnalyticsLogFilePath()}"`);
-      spawn(nodePath, [processPath, Analytics.cacheDir, this.getAnalyticsLogFilePath()], {
+      debug(`Spawning "${nodePath} ${processPath} ${Telemetry.cacheDir} ${this.getTelemetryFilePath()}"`);
+      spawn(nodePath, [processPath, Telemetry.cacheDir, this.getTelemetryFilePath()], {
         detached: true,
         stdio: 'ignore',
       }).unref();
     } else {
       debug(
         `DEBUG MODE. Run the uploader manually with the following command:${EOL}${processPath} ${
-          Analytics.cacheDir
-        } ${this.getAnalyticsLogFilePath()}`
+          Telemetry.cacheDir
+        } ${this.getTelemetryFilePath()}`
       );
     }
   }
 
   protected async init(): Promise<void> {
-    // If we are going to record analytics, make sure the user is aware.
-    await Analytics.acknowledgeDataCollection();
+    // If we are going to record telemetry, make sure the user is aware.
+    await Telemetry.acknowledgeDataCollection();
 
     // Make sure the tmp dir is created.
     try {
-      await fs.access(Analytics.tmpDir, fs.constants.W_OK);
+      await fs.access(Telemetry.tmpDir, fs.constants.W_OK);
     } catch (err) {
       if (err.code === 'ENOENT') {
-        debug('Analytics temp dir does not exist, creating...');
-        await fs.mkdirp(Analytics.tmpDir);
+        debug('Telemetry temp dir does not exist, creating...');
+        await fs.mkdirp(Telemetry.tmpDir);
       }
     }
     // Create a file descriptor to be used
-    this.fileDescriptor = systemFs.openSync(this.getAnalyticsLogFilePath(), 'a');
-    debug(`Using analytics logging file ${this.getAnalyticsLogFilePath()}`);
+    this.fileDescriptor = systemFs.openSync(this.getTelemetryFilePath(), 'a');
+    debug(`Using telemetry logging file ${this.getTelemetryFilePath()}`);
   }
 }

@@ -10,7 +10,7 @@ import TelemetryReporter from '@salesforce/telemetry';
 import { stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import Analytics from '../src/analytics';
+import Telemetry from '../src/telemetry';
 import { Uploader } from '../src/uploader';
 
 describe('uploader', () => {
@@ -38,7 +38,7 @@ describe('uploader', () => {
       sendTelemetryException: sendTelemetryExceptionStub,
       stop: stopStub,
     }));
-    stubMethod(sandbox, Analytics, 'create').callsFake(async () => {
+    stubMethod(sandbox, Telemetry, 'create').callsFake(async () => {
       return {
         getCLIId: getCliIdStub,
         read: readStub,
@@ -56,7 +56,7 @@ describe('uploader', () => {
     readStub.resolves([
       {
         eventName: 'test',
-        type: Analytics.EVENT,
+        type: Telemetry.EVENT,
         data: 'testData',
       },
     ]);
@@ -73,7 +73,7 @@ describe('uploader', () => {
     readStub.resolves([
       {
         eventName: 'test',
-        type: Analytics.EXCEPTION,
+        type: Telemetry.EXCEPTION,
         error: { stack: 'testStack' },
         data: 'testData',
       },
@@ -97,7 +97,7 @@ describe('uploader', () => {
     expect(createStub.firstCall.args[0].userId).to.equal('testId');
   });
 
-  it('clears analytics file', async () => {
+  it('clears telemetry file', async () => {
     readStub.resolves([]);
     await Uploader.upload('test', 'test');
     expect(clearStub.called).to.equal(true);

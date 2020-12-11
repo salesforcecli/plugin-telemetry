@@ -9,12 +9,12 @@ import { join } from 'path';
 import { Hook, Hooks } from '@oclif/config';
 import { Org, SfdxError } from '@salesforce/core';
 import { TelemetryReporter } from '@salesforce/telemetry';
-import Analytics from '../analytics';
-import { AnalyticsGlobal } from '../analyticsGlobal';
+import Telemetry from '../telemetry';
+import { TelemetryGlobal } from '../telemetryGlobal';
 import { CommandExecution } from '../commandExecution';
 import { debug } from '../debuger';
 
-declare const global: AnalyticsGlobal;
+declare const global: TelemetryGlobal;
 
 /**
  * A hook that runs before every command that:
@@ -31,10 +31,10 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
   }
 
   try {
-    // Instantiating analytics shows data collection warning.
+    // Instantiating telemetry shows data collection warning.
     // Adding this to the global so that telemetry events are sent even when different
     // versions of this plugin are in use by the CLI.
-    const analytics = (global.cliTelemetry = await Analytics.create({ cacheDir: this.config.cacheDir }));
+    const telemetry = (global.cliTelemetry = await Telemetry.create({ cacheDir: this.config.cacheDir }));
 
     const commandExecution = await CommandExecution.create({
       command: options.Command,
@@ -44,21 +44,21 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
 
     process.once('exit', (status) => {
       commandExecution.status = status;
-      analytics.record(commandExecution.toJson());
+      telemetry.record(commandExecution.toJson());
 
       if (process.listenerCount('exit') >= 20) {
         // On exit listeners have been a problem in the past. Make sure we don't accumulate too many...
         // This could be from too many plugins. If we start getting this, log number of plugins too.
-        analytics.record({
+        telemetry.record({
           eventName: 'EVENT_EMITTER_WARNING',
           type: 'process.exit',
           count: process.listenerCount('exit'),
         });
       }
 
-      // If it is the first time the analytics is running, consider it a new "install".
-      if (analytics.firstRun) {
-        analytics.record({
+      // If it is the first time the telemetry is running, consider it a new "install".
+      if (telemetry.firstRun) {
+        telemetry.record({
           eventName: 'INSTALL',
           installType:
             this.config.binPath && this.config.binPath.includes(join('sfdx', 'client')) ? 'installer' : 'npm',
@@ -67,7 +67,7 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
       }
       // Upload to server. Starts another process.
       // At this point, any other events during the CLI lifecycle should be logged.
-      analytics.upload();
+      telemetry.upload();
     });
 
     // Log command errors to the server.  The ts-ignore is necessary
@@ -89,7 +89,7 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
         }
 
         // Telemetry will scrub the exception
-        analytics.recordError(
+        telemetry.recordError(
           cmdErr,
           Object.assign(commandExecution.toJson(), {
             eventName: 'COMMAND_ERROR',
@@ -103,7 +103,7 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
       }
     );
   } catch (error) {
-    debug('Error with logging or sending analytics:', error.message);
+    debug('Error with logging or sending telemetry:', error.message);
   }
 };
 

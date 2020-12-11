@@ -12,7 +12,7 @@ import { fs, SfdxProject } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
 import { isNumber, JsonMap } from '@salesforce/ts-types';
 import { debug } from './debuger';
-import { InitData } from './hooks/analyticsInit';
+import { InitData } from './hooks/telemetryInit';
 
 export type CommandExecutionOptions = {
   command: Command.Class;

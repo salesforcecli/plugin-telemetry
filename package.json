@@ -69,8 +69,8 @@
     "commands": "./lib/commands",
     "bin": "sfdx",
     "hooks": {
-      "init": "./lib/hooks/analyticsInit.js",
-      "prerun": "./lib/hooks/analyticsPrerun.js"
+      "init": "./lib/hooks/telemetryInit.js",
+      "prerun": "./lib/hooks/telemetryPrerun.js"
     },
     "devPlugins": [
       "@oclif/plugin-help",

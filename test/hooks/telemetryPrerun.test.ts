@@ -11,16 +11,16 @@ import TelemetryReporter from '@salesforce/telemetry';
 import { StubbedType, stubInterface, stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import Analytics from '../../src/analytics';
+import Telemetry from '../../src/telemetry';
 import { CommandExecution } from '../../src/commandExecution';
-import hook from '../../src/hooks/analyticsPrerun';
+import hook from '../../src/hooks/telemetryPrerun';
 import { MyCommand } from '../helpers/myCommand';
 
 // The hook doesn't like the stubInterface type, so just set it to any.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const args: any = { argv: [], Command: MyCommand };
 
-describe('analytics prerun hook', () => {
+describe('telemetry prerun hook', () => {
   let sandbox: sinon.SinonSandbox;
   let determineSfdxTelemetryEnabledStub: sinon.SinonStub;
   let createCommandStub: sinon.SinonStub;
@@ -47,7 +47,7 @@ describe('analytics prerun hook', () => {
     createCommandStub = stubMethod(sandbox, CommandExecution, 'create').callsFake(async () => ({
       toJson: () => ({}),
     }));
-    stubMethod(sandbox, Analytics, 'create').callsFake(async () => {
+    stubMethod(sandbox, Telemetry, 'create').callsFake(async () => {
       return {
         record: recordStub,
         recordError: recordErrorStub,
