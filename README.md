@@ -2,14 +2,16 @@
 
 A plugin to record command usage and error telemetry for the Salesforce CLI.
 
-This plugin is bundled with the CLI and will automatically collect usage data. To disable data collection, see [this help document](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_dev_cli_telemetry.htm).
+This plugin is bundled with the CLI and will automatically collect usage data on all commands and plugins. To disable data collection, see [this help document](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_dev_cli_telemetry.htm).
+
+**Note: This plugin should be included at a CLI level ONLY. No CLI plugins should include or depend on this plugin.**
 
 All command usage is recorded by initializing on the `init` oclif hook, recording all events to a log file, then spawning a process on exit to send the data to appinsights.
 
-To debug the telemetry spawned process, run a command with the environment variables `SFDX_TELEMETRY_DEBUG=true` and `DEBUG=sfdx:telemetry`.
+To debug the telemetry spawned process, run a command with the environment variables `SFDX_TELEMETRY_DEBUG=true` and `DEBUG=sfdx:telemetry*`.
 
 ```bash
-SFDX_TELEMETRY_DEBUG=true DEBUG=sfdx:telemetry ./bun/run telemetry
+SFDX_TELEMETRY_DEBUG=true DEBUG=sfdx:telemetry* ./bin/run telemetry
 ```
 
 ## Getting Started

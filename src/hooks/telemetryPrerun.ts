@@ -42,6 +42,7 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
       config: this.config,
     });
 
+    debug('Setting up process exit handler');
     process.once('exit', (status) => {
       commandExecution.status = status;
       telemetry.record(commandExecution.toJson());

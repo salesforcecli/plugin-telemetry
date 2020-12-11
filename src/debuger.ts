@@ -7,4 +7,6 @@
 
 import * as Debug from 'debug';
 
-export const debug = Debug('sfdx:telemetry');
+export const version: string = require('../package.json').version;
+
+export const debug = Debug(`sfdx:telemetry@${version}`);
