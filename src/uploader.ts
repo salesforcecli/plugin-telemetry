@@ -74,7 +74,7 @@ export class Uploader {
 
           Object.assign(error, errorObject);
           error.name = asString(errorObject.name) || 'Unknown';
-          error.message = asString(errorObject.messaage) || 'Unknown';
+          error.message = asString(errorObject.message) || 'Unknown';
           error.stack = asString(errorObject.stack) || 'Unknown';
           reporter.sendTelemetryException(error, event);
         }
