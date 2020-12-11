@@ -11,7 +11,7 @@ import { parse } from '@oclif/parser';
 import { fs, SfdxProject } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
 import { isNumber, JsonMap } from '@salesforce/ts-types';
-import { debug, version } from './debuger';
+import { debug } from './debuger';
 import { InitData } from './hooks/telemetryInit';
 
 export type CommandExecutionOptions = {
@@ -71,8 +71,6 @@ export class CommandExecution extends AsyncCreatable {
   public toJson(): JsonMap {
     return {
       eventName: 'COMMAND_EXECUTION',
-
-      telemetryVersion: version,
 
       // System information
       platform: this.config.platform,

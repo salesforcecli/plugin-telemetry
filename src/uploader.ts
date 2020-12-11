@@ -9,7 +9,7 @@ import { Org } from '@salesforce/core';
 import TelemetryReporter from '@salesforce/telemetry';
 import { asString, Dictionary } from '@salesforce/ts-types';
 import Telemetry from './telemetry';
-import { debug } from './debuger';
+import { debug, version } from './debuger';
 
 import { TelemetryGlobal } from './telemetryGlobal';
 
@@ -58,6 +58,7 @@ export class Uploader {
         delete event.eventName;
 
         if (eventType === Telemetry.EVENT) {
+          event.telemetryVersion = version;
           // Resolve orgs for all events.
           event.orgId = await this.getOrgId(false, asString(event.orgUsername));
           event.devHubId = await this.getOrgId(true, asString(event.devHubUsername));
