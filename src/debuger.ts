@@ -5,4 +5,8 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-export * from './telemetry';
+import * as Debug from 'debug';
+
+export const version: string = require('../package.json').version;
+
+export const debug = Debug(`sfdx:telemetry@${version}`);
