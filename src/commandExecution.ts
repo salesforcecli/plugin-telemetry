@@ -10,7 +10,7 @@ import { Command, IConfig } from '@oclif/config';
 import { parse } from '@oclif/parser';
 import { fs, SfdxProject } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
-import { isNumber, JsonMap } from '@salesforce/ts-types';
+import { isNumber, JsonMap, Optional } from '@salesforce/ts-types';
 import { debug } from './debuger';
 import { InitData } from './hooks/telemetryInit';
 
@@ -19,6 +19,11 @@ export type CommandExecutionOptions = {
   argv: string[];
   config: IConfig;
 };
+
+interface PluginInfo {
+  name: Optional<string>;
+  version: Optional<string>;
+}
 
 export class CommandExecution extends AsyncCreatable {
   public status?: number;
@@ -69,6 +74,7 @@ export class CommandExecution extends AsyncCreatable {
   }
 
   public toJson(): JsonMap {
+    const pluginInfo = this.getPluginInfo();
     return {
       eventName: 'COMMAND_EXECUTION',
 
@@ -78,15 +84,16 @@ export class CommandExecution extends AsyncCreatable {
       arch: this.config.arch,
       vcs: this.vcs,
       nodeEnv: process.env.NODE_ENV,
+      nodeVersion: process.version,
       processUptime: process.uptime() * 1000,
 
       // CLI information
       version: this.config.version,
       channel: this.config.channel,
       origin: this.config.userAgent,
-      plugin: this.command.plugin && this.command.plugin.name,
+      plugin: pluginInfo.name,
       // eslint-disable-next-line @typescript-eslint/camelcase
-      plugin_version: this.command.plugin && this.command.plugin.version,
+      plugin_version: pluginInfo.version,
       command: this.command.id,
       // As the user specified, including short names
       specifiedFlags: this.specifiedFlags.join(' '),
@@ -115,6 +122,17 @@ export class CommandExecution extends AsyncCreatable {
       devHubUsername: this.devHubOrgUsername,
       orgUsername: this.orgUsername,
     };
+  }
+
+  public getPluginInfo(): PluginInfo {
+    return {
+      name: this.command.plugin && this.command.plugin.name,
+      version: this.command.plugin && this.command.plugin.version,
+    };
+  }
+
+  public getCommandName(): string {
+    return this.command.id;
   }
 
   protected async init(): Promise<void> {

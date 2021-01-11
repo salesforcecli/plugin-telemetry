@@ -78,7 +78,7 @@
       "@salesforce/plugin-command-reference"
     ]
   },
-  "repository": "salesforcecli/plugin-template",
+  "repository": "salesforcecli/plugin-telemetry",
   "scripts": {
     "build": "sf-build",
     "clean": "sf-clean",
