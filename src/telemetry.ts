@@ -27,6 +27,12 @@ export type TelemetryOptions = {
 export type CI =
   | 'circleci'
   | 'travisci'
+  | 'bitbucket'
+  | 'hudson'
+  | 'heroku'
+  | 'codebuild'
+  | 'bamboo'
+  | 'cirrus'
   | 'jenkins'
   | 'github_actions'
   | 'azure_pipelines'
@@ -116,6 +122,7 @@ export default class Telemetry extends AsyncCreatable {
     }
   }
 
+  // eslint-disable-next-line complexity
   public static guessCISystem(): CI | undefined {
     const keys = Object.keys(process.env);
     if (keys.find((key) => key.startsWith('CIRCLE'))) {
@@ -123,6 +130,21 @@ export default class Telemetry extends AsyncCreatable {
     }
     if (keys.find((key) => key.startsWith('TRAVIS'))) {
       return 'travisci';
+    }
+    if (keys.find((key) => key.startsWith('BITBUCKET'))) {
+      return 'bitbucket';
+    }
+    if (keys.find((key) => key.startsWith('CIRRUS'))) {
+      return 'cirrus';
+    }
+    if (keys.find((key) => key.startsWith('HEROKU_TEST_RUN_ID'))) {
+      return 'heroku';
+    }
+    if (keys.find((key) => key.startsWith('bamboo') || key.startsWith('BAMBOO'))) {
+      return 'bamboo';
+    }
+    if (keys.find((key) => key.startsWith('CODEBUILD'))) {
+      return 'codebuild';
     }
     if (keys.find((key) => key.startsWith('GITHUB_ACTION'))) {
       return 'github_actions';
@@ -160,7 +182,10 @@ export default class Telemetry extends AsyncCreatable {
     if (keys.find((key) => key.startsWith('JENKINS'))) {
       return 'jenkins';
     }
-    if (keys.find((key) => key === 'CI' || key === 'CONTINUOUS_INTEGRATION')) {
+    if (keys.find((key) => key.startsWith('HUDSON'))) {
+      return 'hudson';
+    }
+    if (keys.find((key) => key === 'CI' || key === 'CONTINUOUS_INTEGRATION' || key === 'BUILD_ID')) {
       return 'unknown';
     }
   }
