@@ -100,10 +100,7 @@ export default class Telemetry extends AsyncCreatable {
         if (!env.getBoolean('SFDX_TELEMETRY_DISABLE_ACKNOWLEDGEMENT', false)) {
           // eslint-disable-next-line no-console
           console.warn(
-            'You acknowledge and agree that the CLI tool may collect usage information, ' +
-              'user environment, and crash reports for the purposes of providing services or functions that are relevant ' +
-              'to use of the CLI tool and product improvements.',
-            EOL
+            `You acknowledge and agree that the CLI tool may collect usage information, user environment, and crash reports for the purposes of providing services or functions that are relevant to use of the CLI tool and product improvements.${EOL}`
           );
         }
         Telemetry.acknowledged = true;

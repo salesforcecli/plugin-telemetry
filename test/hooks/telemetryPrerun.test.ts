@@ -43,9 +43,14 @@ describe('telemetry prerun hook', () => {
     context = stubInterface<Hook.Context>(sandbox, { config });
 
     processExitStub = stubMethod(sandbox, process, 'once');
-    processCmdErrorStub = stubMethod(sandbox, process, 'on');
+    processCmdErrorStub = stubMethod(sandbox, process, 'on').withArgs('cmdError');
     createCommandStub = stubMethod(sandbox, CommandExecution, 'create').callsFake(async () => ({
       toJson: () => ({}),
+      getPluginInfo: () => ({
+        name: '@salesforce/foo',
+        version: '1.0.0',
+      }),
+      getCommandName: () => 'foo:bar',
     }));
     stubMethod(sandbox, Telemetry, 'create').callsFake(async () => {
       return {

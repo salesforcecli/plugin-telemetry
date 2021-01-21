@@ -42,6 +42,21 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
       config: this.config,
     });
 
+    process.on('warning', (warning) => {
+      const pluginInfo = commandExecution.getPluginInfo();
+      telemetry.record({
+        eventName: 'NODE_WARNING',
+        warningType: warning.name,
+        stack: warning.stack,
+        message: warning.message,
+        nodeVersion: process.version,
+        plugin: pluginInfo.name,
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        plugin_version: pluginInfo.version,
+        command: commandExecution.getCommandName(),
+      });
+    });
+
     debug('Setting up process exit handler');
     process.once('exit', (status) => {
       commandExecution.status = status;
@@ -52,7 +67,6 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
         // This could be from too many plugins. If we start getting this, log number of plugins too.
         telemetry.record({
           eventName: 'EVENT_EMITTER_WARNING',
-          type: 'process.exit',
           count: process.listenerCount('exit'),
         });
       }
