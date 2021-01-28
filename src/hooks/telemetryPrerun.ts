@@ -110,9 +110,6 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
             eventName: 'COMMAND_ERROR',
             apiVersion,
             orgType,
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            __errorWhitelist__: cmdErr.errWhitelist,
           })
         );
       }
