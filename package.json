@@ -9,7 +9,7 @@
     "@salesforce/command": "^3.0.3",
     "@salesforce/core": "^2.6.0",
     "@salesforce/telemetry": "^2.0.4",
-    "tslib": "^1"
+    "tslib": "^2"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1",
