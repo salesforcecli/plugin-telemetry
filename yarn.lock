@@ -521,7 +521,7 @@
     debug "^3.1.0"
     graceful-fs "^4.2.4"
     jsen "0.6.6"
-    jsforce "^1.10.0"
+    jsforce "1.9.3"
     jsonwebtoken "8.5.0"
     mkdirp "1.0.4"
     sfdx-faye "^1.0.9"
@@ -580,9 +580,9 @@
     tslib "^1.10.0"
 
 "@salesforce/plugin-command-reference@^1.2.3":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@salesforce/plugin-command-reference/-/plugin-command-reference-1.2.3.tgz#7f4228cf8c37958a203617e66a447463d4b42eb9"
-  integrity sha512-uXxrnhm9foCMKgJOL9tijeMr20aDwaVlPpTNIAQLMD52ZB8dtwB9qj+V4q2keZ8A464+e1DjCPTe45QUUEWATg==
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/@salesforce/plugin-command-reference/-/plugin-command-reference-1.2.4.tgz#da1298cd1682a61e198e684b1c4fc6503c863e75"
+  integrity sha512-xe4zwkLW3VZ+m2n6LTUFLq05yNhEGf+YR2FgOKEU/+orItFXvgJNO2+OzMuZzdl7eh4+fuLB3DLbYJHkq/ubIg==
   dependencies:
     "@oclif/command" "^1.5.19"
     "@oclif/config" "^1.14.0"
