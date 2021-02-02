@@ -7,7 +7,7 @@
 
 import { join } from 'path';
 import { Command, IConfig } from '@oclif/config';
-import { parse } from '@oclif/parser';
+import { parse, Input } from '@oclif/parser';
 import { fs, SfdxProject } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
 import { isNumber, JsonMap, Optional } from '@salesforce/ts-types';
@@ -92,7 +92,7 @@ export class CommandExecution extends AsyncCreatable {
       channel: this.config.channel,
       origin: this.config.userAgent,
       plugin: pluginInfo.name,
-      // eslint-disable-next-line @typescript-eslint/camelcase
+      // eslint-disable-next-line camelcase
       plugin_version: pluginInfo.version,
       command: this.command.id,
       // As the user specified, including short names
@@ -142,17 +142,19 @@ export class CommandExecution extends AsyncCreatable {
     // We can't get varargs on type Class, so we need to cast to any to parse flags properly
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const anyCmd: any = this.command;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const commandDef = { flags: flagDefinitions, args: this.command.args, strict: !anyCmd.varargs };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let flags: any = {};
+    let flags: Input<any> = {};
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       flags = parse(argv, commandDef).flags;
     } catch (error) {
       debug('Error parsing flags');
     }
-    this.orgUsername = flags.targetusername;
-    this.devHubOrgUsername = flags.targetdevhubusername;
+    this.orgUsername = flags['targetusername'] as string;
+    this.devHubOrgUsername = flags['targetdevhubusername'] as string;
 
     this.determineSpecifiedFlags(argv, flags, flagDefinitions);
 
@@ -160,7 +162,7 @@ export class CommandExecution extends AsyncCreatable {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private determineSpecifiedFlags(argv: string[], flags: any, flagDefinitions: any): void {
+  private determineSpecifiedFlags(argv: string[], flags: any, flagDefinitions: Input<any>): void {
     // Help won't be in the parsed flags
     const shortHelp = argv.find((arg) => /^-h$/.test(arg));
     const fullHelp = argv.find((arg) => /^--help$/.test(arg));
@@ -174,6 +176,7 @@ export class CommandExecution extends AsyncCreatable {
       // All other flags don't matter if help is specified, so end here.
     } else {
       Object.keys(flags).forEach((flagName) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         const shortCode = flagDefinitions[flagName] && (flagDefinitions[flagName].char as string);
         // Oclif will include the flag if there is a default, but we only want to add it if the
         // user specified it, so confirm in the argv list.

@@ -51,7 +51,7 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
         message: warning.message,
         nodeVersion: process.version,
         plugin: pluginInfo.name,
-        // eslint-disable-next-line @typescript-eslint/camelcase
+        // eslint-disable-next-line camelcase
         plugin_version: pluginInfo.version,
         command: commandExecution.getCommandName(),
       });
@@ -114,7 +114,8 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
         );
       }
     );
-  } catch (error) {
+  } catch (err) {
+    const error = err as SfdxError;
     debug('Error with logging or sending telemetry:', error.message);
   }
 };

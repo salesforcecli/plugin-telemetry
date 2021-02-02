@@ -12,7 +12,7 @@ import { EOL, tmpdir } from 'os';
 import { join } from 'path';
 import { Attributes } from '@salesforce/telemetry';
 import { AsyncCreatable, env } from '@salesforce/kit';
-import { fs } from '@salesforce/core';
+import { fs, SfdxError } from '@salesforce/core';
 import { isBoolean, isNumber, isString, JsonMap } from '@salesforce/ts-types';
 import { debug } from './debuger';
 
@@ -101,7 +101,8 @@ export default class Telemetry extends AsyncCreatable {
     try {
       await fs.access(acknowledgementFilePath, fs.constants.R_OK);
       debug('Usage acknowledgement file already exists');
-    } catch (err) {
+    } catch (error) {
+      const err = error as SfdxError;
       if (err.code === 'ENOENT') {
         if (!env.getBoolean('SFDX_TELEMETRY_DISABLE_ACKNOWLEDGEMENT', false)) {
           // eslint-disable-next-line no-console
@@ -256,8 +257,9 @@ export default class Telemetry extends AsyncCreatable {
     dataToRecord.ci = Telemetry.guessCISystem();
     try {
       systemFs.writeSync(this.fileDescriptor, JSON.stringify(dataToRecord) + EOL);
-    } catch (error) {
-      debug(`Error saving telemetry line to file: ${error.message as string}`);
+    } catch (err) {
+      const error = err as SfdxError;
+      debug(`Error saving telemetry line to file: ${error.message}`);
     }
   }
 
@@ -291,8 +293,9 @@ export default class Telemetry extends AsyncCreatable {
         .filter((line) => !!line)
         .map((line) => JSON.parse(line) as Attributes);
       return events;
-    } catch (err) {
-      debug(`Error reading: ${err.message as string}`);
+    } catch (error) {
+      const err = error as SfdxError;
+      debug(`Error reading: ${err.message}`);
       // If anything goes wrong, it just means a couple of lost telemetry events.
       return [];
     }
@@ -314,9 +317,8 @@ export default class Telemetry extends AsyncCreatable {
       }).unref();
     } else {
       debug(
-        `DEBUG MODE. Run the uploader manually with the following command:${EOL}${processPath} ${
-          Telemetry.cacheDir
-        } ${this.getTelemetryFilePath()}`
+        // eslint-disable-next-line prettier/prettier
+        `DEBUG MODE. Run the uploader manually with the following command:${EOL}${processPath} ${Telemetry.cacheDir} ${this.getTelemetryFilePath()}`
       );
     }
   }
@@ -328,7 +330,8 @@ export default class Telemetry extends AsyncCreatable {
     // Make sure the tmp dir is created.
     try {
       await fs.access(Telemetry.tmpDir, fs.constants.W_OK);
-    } catch (err) {
+    } catch (error) {
+      const err = error as SfdxError;
       if (err.code === 'ENOENT') {
         debug('Telemetry temp dir does not exist, creating...');
         await fs.mkdirp(Telemetry.tmpDir);
