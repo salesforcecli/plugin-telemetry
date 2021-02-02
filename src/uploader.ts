@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { Org } from '@salesforce/core';
+import { Org, SfdxError } from '@salesforce/core';
 import TelemetryReporter from '@salesforce/telemetry';
 import { asString, Dictionary } from '@salesforce/ts-types';
 import Telemetry from './telemetry';
@@ -34,7 +34,7 @@ export class Uploader {
    * Reads the telemetry events from file and sends them to the telemetry service.
    */
   private async sendToTelemetry(): Promise<void> {
-    let reporter;
+    let reporter: TelemetryReporter;
     try {
       reporter = await TelemetryReporter.create({
         project: PROJECT,
@@ -42,8 +42,9 @@ export class Uploader {
         userId: this.telemetry.getCLIId(),
         waitForConnection: true,
       });
-    } catch (error) {
-      debug(`Error creating reporter: ${error.message as string}`);
+    } catch (err) {
+      const error = err as SfdxError;
+      debug(`Error creating reporter: ${error.message}`);
       // We can't do much without a reporter, so clear the telemetry file and move on.
       await this.telemetry.clear();
       return;
@@ -80,14 +81,16 @@ export class Uploader {
           reporter.sendTelemetryException(error, event);
         }
       }
-    } catch (error) {
-      debug(`Error reading or sending telemetry events: ${error.message as string}`);
+    } catch (err) {
+      const error = err as SfdxError;
+      debug(`Error reading or sending telemetry events: ${error.message}`);
     } finally {
       try {
         // We are done sending events
         reporter.stop();
-      } catch (error) {
-        debug(`Error stopping telemetry reporter: ${error.message as string}`);
+      } catch (err) {
+        const error = err as SfdxError;
+        debug(`Error stopping telemetry reporter: ${error.message}`);
       } finally {
         // We alway want to clear the file.
         await this.telemetry.clear();

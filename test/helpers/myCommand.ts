@@ -30,7 +30,7 @@ export class MyCommand {
     return Promise.resolve();
   }
 
-  public _run() {
+  public _run(): Promise<void> {
     return Promise.resolve();
   }
 }
