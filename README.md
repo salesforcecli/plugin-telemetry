@@ -1,5 +1,7 @@
 # plugin-telemetry
 
+[![NPM](https://img.shields.io/npm/v/@salesforce/plugin-telemetry.svg?label=@salesforce/plugin-telemetry)](https://www.npmjs.com/package/@salesforce/plugin-telemetry) [![CircleCI](https://circleci.com/gh/salesforcecli/plugin-telemetry/tree/main.svg?style=shield)](https://circleci.com/gh/salesforcecli/plugin-telemetry/tree/main) [![Downloads/week](https://img.shields.io/npm/dw/@salesforce/plugin-telemetry.svg)](https://npmjs.org/package/@salesforce/plugin-telemetry) [![License](https://img.shields.io/badge/License-BSD%203--Clause-brightgreen.svg)](https://raw.githubusercontent.com/salesforcecli/plugin-telemetry/main/LICENSE.txt)
+
 A plugin to record command usage and error telemetry for the Salesforce CLI.
 
 This plugin is bundled with the CLI and will automatically collect usage data on all commands and plugins. To disable data collection, see [this help document](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_dev_cli_telemetry.htm).
