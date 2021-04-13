@@ -243,7 +243,7 @@ export default class Telemetry extends AsyncCreatable {
 
       // Don't break this into a utility because the stack HAS to start from this method.
       const stack = new Error().stack || '';
-      const locations = stack.split(EOL).filter((line) => /\s*at /.test(line));
+      const locations = stack.split(/\r?\n/).filter((line) => /\s*at /.test(line));
       if (locations.length >= 2) {
         // The first location is this file, the second is the calling file.
         // Replace HOME for GDPR.
@@ -318,7 +318,9 @@ export default class Telemetry extends AsyncCreatable {
     } else {
       debug(
         // eslint-disable-next-line prettier/prettier
-        `DEBUG MODE. Run the uploader manually with the following command:${EOL}${processPath} ${Telemetry.cacheDir} ${this.getTelemetryFilePath()}`
+        `DEBUG MODE. Run the uploader manually with the following command:${EOL}${processPath} ${
+          Telemetry.cacheDir
+        } ${this.getTelemetryFilePath()}`
       );
     }
   }

@@ -8,6 +8,7 @@
 import * as cp from 'child_process';
 import * as systemFs from 'fs';
 import { EOL } from 'os';
+import * as path from 'path';
 import { fs } from '@salesforce/core';
 import { stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
@@ -41,7 +42,7 @@ describe('telemetry', () => {
     process.env = {};
 
     // Return a fake CLI ID
-    readFileSyncStub.withArgs('test/CLIID.txt').returns('testCliID');
+    readFileSyncStub.withArgs(path.join('test', 'CLIID.txt')).returns('testCliID');
 
     // Reset caches
     Telemetry['acknowledged'] = false;
