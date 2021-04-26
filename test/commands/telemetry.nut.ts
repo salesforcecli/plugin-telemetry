@@ -9,11 +9,6 @@ import { execCmd, TestSession } from '@salesforce/cli-plugins-testkit';
 import { getString } from '@salesforce/ts-types';
 import { fs } from '@salesforce/core';
 
-export interface ListApiDisplayOutput {
-  status: number;
-  result: Array<Record<string, unknown>>;
-}
-
 describe('telemetry', () => {
   let testSession: TestSession;
 
