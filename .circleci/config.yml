@@ -29,7 +29,7 @@ parameters:
     default: ''
     type: string
   repo_tag:
-    description: 'The tag of the module repo to checkout, '''' defaults to branch/PR'
+    description: "The tag of the module repo to checkout, '' defaults to branch/PR"
     default: ''
     type: string
 workflows:
@@ -56,6 +56,19 @@ workflows:
                 node_version: lts
               - os: windows
                 node_version: maintenance
+      - release-management/test-nut:
+          context:
+            - << pipeline.parameters.nut_context >>
+          name: nuts-on-linux
+          sfdx_version: latest
+          requires:
+            - release-management/test-package
+      - release-management/test-nut:
+          name: nuts-on-windows
+          sfdx_version: latest
+          os: windows
+          requires:
+            - release-management/test-package
       - release-management/release-package:
           sign: true
           github-release: true
