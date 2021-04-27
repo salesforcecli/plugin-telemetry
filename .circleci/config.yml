@@ -61,8 +61,6 @@ workflows:
               - os: windows
                 node_version: maintenance
       - release-management/test-nut:
-          context:
-            - << pipeline.parameters.nut_context >>
           name: nuts-on-linux
           sfdx_version: latest
           requires:
