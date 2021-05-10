@@ -98,9 +98,9 @@ workflows:
           sfdx_version: << pipeline.parameters.sfdx_version >>
           sfdx_executable_path: sfdx
           repo_tag: << pipeline.parameters.repo_tag >>
+          npm_module_name: << pipeline.parameters.npm_module_name >>
           matrix:
             parameters:
               os:
                 - linux
                 - windows
-              npm_module_name: << pipeline.parameters.npm_module_name >>
