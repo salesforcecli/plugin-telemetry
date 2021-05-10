@@ -103,3 +103,4 @@ workflows:
               os:
                 - linux
                 - windows
+              npm_module_name: << pipeline.parameters.npm_module_name >>
