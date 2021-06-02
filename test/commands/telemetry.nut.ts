@@ -12,8 +12,8 @@ import { fs } from '@salesforce/core';
 describe('telemetry', () => {
   let testSession: TestSession;
 
-  before('prepare session and ensure environment variables', () => {
-    testSession = TestSession.create({});
+  before('prepare session and ensure environment variables', async () => {
+    testSession = await TestSession.create({});
   });
 
   after(async () => {

@@ -71,7 +71,7 @@ export class Uploader {
         } else if (eventType === Telemetry.EXCEPTION) {
           const error = new Error();
           // We know this is an object because it is logged as such
-          const errorObject = (event.error as unknown) as Dictionary;
+          const errorObject = event.error as unknown as Dictionary;
           delete event.error;
 
           Object.assign(error, errorObject);
