@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.2](https://github.com/salesforcecli/plugin-telemetry/compare/v1.2.1...v1.2.2) (2021-06-10)
+
+
+### Bug Fixes
+
+* dependency bumps ([150bf86](https://github.com/salesforcecli/plugin-telemetry/commit/150bf86ff3d24d5af222ba0fc15a12b58f83ec26))
+
 ### [1.2.1](https://github.com/salesforcecli/plugin-telemetry/compare/v1.2.0...v1.2.1) (2021-05-10)
 
 ## [1.2.0](https://github.com/salesforcecli/plugin-telemetry/compare/v1.1.2...v1.2.0) (2021-04-27)
