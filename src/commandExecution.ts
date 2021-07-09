@@ -77,7 +77,6 @@ export class CommandExecution extends AsyncCreatable {
     const pluginInfo = this.getPluginInfo();
     return {
       eventName: 'COMMAND_EXECUTION',
-
       // System information
       platform: this.config.platform,
       shell: this.config.shell,
@@ -90,6 +89,7 @@ export class CommandExecution extends AsyncCreatable {
       // CLI information
       version: this.config.version,
       channel: this.config.channel,
+      executable: this.config.bin,
       origin: this.config.userAgent,
       plugin: pluginInfo.name,
       // eslint-disable-next-line camelcase
