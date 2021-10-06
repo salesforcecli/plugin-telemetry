@@ -216,5 +216,29 @@ describe('telemetry prerun hook', () => {
       expect(recordStub.called).to.equal(false);
       expect(uploadStub.called).to.equal(false);
     });
+
+    it('calls recordError on cmdError when failing to determine org type', async () => {
+      await hook.call(context, args);
+
+      expect(createCommandStub.called).to.equal(true);
+      expect(processExitStub.called).to.equal(true);
+      expect(processCmdErrorStub.called).to.equal(true);
+
+      await processCmdErrorStub.firstCall.args[1](
+        new SfdxError('test'),
+        {},
+        {
+          determineIfDevHubOrg: async () => Promise.reject(new Error()),
+          checkScratchOrg: async () => {},
+          getConnection: () => ({ getApiVersion: () => '47.0' }),
+        }
+      );
+
+      expect(recordErrorStub.called).to.equal(true);
+      expect(recordErrorStub.firstCall.args[1].orgType).to.equal(undefined);
+
+      expect(recordStub.called).to.equal(false);
+      expect(uploadStub.called).to.equal(false);
+    });
   });
 });

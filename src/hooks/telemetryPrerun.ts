@@ -93,14 +93,16 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       async (cmdErr: SfdxError, _, org?: Org): Promise<void> => {
         const apiVersion = org ? org.getConnection().getApiVersion() : undefined;
-        let orgType: string | undefined = org && (await org.determineIfDevHubOrg()) ? 'devhub' : undefined;
-        if (!orgType && org) {
-          try {
+        let orgType: string | undefined;
+
+        try {
+          orgType = org && (await org.determineIfDevHubOrg()) ? 'devhub' : undefined;
+          if (!orgType && org) {
             await org.checkScratchOrg();
             orgType = 'scratch';
-          } catch (err) {
-            /* Leave the org as unknown for app insights */
           }
+        } catch (err) {
+          /* leave the org as unknown for app insights */
         }
 
         // Telemetry will scrub the exception
