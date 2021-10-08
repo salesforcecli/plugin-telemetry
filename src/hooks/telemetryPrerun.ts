@@ -34,7 +34,10 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
     // Instantiating telemetry shows data collection warning.
     // Adding this to the global so that telemetry events are sent even when different
     // versions of this plugin are in use by the CLI.
-    const telemetry = (global.cliTelemetry = await Telemetry.create({ cacheDir: this.config.cacheDir }));
+    const telemetry = (global.cliTelemetry = await Telemetry.create({
+      cacheDir: this.config.cacheDir,
+      executable: this.config.bin,
+    }));
 
     const commandExecution = await CommandExecution.create({
       command: options.Command,

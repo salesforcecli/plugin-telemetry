@@ -22,6 +22,7 @@ const USAGE_ACKNOWLEDGEMENT_FILE_NAME = 'acknowledgedUsageCollection.json';
 export type TelemetryOptions = {
   cacheDir?: string;
   telemetryFilePath?: string;
+  executable?: string;
 };
 
 export type CI =
@@ -64,6 +65,7 @@ export default class Telemetry extends AsyncCreatable {
   public static tmpDir = env.getString('SFDX_TELEMETRY_PATH', join(tmpdir(), 'sfdx-telemetry'));
 
   private static cacheDir: string;
+  private static executable = 'sfdx';
   private static telemetryTmpFile: string = join(Telemetry.tmpDir, `telemetry-${Telemetry.generateRandomId()}.log`);
   private static acknowledged = false;
 
@@ -80,6 +82,10 @@ export default class Telemetry extends AsyncCreatable {
     // We want to run off of a specific telemetry file, so override.
     if (options.telemetryFilePath) {
       Telemetry.telemetryTmpFile = options.telemetryFilePath;
+    }
+
+    if (options.executable) {
+      Telemetry.executable = options.executable;
     }
   }
 
@@ -255,6 +261,7 @@ export default class Telemetry extends AsyncCreatable {
     // Unique to this CLI installation
     dataToRecord.cliId = this.getCLIId();
     dataToRecord.ci = Telemetry.guessCISystem();
+    dataToRecord.executable = Telemetry.executable;
     try {
       systemFs.writeSync(this.fileDescriptor, JSON.stringify(dataToRecord) + EOL);
     } catch (err) {
