@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.7](https://github.com/salesforcecli/plugin-telemetry/compare/v1.2.6...v1.2.7) (2021-10-08)
+
+
+### Bug Fixes
+
+* add executable to prerun events ([#209](https://github.com/salesforcecli/plugin-telemetry/issues/209)) ([50248fe](https://github.com/salesforcecli/plugin-telemetry/commit/50248fe2da68d80fb1ab613f3ece88e2ca647bf7))
+
 ### [1.2.6](https://github.com/salesforcecli/plugin-telemetry/compare/v1.2.5...v1.2.6) (2021-10-07)
 
 
