@@ -7,15 +7,21 @@
 
 import { join } from 'path';
 import { Hook, Hooks } from '@oclif/config';
-import { Org, SfdxError } from '@salesforce/core';
+import { Org, SfdxError, Lifecycle } from '@salesforce/core';
 import { TelemetryReporter } from '@salesforce/telemetry';
 import Telemetry from '../telemetry';
 import { TelemetryGlobal } from '../telemetryGlobal';
 import { CommandExecution } from '../commandExecution';
 import { debug } from '../debuger';
-
 declare const global: TelemetryGlobal;
 
+interface CommonData {
+  nodeVersion: string;
+  plugin: string;
+  // eslint-disable-next-line camelcase
+  plugin_version: string;
+  command: string;
+}
 /**
  * A hook that runs before every command that:
  * 1. Warns the user about command usage data collection the CLI does unless they have already acknowledged the warning.
@@ -45,18 +51,30 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
       config: this.config,
     });
 
+    let commonData: CommonData;
+
+    try {
+      Lifecycle.getInstance().onTelemetry(async (data) => {
+        // lifecycle wants promises, telemetry is not a promise
+        // eslint-disable-next-line @typescript-eslint/await-thenable
+        await telemetry.record({
+          ...commonDataMemoized(),
+          ...data,
+        });
+      });
+    } catch (err) {
+      // even if this throws, the rest of telemetry is not affected
+      const error = err as SfdxError;
+      debug('Error subscribing to telemetry events', error.message);
+    }
+
     process.on('warning', (warning) => {
-      const pluginInfo = commandExecution.getPluginInfo();
       telemetry.record({
+        ...commonDataMemoized(),
         eventName: 'NODE_WARNING',
         warningType: warning.name,
         stack: warning.stack,
         message: warning.message,
-        nodeVersion: process.version,
-        plugin: pluginInfo.name,
-        // eslint-disable-next-line camelcase
-        plugin_version: pluginInfo.version,
-        command: commandExecution.getCommandName(),
       });
     });
 
@@ -119,6 +137,20 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
         );
       }
     );
+
+    const commonDataMemoized = (): CommonData => {
+      if (!commonData) {
+        const pluginInfo = commandExecution.getPluginInfo();
+        commonData = {
+          nodeVersion: process.version,
+          plugin: pluginInfo.name,
+          // eslint-disable-next-line camelcase
+          plugin_version: pluginInfo.version,
+          command: commandExecution.getCommandName(),
+        };
+      }
+      return commonData;
+    };
   } catch (err) {
     const error = err as SfdxError;
     debug('Error with logging or sending telemetry:', error.message);
