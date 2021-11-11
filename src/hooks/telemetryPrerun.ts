@@ -58,6 +58,7 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
         // lifecycle wants promises, telemetry is not a promise
         // eslint-disable-next-line @typescript-eslint/await-thenable
         await telemetry.record({
+          type: 'EVENT',
           ...commonDataMemoized(),
           ...data,
         });
