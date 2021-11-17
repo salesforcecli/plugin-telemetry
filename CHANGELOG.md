@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/salesforcecli/plugin-telemetry/compare/v1.2.8...v1.3.0) (2021-11-17)
+
+
+### Features
+
+* forwards telemetry ([292a296](https://github.com/salesforcecli/plugin-telemetry/commit/292a296ced7537c06ffebb3e567d4495f0022118))
+
+
+### Bug Fixes
+
+* set event type ([120bbf1](https://github.com/salesforcecli/plugin-telemetry/commit/120bbf1b40377dacf61186ae27a413a37e8441fc))
+
 ### [1.2.8](https://github.com/salesforcecli/plugin-telemetry/compare/v1.2.7...v1.2.8) (2021-10-12)
 
 ### [1.2.7](https://github.com/salesforcecli/plugin-telemetry/compare/v1.2.6...v1.2.7) (2021-10-08)
