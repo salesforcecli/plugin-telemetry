@@ -778,9 +778,9 @@
   integrity sha512-6D7DvE6nFxpLyyTnrOIbbAeCJw2r/EpinFAcMh6gU0gA/CGfSbwV/8uR3uHLYL2zCyCZLH8jJ4dZ3BzCMqc+Eg==
 
 "@salesforce/telemetry@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-3.1.0.tgz#5aa19fcd9b1ad405ed1c1ae891d19174fc4ed5e9"
-  integrity sha512-oYHf/0ixn99g8eTJ2Cq39N/3yzyYjKEEsNXbl87wgYK+dyZwqVq4+Vj6tGwJmCzX8iL6CQ3ofVaKar8SxtBiHQ==
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-3.2.0.tgz#4b3af79a208b7d2627af347d90d944c993ec005f"
+  integrity sha512-WMKnuWfZx/iOg/OErJCt4OS72Fp4lru+EFaxPHgZIuhrLxpNOHrqni31QkYmY62eYKr0tLSuJFOs8vkgAcGcrw==
   dependencies:
     "@salesforce/core" "^2.31.0"
     "@salesforce/ts-types" "^1.2.1"
