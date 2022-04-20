@@ -82,6 +82,7 @@ workflows:
           context:
             - CLI_CTC
             - AWS
+            - release
   test-ts-update:
     triggers:
       - schedule:
