@@ -6,9 +6,10 @@
  */
 
 import { join } from 'path';
+import * as fs from 'fs';
 import { Command, IConfig } from '@oclif/config';
 import { parse, Input } from '@oclif/parser';
-import { fs, SfdxProject } from '@salesforce/core';
+import { SfProject } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
 import { isNumber, JsonMap, Optional } from '@salesforce/ts-types';
 import { debug } from './debuger';
@@ -58,7 +59,7 @@ export class CommandExecution extends AsyncCreatable {
   public static async resolveVCSInfo(): Promise<string> {
     let possibleVcsPath: string;
     try {
-      possibleVcsPath = await SfdxProject.resolveProjectPath();
+      possibleVcsPath = await SfProject.resolveProjectPath();
     } catch (err) {
       debug('Not in a sfdx project, using current working directory');
       possibleVcsPath = process.cwd();
@@ -66,7 +67,7 @@ export class CommandExecution extends AsyncCreatable {
 
     const gitPath = join(possibleVcsPath, '.git');
     try {
-      await fs.access(gitPath, fs.constants.R_OK);
+      await fs.promises.access(gitPath, fs.constants.R_OK);
       return 'git';
     } catch (err) {
       return 'other';

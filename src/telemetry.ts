@@ -7,12 +7,12 @@
 
 import { spawn } from 'child_process';
 import { randomBytes } from 'crypto';
-import * as systemFs from 'fs';
+import * as fs from 'fs';
 import { EOL, tmpdir } from 'os';
 import { join } from 'path';
 import { Attributes } from '@salesforce/telemetry';
 import { AsyncCreatable, env } from '@salesforce/kit';
-import { fs, SfdxError } from '@salesforce/core';
+import { SfError } from '@salesforce/core';
 import { isBoolean, isNumber, isString, JsonMap } from '@salesforce/ts-types';
 import { debug } from './debuger';
 
@@ -105,10 +105,10 @@ export default class Telemetry extends AsyncCreatable {
 
     const acknowledgementFilePath = join(Telemetry.cacheDir, USAGE_ACKNOWLEDGEMENT_FILE_NAME);
     try {
-      await fs.access(acknowledgementFilePath, fs.constants.R_OK);
+      await fs.promises.access(acknowledgementFilePath, fs.constants.R_OK);
       debug('Usage acknowledgement file already exists');
     } catch (error) {
-      const err = error as SfdxError;
+      const err = error as SfError;
       if (err.code === 'ENOENT') {
         if (!env.getBoolean('SFDX_TELEMETRY_DISABLE_ACKNOWLEDGEMENT', false)) {
           // eslint-disable-next-line no-console
@@ -117,8 +117,8 @@ export default class Telemetry extends AsyncCreatable {
           );
         }
         Telemetry.acknowledged = true;
-        await fs.mkdirp(Telemetry.cacheDir);
-        await fs.writeJson(acknowledgementFilePath, { acknowledged: true });
+        await fs.promises.mkdir(Telemetry.cacheDir, { recursive: true });
+        await fs.promises.writeFile(acknowledgementFilePath, JSON.stringify({ acknowledged: true }));
         debug('Wrote usage acknowledgement file', acknowledgementFilePath);
       } else {
         debug('Could not access', acknowledgementFilePath, 'DUE TO:', err.code, err.message);
@@ -208,11 +208,11 @@ export default class Telemetry extends AsyncCreatable {
     const cliIdPath = join(Telemetry.cacheDir, CLI_ID_FILE_NAME);
 
     try {
-      this.cliId = systemFs.readFileSync(cliIdPath, 'utf8');
+      this.cliId = fs.readFileSync(cliIdPath, 'utf8');
     } catch (err) {
       debug('Unique CLI ID not found, generating and writing new ID to ', cliIdPath);
       this.cliId = Telemetry.generateRandomId();
-      systemFs.writeFileSync(cliIdPath, this.cliId, 'utf8');
+      fs.writeFileSync(cliIdPath, this.cliId, 'utf8');
 
       // If there is not a unique ID for this CLI, consider it a first run.
       this.firstRun = true;
@@ -263,9 +263,9 @@ export default class Telemetry extends AsyncCreatable {
     dataToRecord.ci = Telemetry.guessCISystem();
     dataToRecord.executable = Telemetry.executable;
     try {
-      systemFs.writeSync(this.fileDescriptor, JSON.stringify(dataToRecord) + EOL);
+      fs.writeSync(this.fileDescriptor, JSON.stringify(dataToRecord) + EOL);
     } catch (err) {
-      const error = err as SfdxError;
+      const error = err as SfError;
       debug(`Error saving telemetry line to file: ${error.message}`);
     }
   }
@@ -288,20 +288,19 @@ export default class Telemetry extends AsyncCreatable {
 
   public async clear(): Promise<void> {
     debug('Deleting the log file', this.getTelemetryFilePath());
-    await fs.unlink(this.getTelemetryFilePath());
+    await fs.promises.unlink(this.getTelemetryFilePath());
   }
 
   public async read(): Promise<Attributes[]> {
     try {
       debug(`Reading ${this.getTelemetryFilePath()}`);
-      const data = await fs.readFile(this.getTelemetryFilePath(), 'utf8');
-      const events = data
+      const data = await fs.promises.readFile(this.getTelemetryFilePath(), 'utf8');
+      return data
         .split(EOL)
         .filter((line) => !!line)
         .map((line) => JSON.parse(line) as Attributes);
-      return events;
     } catch (error) {
-      const err = error as SfdxError;
+      const err = error as SfError;
       debug(`Error reading: ${err.message}`);
       // If anything goes wrong, it just means a couple of lost telemetry events.
       return [];
@@ -338,16 +337,16 @@ export default class Telemetry extends AsyncCreatable {
 
     // Make sure the tmp dir is created.
     try {
-      await fs.access(Telemetry.tmpDir, fs.constants.W_OK);
+      await fs.promises.access(Telemetry.tmpDir, fs.constants.W_OK);
     } catch (error) {
-      const err = error as SfdxError;
+      const err = error as SfError;
       if (err.code === 'ENOENT') {
         debug('Telemetry temp dir does not exist, creating...');
-        await fs.mkdirp(Telemetry.tmpDir);
+        await fs.promises.mkdir(Telemetry.tmpDir, { recursive: true });
       }
     }
     // Create a file descriptor to be used
-    this.fileDescriptor = systemFs.openSync(this.getTelemetryFilePath(), 'a');
+    this.fileDescriptor = fs.openSync(this.getTelemetryFilePath(), 'a');
     debug(`Using telemetry logging file ${this.getTelemetryFilePath()}`);
   }
 }

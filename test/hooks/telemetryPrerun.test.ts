@@ -6,7 +6,7 @@
  */
 
 import { Hook, IConfig } from '@oclif/config';
-import { SfdxError } from '@salesforce/core';
+import { SfError } from '@salesforce/core';
 import TelemetryReporter from '@salesforce/telemetry';
 import { StubbedType, stubInterface, stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
@@ -137,7 +137,7 @@ describe('telemetry prerun hook', () => {
       expect(processExitStub.called).to.equal(true);
       expect(processCmdErrorStub.called).to.equal(true);
 
-      await processCmdErrorStub.firstCall.args[1](new SfdxError('test'), {});
+      await processCmdErrorStub.firstCall.args[1](new SfError('test'), {});
 
       expect(recordErrorStub.called).to.equal(true);
       expect(recordErrorStub.firstCall.args[1].orgType).to.equal(undefined);
@@ -154,7 +154,7 @@ describe('telemetry prerun hook', () => {
       expect(processCmdErrorStub.called).to.equal(true);
 
       await processCmdErrorStub.firstCall.args[1](
-        new SfdxError('test'),
+        new SfError('test'),
         {},
         {
           determineIfDevHubOrg: async () => true,
@@ -177,7 +177,7 @@ describe('telemetry prerun hook', () => {
       expect(processCmdErrorStub.called).to.equal(true);
 
       await processCmdErrorStub.firstCall.args[1](
-        new SfdxError('test'),
+        new SfError('test'),
         {},
         {
           determineIfDevHubOrg: async () => false,
@@ -201,7 +201,7 @@ describe('telemetry prerun hook', () => {
       expect(processCmdErrorStub.called).to.equal(true);
 
       await processCmdErrorStub.firstCall.args[1](
-        new SfdxError('test'),
+        new SfError('test'),
         {},
         {
           determineIfDevHubOrg: async () => false,
@@ -225,7 +225,7 @@ describe('telemetry prerun hook', () => {
       expect(processCmdErrorStub.called).to.equal(true);
 
       await processCmdErrorStub.firstCall.args[1](
-        new SfdxError('test'),
+        new SfError('test'),
         {},
         {
           determineIfDevHubOrg: async () => Promise.reject(new Error()),
