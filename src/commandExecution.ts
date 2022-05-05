@@ -15,9 +15,9 @@ import { debug } from './debuger';
 import { InitData } from './hooks/telemetryInit';
 
 export type CommandExecutionOptions = {
-  command: Interfaces.Command.Class;
+  command: Partial<Interfaces.Command.Class>;
   argv: string[];
-  config: Config;
+  config: Partial<Config>;
 };
 
 interface PluginInfo {
@@ -31,9 +31,9 @@ export class CommandExecution extends AsyncCreatable {
   private upTimeAtCmdStart: number;
   private specifiedFlags: string[] = [];
   private specifiedFlagFullNames: string[] = [];
-  private command: Interfaces.Command.Class;
+  private command: Partial<Interfaces.Command.Class>;
   private argv: string[];
-  private config: Config;
+  private config: Partial<Config>;
   private vcs?: string;
 
   // These will be removed by the uploader
