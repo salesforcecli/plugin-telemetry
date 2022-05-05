@@ -7,13 +7,13 @@
 
 import { join } from 'path';
 import { Hook } from '@oclif/core';
-import { Hooks } from '@oclif/core/lib/interfaces/hooks';
 import { Org, SfError, Lifecycle } from '@salesforce/core';
 import { TelemetryReporter } from '@salesforce/telemetry';
 import Telemetry from '../telemetry';
 import { TelemetryGlobal } from '../telemetryGlobal';
 import { CommandExecution } from '../commandExecution';
 import { debug } from '../debuger';
+
 declare const global: TelemetryGlobal;
 
 interface CommonData {
@@ -29,7 +29,7 @@ interface CommonData {
  * 2. Writes logs to a file, including execution and errors.
  * 3. Logs command usage data to the server right after the process ends by spawning a detached process.
  */
-const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<void> {
+const hook: Hook.Prerun = async function (options): Promise<void> {
   const telemetryEnabled = await TelemetryReporter.determineSfdxTelemetryEnabled();
   // Don't even bother logging if telemetry is disabled
   if (!telemetryEnabled) {

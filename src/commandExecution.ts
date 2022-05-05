@@ -7,8 +7,7 @@
 
 import { join } from 'path';
 import * as fs from 'fs';
-import { Config, Interfaces } from '@oclif/core';
-import { parse, Input } from '@oclif/parser';
+import { Config, Interfaces, Parser } from '@oclif/core';
 import { SfProject } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
 import { isNumber, JsonMap, Optional } from '@salesforce/ts-types';
@@ -127,10 +126,8 @@ export class CommandExecution extends AsyncCreatable {
 
   public getPluginInfo(): PluginInfo {
     return {
-      name: this.command.plugin && this.command.plugin.pluginName,
-      // TODO: should be
-      // version: this.command.plugin && this.command.plugin.version or .pluginVersion,
-      version: this.command.plugin && this.command.plugin,
+      name: this.command.plugin && this.command.plugin.name,
+      version: this.command.plugin && this.command.plugin.version,
     };
   }
 
@@ -149,10 +146,10 @@ export class CommandExecution extends AsyncCreatable {
     const commandDef = { flags: flagDefinitions, args: this.command.args, strict: !anyCmd.varargs };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let flags: Input<any> = {};
+    let flags: Interfaces.Input<any> = {};
     try {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      flags = parse(argv, commandDef).flags;
+      flags = (await Parser.parse(argv, commandDef)).flags;
     } catch (error) {
       debug('Error parsing flags');
     }
@@ -165,7 +162,7 @@ export class CommandExecution extends AsyncCreatable {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private determineSpecifiedFlags(argv: string[], flags: any, flagDefinitions: Input<any>): void {
+  private determineSpecifiedFlags(argv: string[], flags: any, flagDefinitions: Interfaces.Input<any>): void {
     // Help won't be in the parsed flags
     const shortHelp = argv.find((arg) => /^-h$/.test(arg));
     const fullHelp = argv.find((arg) => /^--help$/.test(arg));
