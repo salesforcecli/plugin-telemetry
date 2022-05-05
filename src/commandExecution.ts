@@ -7,7 +7,7 @@
 
 import { join } from 'path';
 import * as fs from 'fs';
-import { Command, IConfig } from '@oclif/config';
+import { Config, Interfaces } from '@oclif/core';
 import { parse, Input } from '@oclif/parser';
 import { SfProject } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
@@ -16,9 +16,9 @@ import { debug } from './debuger';
 import { InitData } from './hooks/telemetryInit';
 
 export type CommandExecutionOptions = {
-  command: Command.Class;
+  command: Interfaces.Command.Class;
   argv: string[];
-  config: IConfig;
+  config: Config;
 };
 
 interface PluginInfo {
@@ -32,9 +32,9 @@ export class CommandExecution extends AsyncCreatable {
   private upTimeAtCmdStart: number;
   private specifiedFlags: string[] = [];
   private specifiedFlagFullNames: string[] = [];
-  private command: Command.Class;
+  private command: Interfaces.Command.Class;
   private argv: string[];
-  private config: IConfig;
+  private config: Config;
   private vcs?: string;
 
   // These will be removed by the uploader
@@ -127,8 +127,10 @@ export class CommandExecution extends AsyncCreatable {
 
   public getPluginInfo(): PluginInfo {
     return {
-      name: this.command.plugin && this.command.plugin.name,
-      version: this.command.plugin && this.command.plugin.version,
+      name: this.command.plugin && this.command.plugin.pluginName,
+      // TODO: should be
+      // version: this.command.plugin && this.command.plugin.version or .pluginVersion,
+      version: this.command.plugin && this.command.plugin,
     };
   }
 

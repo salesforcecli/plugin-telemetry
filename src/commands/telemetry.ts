@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { Command } from '@oclif/command';
+import { Command } from '@oclif/core';
 import TelemetryReporter from '@salesforce/telemetry';
 import Telemetry from '../telemetry';
 import { TelemetryGlobal } from '../telemetryGlobal';

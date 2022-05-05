@@ -6,7 +6,8 @@
  */
 
 import { join } from 'path';
-import { Hook, Hooks } from '@oclif/config';
+import { Hook } from '@oclif/core';
+import { Hooks } from '@oclif/core/lib/interfaces/hooks';
 import { Org, SfError, Lifecycle } from '@salesforce/core';
 import { TelemetryReporter } from '@salesforce/telemetry';
 import Telemetry from '../telemetry';

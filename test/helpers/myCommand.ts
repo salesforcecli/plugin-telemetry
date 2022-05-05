@@ -5,25 +5,24 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { flags } from '@oclif/command';
-import { IConfig } from '@oclif/config';
+import { Flags, Config } from '@oclif/core';
 
 export class MyCommand {
   public static id = 'test';
   public static hidden = false;
   public static aliases = [];
   public static flags = {
-    flag: flags.boolean(),
-    test: flags.string({ char: 't' }),
-    targetusername: flags.string(),
-    targetdevhubusername: flags.string(),
+    flag: Flags.boolean(),
+    test: Flags.string({ char: 't' }),
+    targetusername: Flags.string(),
+    targetdevhubusername: Flags.string(),
   };
   public static args = [];
 
   public static _base = '';
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public constructor(argv: string[], config: IConfig) {}
+  public constructor(argv: string[], config: Config) {}
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public static run(): PromiseLike<any> {
