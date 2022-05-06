@@ -6,18 +6,18 @@
  */
 
 import { join } from 'path';
-import { Command, IConfig } from '@oclif/config';
-import { parse, Input } from '@oclif/parser';
-import { fs, SfdxProject } from '@salesforce/core';
+import * as fs from 'fs';
+import { Config, Interfaces, Parser } from '@oclif/core';
+import { SfProject } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
 import { isNumber, JsonMap, Optional } from '@salesforce/ts-types';
 import { debug } from './debuger';
 import { InitData } from './hooks/telemetryInit';
 
 export type CommandExecutionOptions = {
-  command: Command.Class;
+  command: Partial<Interfaces.Command.Class>;
   argv: string[];
-  config: IConfig;
+  config: Partial<Config>;
 };
 
 interface PluginInfo {
@@ -31,9 +31,9 @@ export class CommandExecution extends AsyncCreatable {
   private upTimeAtCmdStart: number;
   private specifiedFlags: string[] = [];
   private specifiedFlagFullNames: string[] = [];
-  private command: Command.Class;
+  private command: Partial<Interfaces.Command.Class>;
   private argv: string[];
-  private config: IConfig;
+  private config: Partial<Config>;
   private vcs?: string;
 
   // These will be removed by the uploader
@@ -58,7 +58,7 @@ export class CommandExecution extends AsyncCreatable {
   public static async resolveVCSInfo(): Promise<string> {
     let possibleVcsPath: string;
     try {
-      possibleVcsPath = await SfdxProject.resolveProjectPath();
+      possibleVcsPath = await SfProject.resolveProjectPath();
     } catch (err) {
       debug('Not in a sfdx project, using current working directory');
       possibleVcsPath = process.cwd();
@@ -66,7 +66,7 @@ export class CommandExecution extends AsyncCreatable {
 
     const gitPath = join(possibleVcsPath, '.git');
     try {
-      await fs.access(gitPath, fs.constants.R_OK);
+      await fs.promises.access(gitPath, fs.constants.R_OK);
       return 'git';
     } catch (err) {
       return 'other';
@@ -146,10 +146,10 @@ export class CommandExecution extends AsyncCreatable {
     const commandDef = { flags: flagDefinitions, args: this.command.args, strict: !anyCmd.varargs };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let flags: Input<any> = {};
+    let flags: Interfaces.Input<any> = {};
     try {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      flags = parse(argv, commandDef).flags;
+      flags = (await Parser.parse(argv, commandDef)).flags;
     } catch (error) {
       debug('Error parsing flags');
     }
@@ -162,7 +162,7 @@ export class CommandExecution extends AsyncCreatable {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private determineSpecifiedFlags(argv: string[], flags: any, flagDefinitions: Input<any>): void {
+  private determineSpecifiedFlags(argv: string[], flags: any, flagDefinitions: Interfaces.Input<any>): void {
     // Help won't be in the parsed flags
     const shortHelp = argv.find((arg) => /^-h$/.test(arg));
     const fullHelp = argv.find((arg) => /^--help$/.test(arg));

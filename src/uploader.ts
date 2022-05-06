@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { Org, SfdxError } from '@salesforce/core';
+import { Org, SfError } from '@salesforce/core';
 import TelemetryReporter from '@salesforce/telemetry';
 import { asString, Dictionary } from '@salesforce/ts-types';
 import Telemetry from './telemetry';
@@ -43,7 +43,7 @@ export class Uploader {
         waitForConnection: true,
       });
     } catch (err) {
-      const error = err as SfdxError;
+      const error = err as SfError;
       debug(`Error creating reporter: ${error.message}`);
       // We can't do much without a reporter, so clear the telemetry file and move on.
       await this.telemetry.clear();
@@ -82,14 +82,14 @@ export class Uploader {
         }
       }
     } catch (err) {
-      const error = err as SfdxError;
+      const error = err as SfError;
       debug(`Error reading or sending telemetry events: ${error.message}`);
     } finally {
       try {
         // We are done sending events
         reporter.stop();
       } catch (err) {
-        const error = err as SfdxError;
+        const error = err as SfError;
         debug(`Error stopping telemetry reporter: ${error.message}`);
       } finally {
         // We alway want to clear the file.

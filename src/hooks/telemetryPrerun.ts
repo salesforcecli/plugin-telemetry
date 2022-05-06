@@ -6,13 +6,14 @@
  */
 
 import { join } from 'path';
-import { Hook, Hooks } from '@oclif/config';
-import { Org, SfdxError, Lifecycle } from '@salesforce/core';
+import { Hook } from '@oclif/core';
+import { Org, SfError, Lifecycle } from '@salesforce/core';
 import { TelemetryReporter } from '@salesforce/telemetry';
 import Telemetry from '../telemetry';
 import { TelemetryGlobal } from '../telemetryGlobal';
 import { CommandExecution } from '../commandExecution';
 import { debug } from '../debuger';
+
 declare const global: TelemetryGlobal;
 
 interface CommonData {
@@ -28,7 +29,7 @@ interface CommonData {
  * 2. Writes logs to a file, including execution and errors.
  * 3. Logs command usage data to the server right after the process ends by spawning a detached process.
  */
-const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<void> {
+const hook: Hook.Prerun = async function (options): Promise<void> {
   const telemetryEnabled = await TelemetryReporter.determineSfdxTelemetryEnabled();
   // Don't even bother logging if telemetry is disabled
   if (!telemetryEnabled) {
@@ -65,7 +66,7 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
       });
     } catch (err) {
       // even if this throws, the rest of telemetry is not affected
-      const error = err as SfdxError;
+      const error = err as SfError;
       debug('Error subscribing to telemetry events', error.message);
     }
 
@@ -113,7 +114,7 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
     process.on(
       'cmdError',
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      async (cmdErr: SfdxError, _, org?: Org): Promise<void> => {
+      async (cmdErr: SfError, _, org?: Org): Promise<void> => {
         const apiVersion = org ? org.getConnection().getApiVersion() : undefined;
         let orgType: string | undefined;
 
@@ -153,7 +154,7 @@ const hook: Hook.Prerun = async function (options: Hooks['prerun']): Promise<voi
       return commonData;
     };
   } catch (err) {
-    const error = err as SfdxError;
+    const error = err as SfError;
     debug('Error with logging or sending telemetry:', error.message);
   }
 };

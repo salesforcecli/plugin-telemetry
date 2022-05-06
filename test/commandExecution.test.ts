@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { IConfig } from '@oclif/config';
+import { Interfaces } from '@oclif/core';
 import { stubInterface, stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
 import { createSandbox } from 'sinon';
@@ -25,7 +25,7 @@ describe('toJson', () => {
   });
 
   it('shows event name', async () => {
-    const config = stubInterface<IConfig>(sandbox, {});
+    const config = stubInterface<Interfaces.Config>(sandbox, {});
     const execution = await CommandExecution.create({
       argv: [],
       command: MyCommand,
@@ -38,7 +38,7 @@ describe('toJson', () => {
 
   it('shows flags', async () => {
     process.env.CI = 'true';
-    const config = stubInterface<IConfig>(sandbox, {});
+    const config = stubInterface<Interfaces.Config>(sandbox, {});
     const execution = await CommandExecution.create({
       argv: ['--flag', '-t=asdf'],
       command: MyCommand,
@@ -52,7 +52,7 @@ describe('toJson', () => {
 
   it('shows short help flag', async () => {
     process.env.CI = 'true';
-    const config = stubInterface<IConfig>(sandbox, {});
+    const config = stubInterface<Interfaces.Config>(sandbox, {});
     const execution = await CommandExecution.create({
       argv: ['-h'],
       command: MyCommand,
@@ -66,7 +66,7 @@ describe('toJson', () => {
 
   it('shows long help flag', async () => {
     process.env.CI = 'true';
-    const config = stubInterface<IConfig>(sandbox, {});
+    const config = stubInterface<Interfaces.Config>(sandbox, {});
     const execution = await CommandExecution.create({
       argv: ['--help'],
       command: MyCommand,
@@ -80,7 +80,7 @@ describe('toJson', () => {
 
   it('shows default org ids', async () => {
     process.env.CI = 'true';
-    const config = stubInterface<IConfig>(sandbox, {});
+    const config = stubInterface<Interfaces.Config>(sandbox, {});
     const execution = await CommandExecution.create({
       argv: [],
       command: MyCommand,
@@ -94,7 +94,7 @@ describe('toJson', () => {
 
   it('shows org ids with flags', async () => {
     process.env.CI = 'true';
-    const config = stubInterface<IConfig>(sandbox, {});
+    const config = stubInterface<Interfaces.Config>(sandbox, {});
     const execution = await CommandExecution.create({
       argv: ['--targetusername=org', '--targetdevhubusername=devhub'],
       command: MyCommand,

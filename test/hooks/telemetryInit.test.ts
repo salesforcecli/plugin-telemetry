@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { Hook, IConfig } from '@oclif/config';
+import { Hook, Config } from '@oclif/core';
 import { StubbedType, stubInterface } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
@@ -19,12 +19,12 @@ const args: any = { argv: [], Command: MyCommand };
 describe('telemetry init hook', () => {
   let sandbox: sinon.SinonSandbox;
 
-  let config: StubbedType<IConfig>;
+  let config: StubbedType<Config>;
   let context: StubbedType<Hook.Context>;
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
-    config = stubInterface<IConfig>(sandbox, {});
+    config = stubInterface<Config>(sandbox, {});
     context = stubInterface<Hook.Context>(sandbox, { config });
   });
 

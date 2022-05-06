@@ -6,10 +6,9 @@
  */
 
 import * as cp from 'child_process';
-import * as systemFs from 'fs';
 import { EOL } from 'os';
 import * as path from 'path';
-import { fs } from '@salesforce/core';
+import * as fs from 'fs';
 import { stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
@@ -19,26 +18,26 @@ describe('telemetry', () => {
   let sandbox: sinon.SinonSandbox;
   let openStub: sinon.SinonStub;
   let readFileSyncStub: sinon.SinonStub;
-  let writeFileStub: sinon.SinonStub;
-  let writeStub: sinon.SinonStub;
+  let writeFileSyncStub: sinon.SinonStub;
+  let writeSyncStub: sinon.SinonStub;
   let readFileStub: sinon.SinonStub;
   let unlinkStub: sinon.SinonStub;
   let accessStub: sinon.SinonStub;
-  let mkdirpStub: sinon.SinonStub;
-  let writeJsonStub: sinon.SinonStub;
+  let mkdirStub: sinon.SinonStub;
+  let writeFileStub: sinon.SinonStub;
   const env = process.env;
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
-    openStub = stubMethod(sandbox, systemFs, 'openSync');
-    readFileSyncStub = stubMethod(sandbox, systemFs, 'readFileSync');
-    writeFileStub = stubMethod(sandbox, systemFs, 'writeFileSync');
-    writeStub = stubMethod(sandbox, systemFs, 'writeSync');
-    readFileStub = stubMethod(sandbox, fs, 'readFile');
-    unlinkStub = stubMethod(sandbox, fs, 'unlink');
-    accessStub = stubMethod(sandbox, fs, 'access');
-    mkdirpStub = stubMethod(sandbox, fs, 'mkdirp');
-    writeJsonStub = stubMethod(sandbox, fs, 'writeJson');
+    openStub = stubMethod(sandbox, fs, 'openSync');
+    readFileSyncStub = stubMethod(sandbox, fs, 'readFileSync');
+    writeFileSyncStub = stubMethod(sandbox, fs, 'writeFileSync');
+    writeSyncStub = stubMethod(sandbox, fs, 'writeSync');
+    readFileStub = stubMethod(sandbox, fs.promises, 'readFile');
+    unlinkStub = stubMethod(sandbox, fs.promises, 'unlink');
+    accessStub = stubMethod(sandbox, fs.promises, 'access');
+    mkdirStub = stubMethod(sandbox, fs.promises, 'mkdir');
+    writeFileStub = stubMethod(sandbox, fs.promises, 'writeFile');
     process.env = {};
 
     // Return a fake CLI ID
@@ -69,8 +68,8 @@ describe('telemetry', () => {
     Telemetry['cacheDir'] = 'test';
     await Telemetry['acknowledgeDataCollection']();
     expect(accessStub.called).to.equal(true);
-    expect(mkdirpStub.called).to.equal(true);
-    expect(writeJsonStub.called).to.equal(true);
+    expect(mkdirStub.called).to.equal(true);
+    expect(writeFileStub.called).to.equal(true);
     expect(warn.called).to.equal(true);
   });
   it('does not show telemetry warning on unknown error', async () => {
@@ -80,8 +79,8 @@ describe('telemetry', () => {
     Telemetry['cacheDir'] = 'test';
     await Telemetry['acknowledgeDataCollection']();
     expect(accessStub.called).to.equal(true);
-    expect(mkdirpStub.called).to.equal(false);
-    expect(writeJsonStub.called).to.equal(false);
+    expect(mkdirStub.called).to.equal(false);
+    expect(writeFileStub.called).to.equal(false);
     expect(warn.called).to.equal(false);
   });
 
@@ -90,8 +89,8 @@ describe('telemetry', () => {
       const telemetry = await Telemetry.create({ cacheDir: 'test' });
       telemetry.record({});
 
-      expect(writeStub.calledOnce).to.equal(true);
-      const logLine = JSON.parse(writeStub.firstCall.args[1]);
+      expect(writeSyncStub.calledOnce).to.equal(true);
+      const logLine = JSON.parse(writeSyncStub.firstCall.args[1]);
       expect(logLine.type).to.contains(Telemetry.EVENT);
       expect(logLine.eventName).to.contains('UNKNOWN');
       expect(logLine).to.be.haveOwnProperty('requestorLocation');
@@ -100,20 +99,20 @@ describe('telemetry', () => {
       expect(openStub.called).to.equal(true);
       // Only called once for the CLI ID
       expect(readFileSyncStub.calledTwice).to.equal(false);
-      expect(writeFileStub.called).to.equal(false);
+      expect(writeFileSyncStub.called).to.equal(false);
       expect(unlinkStub.called).to.equal(false);
       // It should call our to check usage file
       expect(accessStub.called).to.equal(true);
-      expect(mkdirpStub.called).to.equal(false);
-      expect(writeJsonStub.called).to.equal(false);
+      expect(mkdirStub.called).to.equal(false);
+      expect(writeFileStub.called).to.equal(false);
     });
 
     it('shows jenkins CI', async () => {
       process.env.JENKINS_WORKSPACE = 'test';
       const telemetry = await Telemetry.create({ cacheDir: 'test' });
       telemetry.record({});
-      expect(writeStub.calledOnce).to.equal(true);
-      const logLine = JSON.parse(writeStub.firstCall.args[1]);
+      expect(writeSyncStub.calledOnce).to.equal(true);
+      const logLine = JSON.parse(writeSyncStub.firstCall.args[1]);
       expect(logLine.ci).to.equal('jenkins');
     });
 
@@ -121,32 +120,32 @@ describe('telemetry', () => {
       process.env.TRAVIS = 'true';
       const telemetry = await Telemetry.create({ cacheDir: 'test' });
       telemetry.record({});
-      expect(writeStub.calledOnce).to.equal(true);
-      const logLine = JSON.parse(writeStub.firstCall.args[1]);
+      expect(writeSyncStub.calledOnce).to.equal(true);
+      const logLine = JSON.parse(writeSyncStub.firstCall.args[1]);
       expect(logLine.ci).to.equal('travisci');
     });
     it('shows circle CI', async () => {
       process.env.CIRCLE_BRANCH = 'master';
       const telemetry = await Telemetry.create({ cacheDir: 'test' });
       telemetry.record({});
-      expect(writeStub.calledOnce).to.equal(true);
-      const logLine = JSON.parse(writeStub.firstCall.args[1]);
+      expect(writeSyncStub.calledOnce).to.equal(true);
+      const logLine = JSON.parse(writeSyncStub.firstCall.args[1]);
       expect(logLine.ci).to.equal('circleci');
     });
     it('shows github actions CI', async () => {
       process.env.GITHUB_ACTIONS = 'test';
       const telemetry = await Telemetry.create({ cacheDir: 'test' });
       telemetry.record({});
-      expect(writeStub.calledOnce).to.equal(true);
-      const logLine = JSON.parse(writeStub.firstCall.args[1]);
+      expect(writeSyncStub.calledOnce).to.equal(true);
+      const logLine = JSON.parse(writeSyncStub.firstCall.args[1]);
       expect(logLine.ci).to.equal('github_actions');
     });
     it('shows CI', async () => {
       process.env.CI = 'true';
       const telemetry = await Telemetry.create({ cacheDir: 'test' });
       telemetry.record({});
-      expect(writeStub.calledOnce).to.equal(true);
-      const logLine = JSON.parse(writeStub.firstCall.args[1]);
+      expect(writeSyncStub.calledOnce).to.equal(true);
+      const logLine = JSON.parse(writeSyncStub.firstCall.args[1]);
       expect(logLine.ci).to.equal('unknown');
     });
 
@@ -159,8 +158,8 @@ describe('telemetry', () => {
         d: { a: 'b' },
       });
 
-      expect(writeStub.calledOnce).to.equal(true);
-      const logLine = JSON.parse(writeStub.firstCall.args[1]);
+      expect(writeSyncStub.calledOnce).to.equal(true);
+      const logLine = JSON.parse(writeSyncStub.firstCall.args[1]);
       expect(logLine.a).to.equal('test');
       expect(logLine.b).to.equal(false);
       expect(logLine.c).to.equal(0);
@@ -177,8 +176,8 @@ describe('telemetry', () => {
 
       telemetry.recordError(error, { additionalInfo: 'testing' });
 
-      expect(writeStub.calledOnce).to.equal(true);
-      const logLine = JSON.parse(writeStub.firstCall.args[1]);
+      expect(writeSyncStub.calledOnce).to.equal(true);
+      const logLine = JSON.parse(writeSyncStub.firstCall.args[1]);
       expect(logLine.error.name).to.deep.equal('testName');
       expect(logLine.error.message).to.deep.equal('testMessage');
       expect(logLine.error.stack).to.deep.equal('testStack');

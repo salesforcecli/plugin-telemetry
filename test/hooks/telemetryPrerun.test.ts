@@ -5,8 +5,8 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { Hook, IConfig } from '@oclif/config';
-import { SfdxError } from '@salesforce/core';
+import { Hook, Config } from '@oclif/core';
+import { SfError } from '@salesforce/core';
 import TelemetryReporter from '@salesforce/telemetry';
 import { StubbedType, stubInterface, stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
@@ -30,7 +30,7 @@ describe('telemetry prerun hook', () => {
   let processExitStub: sinon.SinonStub;
   let processCmdErrorStub: sinon.SinonStub;
 
-  let config: StubbedType<IConfig>;
+  let config: StubbedType<Config>;
   let context: StubbedType<Hook.Context>;
 
   beforeEach(() => {
@@ -39,7 +39,7 @@ describe('telemetry prerun hook', () => {
     recordStub = sandbox.stub();
     recordErrorStub = sandbox.stub();
     uploadStub = sandbox.stub();
-    config = stubInterface<IConfig>(sandbox, {});
+    config = stubInterface<Config>(sandbox, {});
     context = stubInterface<Hook.Context>(sandbox, { config });
 
     processExitStub = stubMethod(sandbox, process, 'once');
@@ -137,7 +137,7 @@ describe('telemetry prerun hook', () => {
       expect(processExitStub.called).to.equal(true);
       expect(processCmdErrorStub.called).to.equal(true);
 
-      await processCmdErrorStub.firstCall.args[1](new SfdxError('test'), {});
+      await processCmdErrorStub.firstCall.args[1](new SfError('test'), {});
 
       expect(recordErrorStub.called).to.equal(true);
       expect(recordErrorStub.firstCall.args[1].orgType).to.equal(undefined);
@@ -154,7 +154,7 @@ describe('telemetry prerun hook', () => {
       expect(processCmdErrorStub.called).to.equal(true);
 
       await processCmdErrorStub.firstCall.args[1](
-        new SfdxError('test'),
+        new SfError('test'),
         {},
         {
           determineIfDevHubOrg: async () => true,
@@ -177,7 +177,7 @@ describe('telemetry prerun hook', () => {
       expect(processCmdErrorStub.called).to.equal(true);
 
       await processCmdErrorStub.firstCall.args[1](
-        new SfdxError('test'),
+        new SfError('test'),
         {},
         {
           determineIfDevHubOrg: async () => false,
@@ -201,7 +201,7 @@ describe('telemetry prerun hook', () => {
       expect(processCmdErrorStub.called).to.equal(true);
 
       await processCmdErrorStub.firstCall.args[1](
-        new SfdxError('test'),
+        new SfError('test'),
         {},
         {
           determineIfDevHubOrg: async () => false,
@@ -225,7 +225,7 @@ describe('telemetry prerun hook', () => {
       expect(processCmdErrorStub.called).to.equal(true);
 
       await processCmdErrorStub.firstCall.args[1](
-        new SfdxError('test'),
+        new SfError('test'),
         {},
         {
           determineIfDevHubOrg: async () => Promise.reject(new Error()),
