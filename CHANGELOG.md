@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/salesforcecli/plugin-telemetry/compare/v1.4.0...v2.0.0) (2022-05-06)
+
+### Bug Fixes
+
+- bump to core 3, remove command dep ([9953823](https://github.com/salesforcecli/plugin-telemetry/commit/99538230cdcd844053bf61aec03ae898583e0574))
+- use oclif/core interfaces ([954fb17](https://github.com/salesforcecli/plugin-telemetry/commit/954fb179e679372fbea69d8ce8a4a638f99a066e))
+
 ## [1.4.0](https://github.com/salesforcecli/plugin-telemetry/compare/v1.3.0...v1.4.0) (2021-12-01)
 
 ### Features
