@@ -52,13 +52,11 @@ describe('telemetry prerun hook', () => {
       }),
       getCommandName: () => 'foo:bar',
     }));
-    stubMethod(sandbox, Telemetry, 'create').callsFake(async () => {
-      return {
+    stubMethod(sandbox, Telemetry, 'create').callsFake(async () => ({
         record: recordStub,
         recordError: recordErrorStub,
         upload: uploadStub,
-      };
-    });
+      }));
   });
 
   afterEach(() => {
