@@ -29,6 +29,7 @@ export class MyCommand {
     return Promise.resolve();
   }
 
+  // eslint-disable-next-line class-methods-use-this
   public _run(): Promise<void> {
     return Promise.resolve();
   }

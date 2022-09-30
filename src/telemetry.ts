@@ -198,6 +198,7 @@ export default class Telemetry extends AsyncCreatable {
     return randomBytes(20).toString('hex');
   }
 
+  // eslint-disable-next-line class-methods-use-this
   public getTelemetryFilePath(): string {
     return Telemetry.telemetryTmpFile;
   }
@@ -323,7 +324,6 @@ export default class Telemetry extends AsyncCreatable {
       }).unref();
     } else {
       debug(
-        // eslint-disable-next-line prettier/prettier
         `DEBUG MODE. Run the uploader manually with the following command:${EOL}${processPath} ${
           Telemetry.cacheDir
         } ${this.getTelemetryFilePath()}`

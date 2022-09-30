@@ -61,8 +61,10 @@ export class Uploader {
         if (eventType === Telemetry.EVENT) {
           event.telemetryVersion = version;
           // Resolve orgs for all events.
-          event.orgId = await this.getOrgId(false, asString(event.orgUsername));
-          event.devHubId = await this.getOrgId(true, asString(event.devHubUsername));
+          // eslint-disable-next-line no-await-in-loop
+          event.orgId = await getOrgId(false, asString(event.orgUsername));
+          // eslint-disable-next-line no-await-in-loop
+          event.devHubId = await getOrgId(true, asString(event.devHubUsername));
           // Usernames are GDPR info, so don't log.
           delete event.orgUsername;
           delete event.devHubUsername;
@@ -97,18 +99,18 @@ export class Uploader {
       }
     }
   }
-
-  private async getOrgId(isDevHub: boolean, aliasOrUsername?: string): Promise<string | undefined> {
-    const orgOptions: Org.Options = { isDevHub };
-
-    // If no aliasOrUsername, it will try to get the default
-    if (aliasOrUsername) {
-      orgOptions.aliasOrUsername = aliasOrUsername;
-    }
-    try {
-      return (await Org.create(orgOptions)).getOrgId();
-    } catch (error) {
-      // Don't do anything, there is no specified or default.
-    }
-  }
 }
+
+const getOrgId = async (isDevHub: boolean, aliasOrUsername?: string): Promise<string | undefined> => {
+  const orgOptions: Org.Options = { isDevHub };
+
+  // If no aliasOrUsername, it will try to get the default
+  if (aliasOrUsername) {
+    orgOptions.aliasOrUsername = aliasOrUsername;
+  }
+  try {
+    return (await Org.create(orgOptions)).getOrgId();
+  } catch (error) {
+    // Don't do anything, there is no specified or default.
+  }
+};
