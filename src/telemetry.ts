@@ -226,7 +226,7 @@ export default class Telemetry extends AsyncCreatable {
    */
   public record(data: JsonMap): void {
     // Only store valid telemetry attributes to the log file.
-    const dataToRecord = Object.keys(data).reduce((map, key) => {
+    const dataToRecord = Object.keys(data).reduce<JsonMap>((map, key) => {
       const value = data[key];
       const isException = data.type === Telemetry.EXCEPTION && key === 'error';
       const validType = isString(value) || isBoolean(value) || isNumber(value);
@@ -236,7 +236,7 @@ export default class Telemetry extends AsyncCreatable {
       }
 
       return map;
-    }, {} as JsonMap);
+    }, {});
 
     if (!dataToRecord.type) {
       dataToRecord.type = Telemetry.EVENT;

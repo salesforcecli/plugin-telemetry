@@ -38,13 +38,11 @@ describe('uploader', () => {
       sendTelemetryException: sendTelemetryExceptionStub,
       stop: stopStub,
     }));
-    stubMethod(sandbox, Telemetry, 'create').callsFake(async () => {
-      return {
+    stubMethod(sandbox, Telemetry, 'create').callsFake(async () => ({
         getCLIId: getCliIdStub,
         read: readStub,
         clear: clearStub,
-      };
-    });
+      }));
     orgCreateStub = stubMethod(sandbox, Org, 'create').resolves({ getOrgId: () => '000XXX' });
   });
 
