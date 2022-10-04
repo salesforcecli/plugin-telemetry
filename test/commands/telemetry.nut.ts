@@ -13,7 +13,7 @@ describe('telemetry', () => {
   let testSession: TestSession;
 
   before('prepare session and ensure environment variables', async () => {
-    testSession = await TestSession.create({});
+    testSession = await TestSession.create();
   });
 
   after(async () => {
