@@ -126,8 +126,8 @@ export class CommandExecution extends AsyncCreatable {
 
   public getPluginInfo(): PluginInfo {
     return {
-      name: this.command.plugin && this.command.plugin.name,
-      version: this.command.plugin && this.command.plugin.version,
+      name: this.command.plugin?.name,
+      version: this.command.plugin?.version,
     };
   }
 
@@ -175,6 +175,7 @@ export class CommandExecution extends AsyncCreatable {
       this.specifiedFlagFullNames.push('help');
       // All other flags don't matter if help is specified, so end here.
     } else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       Object.keys(flags).forEach((flagName) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         const shortCode = flagDefinitions[flagName] && (flagDefinitions[flagName].char as string);
