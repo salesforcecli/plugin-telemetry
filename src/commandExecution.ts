@@ -146,7 +146,7 @@ export class CommandExecution extends AsyncCreatable {
     const commandDef = { flags: flagDefinitions, args: this.command.args, strict: !anyCmd.varargs };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let flags: Interfaces.Input<any> = {};
+    let flags: Interfaces.Input<any, any> = {};
     try {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       flags = (await Parser.parse(argv, commandDef)).flags;
@@ -162,7 +162,7 @@ export class CommandExecution extends AsyncCreatable {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private determineSpecifiedFlags(argv: string[], flags: any, flagDefinitions: Interfaces.Input<any>): void {
+  private determineSpecifiedFlags(argv: string[], flags: any, flagDefinitions: Interfaces.Input<any, any>): void {
     // Help won't be in the parsed flags
     const shortHelp = argv.find((arg) => /^-h$/.test(arg));
     const fullHelp = argv.find((arg) => /^--help$/.test(arg));
