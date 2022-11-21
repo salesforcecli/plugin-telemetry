@@ -2,6 +2,7 @@
   {
     "command": "telemetry",
     "plugin": "@salesforce/plugin-telemetry",
-    "flags": []
+    "flags": [],
+    "alias": []
   }
 ]
