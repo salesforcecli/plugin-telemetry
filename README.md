@@ -13,7 +13,7 @@ All command usage is recorded by initializing on the `init` oclif hook, recordin
 To debug the telemetry spawned process, run a command with the environment variables `SFDX_TELEMETRY_DEBUG=true` and `DEBUG=sfdx:telemetry*`.
 
 ```bash
-SFDX_TELEMETRY_DEBUG=true DEBUG=sfdx:telemetry* ./bin/run telemetry
+SFDX_TELEMETRY_DEBUG=true DEBUG=sfdx:telemetry* ./bin/dev telemetry
 ```
 
 ## Getting Started
@@ -29,11 +29,11 @@ yarn install
 yarn build
 ```
 
-To use your plugin, run using the local `./bin/run` or `./bin/run.cmd` file.
+To use your plugin, run using the local `./bin/dev` or `./bin/dev.cmd` file.
 
 ```bash
 # Run using local run file.
-./bin/run telemetry
+./bin/dev telemetry
 ```
 
 There should be no differences when running via the Salesforce CLI or using the local run file. However, it can be useful to link the plugin to do some additional testing or run your commands from anywhere on your machine.
