@@ -46,6 +46,7 @@ export type CI =
   | 'bitrise'
   | 'buddy'
   | 'appveyor'
+  | 'copado'
   | 'unknown';
 
 export default class Telemetry extends AsyncCreatable {
@@ -188,6 +189,9 @@ export default class Telemetry extends AsyncCreatable {
     }
     if (keys.find((key) => key.startsWith('HUDSON'))) {
       return 'hudson';
+    }
+    if (keys.find((key) => key.startsWith("CF_SF_") || key.startWith("COPADO_CI"))) {
+      return 'copado';
     }
     if (keys.find((key) => key === 'CI' || key === 'CONTINUOUS_INTEGRATION' || key === 'BUILD_ID')) {
       return 'unknown';
