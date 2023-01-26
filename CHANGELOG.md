@@ -1,3 +1,12 @@
+## [2.0.7](https://github.com/salesforcecli/plugin-telemetry/compare/2.0.6...2.0.7) (2023-01-26)
+
+
+### Bug Fixes
+
+* **deps:** bump json5 from 1.0.1 to 1.0.2 ([4ac4619](https://github.com/salesforcecli/plugin-telemetry/commit/4ac46193edecbf84a8f53e3d6417dc0681692a69))
+
+
+
 ## [2.0.6](https://github.com/salesforcecli/plugin-telemetry/compare/2.0.5...2.0.6) (2023-01-25)
 
 
