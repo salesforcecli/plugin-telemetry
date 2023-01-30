@@ -7,7 +7,8 @@
 
 import { join } from 'path';
 import * as fs from 'fs';
-import { Config, Interfaces, Parser } from '@oclif/core';
+import { Config, Command, Parser } from '@oclif/core';
+import { FlagInput } from '@oclif/core/lib/interfaces/parser';
 import { SfProject } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
 import { isNumber, JsonMap, Optional } from '@salesforce/ts-types';
@@ -15,7 +16,7 @@ import { debug } from './debuger';
 import { InitData } from './hooks/telemetryInit';
 
 export type CommandExecutionOptions = {
-  command: Partial<Interfaces.Command.Class>;
+  command: Partial<Command.Class>;
   argv: string[];
   config: Partial<Config>;
 };
@@ -31,7 +32,7 @@ export class CommandExecution extends AsyncCreatable {
   private upTimeAtCmdStart: number;
   private specifiedFlags: string[] = [];
   private specifiedFlagFullNames: string[] = [];
-  private command: Partial<Interfaces.Command.Class>;
+  private command: Partial<Command.Class>;
   private argv: string[];
   private config: Partial<Config>;
   private vcs?: string;
@@ -146,15 +147,15 @@ export class CommandExecution extends AsyncCreatable {
     const commandDef = { flags: flagDefinitions, args: this.command.args, strict: !anyCmd.varargs };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let flags: Interfaces.Input<any> = {};
+    let flags: FlagInput = {};
     try {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       flags = (await Parser.parse(argv, commandDef)).flags;
     } catch (error) {
       debug('Error parsing flags');
     }
-    this.orgUsername = flags['targetusername'] as string;
-    this.devHubOrgUsername = flags['targetdevhubusername'] as string;
+    this.orgUsername = flags['targetusername'] as unknown as string;
+    this.devHubOrgUsername = flags['targetdevhubusername'] as unknown as string;
 
     this.determineSpecifiedFlags(argv, flags, flagDefinitions);
 
@@ -162,7 +163,7 @@ export class CommandExecution extends AsyncCreatable {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private determineSpecifiedFlags(argv: string[], flags: any, flagDefinitions: Interfaces.Input<any>): void {
+  private determineSpecifiedFlags(argv: string[], flags: any, flagDefinitions: FlagInput): void {
     // Help won't be in the parsed flags
     const shortHelp = argv.find((arg) => /^-h$/.test(arg));
     const fullHelp = argv.find((arg) => /^--help$/.test(arg));
