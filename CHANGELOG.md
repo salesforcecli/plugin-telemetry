@@ -1,3 +1,12 @@
+# [2.1.0](https://github.com/salesforcecli/plugin-telemetry/compare/2.0.7...2.1.0) (2023-01-30)
+
+
+### Features
+
+* update to oclif/core v2 ([#415](https://github.com/salesforcecli/plugin-telemetry/issues/415)) ([d92b44a](https://github.com/salesforcecli/plugin-telemetry/commit/d92b44a57c27a3d709084eebf25e5f6f3b0f11c3))
+
+
+
 ## [2.0.7](https://github.com/salesforcecli/plugin-telemetry/compare/2.0.6...2.0.7) (2023-01-26)
 
 
