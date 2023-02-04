@@ -1,3 +1,12 @@
+## [2.1.1](https://github.com/salesforcecli/plugin-telemetry/compare/2.1.0...2.1.1) (2023-02-04)
+
+
+### Bug Fixes
+
+* **deps:** bump http-cache-semantics from 4.1.0 to 4.1.1 ([f27ac5d](https://github.com/salesforcecli/plugin-telemetry/commit/f27ac5df648a18fa56e272968b1d9d7fd3fcf1b2))
+
+
+
 # [2.1.0](https://github.com/salesforcecli/plugin-telemetry/compare/2.0.7...2.1.0) (2023-01-30)
 
 
