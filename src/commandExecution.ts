@@ -127,11 +127,11 @@ export class CommandExecution extends AsyncCreatable {
       // The amount of time (ms) required for oclif to load linked plugins.
       'oclif.linkedPluginsLoadMs': Performance.highlights.linkedPluginsLoadTime,
       // The amount of time (ms) required for oclif to run all the init hooks
-      'oclif.initHookMs': Performance.highlights.hookRunTimes.init.total,
+      'oclif.initHookMs': Performance.highlights.hookRunTimes.init?.total,
       // The amount of time (ms) required for oclif to run all the prerun hooks
-      'oclif.prerunHookMs': Performance.highlights.hookRunTimes.prerun.total,
+      'oclif.prerunHookMs': Performance.highlights.hookRunTimes.prerun?.total,
       // The amount of time (ms) required for oclif to run all the postrun hooks
-      'oclif.postrunHookMs': Performance.highlights.hookRunTimes.postrun.total,
+      'oclif.postrunHookMs': Performance.highlights.hookRunTimes.postrun?.total,
 
       // Salesforce Information
       // Set the usernames so the uploader can resolve it to orgIds.
