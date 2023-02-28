@@ -14,7 +14,7 @@ import { Attributes } from '@salesforce/telemetry';
 import { AsyncCreatable, env } from '@salesforce/kit';
 import { SfError } from '@salesforce/core';
 import { isBoolean, isNumber, isString, JsonMap } from '@salesforce/ts-types';
-import { debug } from './debuger';
+import { debug } from './debugger';
 
 const CLI_ID_FILE_NAME = 'CLIID.txt';
 const USAGE_ACKNOWLEDGEMENT_FILE_NAME = 'acknowledgedUsageCollection.json';

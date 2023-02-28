@@ -67,7 +67,6 @@
     "commands": "./lib/commands",
     "bin": "sfdx",
     "hooks": {
-      "init": "./lib/hooks/telemetryInit.js",
       "prerun": "./lib/hooks/telemetryPrerun.js"
     },
     "devPlugins": [
