@@ -994,10 +994,10 @@
   resolved "https://registry.yarnpkg.com/@salesforce/dev-config/-/dev-config-3.1.0.tgz#8eb5b35860ff60d1c1dc3fd9329b01a28475d5b9"
   integrity sha512-cPph7ibj3DeSzWDFLcLtxOh5fmUlDUY2Ezq43n0V6auVP+l8orxRHjCExHS86SB3QKVgXkC8yYhryXiS8KF7Zw==
 
-"@salesforce/dev-scripts@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@salesforce/dev-scripts/-/dev-scripts-4.1.1.tgz#f88deda82c78ccb059f04a6532edd9a5399cc25e"
-  integrity sha512-+TP0j5dhjWlYJnDvR0QhTNq7igEniXlLGoqudZI79JQAnXZ5h/m/pPEi8wzG/gSx+NNRNGixuYEXHCYbWU2rYA==
+"@salesforce/dev-scripts@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@salesforce/dev-scripts/-/dev-scripts-4.1.2.tgz#d9d4b403ac06934c069ca16d849ff7c2e12ee773"
+  integrity sha512-mxpwOb818k4H04DM/GV0/ZTzK5EDovcnROI+0CnR71Fqc4gwrWBmK+jlcRtICGypC48W+myOXKXet0oySQphyA==
   dependencies:
     "@commitlint/cli" "^17.1.2"
     "@commitlint/config-conventional" "^17.1.0"
@@ -1077,21 +1077,21 @@
     applicationinsights "^1.4.0"
     axios "^0.27.2"
 
-"@salesforce/ts-sinon@^1.4.5":
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/@salesforce/ts-sinon/-/ts-sinon-1.4.5.tgz#9f3d00f28e8f73dd0e60651a025a52f283ee8ff7"
-  integrity sha512-gE/y/fNXm/3hiKTqG4wuVSaPUMo3qR/A1Qhv86EN8tNvWVr7MonFn7/TCyi5XHfXhWzE7Qx1k7Ig2+r00RbxQw==
+"@salesforce/ts-sinon@^1.4.6":
+  version "1.4.6"
+  resolved "https://registry.yarnpkg.com/@salesforce/ts-sinon/-/ts-sinon-1.4.6.tgz#50ac8f091ae546bcc5b1a2b0937f566e3f9683c6"
+  integrity sha512-yWed+QzGU3UOSX9ytg09ELWA7Oc5BAK4MVYv8Ap9uUbkg6tylETF7nzuMkvP49TaZcKC7zOG6MBebKNVZqUjPw==
   dependencies:
-    "@salesforce/ts-types" "^1.7.2"
+    "@salesforce/ts-types" "^1.7.3"
     sinon "^5.1.1"
     tslib "^2.5.0"
 
-"@salesforce/ts-types@^1.7.0", "@salesforce/ts-types@^1.7.1", "@salesforce/ts-types@^1.7.2":
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/@salesforce/ts-types/-/ts-types-1.7.2.tgz#ab40399d291c7eca57efc9890daf2fa2632197ec"
-  integrity sha512-eCpWKEb03UCKBJ6Svp0Vwcwt+fG6BQbopO4x5wt6CYeT8Rjt0dbDQicZPmVL59j2qyt3Q4Y4EYsxXUGZmdfvDw==
+"@salesforce/ts-types@^1.7.0", "@salesforce/ts-types@^1.7.1", "@salesforce/ts-types@^1.7.2", "@salesforce/ts-types@^1.7.3":
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/@salesforce/ts-types/-/ts-types-1.7.3.tgz#89b79ff0aaa55fea9f2de0afa8e515be3e17d0d8"
+  integrity sha512-jpmekGqZ7tpHRJwf1rF0yBJ/IMC5mOrryNi4HZkKuNQn8RF97WpynmL8Om04mLTCESvCiif3y7NWfIcxtID2Gw==
   dependencies:
-    tslib "^2.4.1"
+    tslib "^2.5.0"
 
 "@sindresorhus/is@^4.0.0":
   version "4.6.0"
@@ -3034,6 +3034,11 @@ eslint-config-salesforce-license@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/eslint-config-salesforce-license/-/eslint-config-salesforce-license-0.1.6.tgz#75b475cf90f92e1dcb4340124466288915fed3f8"
   integrity sha512-PH1nkm6MaouON4Ac4fgJh29oQiHlpU/G2xS45FAYeAWkh1up88j1UpjXt2ISNniQVvU4uqfVAOOaEb5X5hDqYw==
+
+eslint-config-salesforce-license@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-salesforce-license/-/eslint-config-salesforce-license-0.2.0.tgz#323193f1aa15dd33fbf108d25fc1210afc11065e"
+  integrity sha512-DJdBvgj82Erum82YMe+YvG/o6ukna3UA++lRl0HSTldj0VlBl3Q8hzCp97nRXZHra6JH1I912yievZzklXDw6w==
 
 eslint-config-salesforce-typescript@^1.1.1:
   version "1.1.1"
