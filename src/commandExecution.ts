@@ -7,13 +7,12 @@
 
 import { join } from 'path';
 import * as fs from 'fs';
-import { Config, Command, Parser } from '@oclif/core';
+import { Config, Command, Parser, Performance } from '@oclif/core';
 import { FlagInput } from '@oclif/core/lib/interfaces/parser';
 import { SfProject } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
 import { isNumber, JsonMap, Optional } from '@salesforce/ts-types';
-import { debug } from './debuger';
-import { InitData } from './hooks/telemetryInit';
+import { debug } from './debugger';
 
 export type CommandExecutionOptions = {
   command: Partial<Command.Class>;
@@ -28,8 +27,6 @@ interface PluginInfo {
 
 export class CommandExecution extends AsyncCreatable {
   public status?: number;
-  private start: number;
-  private upTimeAtCmdStart: number;
   private specifiedFlags: string[] = [];
   private specifiedFlagFullNames: string[] = [];
   private command: Partial<Command.Class>;
@@ -44,11 +41,9 @@ export class CommandExecution extends AsyncCreatable {
   public constructor(options: CommandExecutionOptions) {
     super(options);
 
-    this.start = Date.now();
     this.command = options.command;
     this.argv = options.argv;
     this.config = options.config;
-    this.upTimeAtCmdStart = process.uptime() * 1000;
   }
 
   /**
@@ -111,10 +106,32 @@ export class CommandExecution extends AsyncCreatable {
       // Don't log status or timestamp as a number, otherwise vscode will think it is a metric
       status: isNumber(this.status) ? this.status.toString() : undefined,
       timestamp: String(Date.now()),
-      runtime: Date.now() - this.start,
-      upTimeAtCmdStart: this.upTimeAtCmdStart,
-      oclifLoadTime: InitData.upTimeAtInit,
-      commandLoadTime: this.upTimeAtCmdStart - InitData.upTimeAtInit,
+
+      // The amount of time (ms) required for oclif to execute the main `run` function.
+      // This does not represent the entire execution time of the command. The `processUptime`
+      // metric is the most accurate measure of how long the command execution.
+      //
+      // Our CLIs instantiate the Config before running oclif's `run` method, meaning that
+      // this metric will be less than the actual time spent in oclif.
+      'oclif.runMs': Performance.highlights.runTime,
+      // The amount of time (ms) required for oclif to get to the point where it can start running the command.
+      'oclif.initMs': Performance.highlights.initTime,
+      // The amount of time (ms) required for oclif to load the Config.
+      'oclif.configLoadMs': Performance.highlights.configLoadTime,
+      // The amount of time (ms) required for oclif to load the command.
+      'oclif.commandLoadMs': Performance.highlights.commandLoadTime,
+      // The amount of time (ms) required for oclif to load core (i.e. bundled) plugins.
+      'oclif.corePluginsLoadMs': Performance.highlights.corePluginsLoadTime,
+      // The amount of time (ms) required for oclif to load user plugins.
+      'oclif.userPluginsLoadMs': Performance.highlights.userPluginsLoadTime,
+      // The amount of time (ms) required for oclif to load linked plugins.
+      'oclif.linkedPluginsLoadMs': Performance.highlights.linkedPluginsLoadTime,
+      // The amount of time (ms) required for oclif to run all the init hooks
+      'oclif.initHookMs': Performance.highlights.hookRunTimes.init?.total,
+      // The amount of time (ms) required for oclif to run all the prerun hooks
+      'oclif.prerunHookMs': Performance.highlights.hookRunTimes.prerun?.total,
+      // The amount of time (ms) required for oclif to run all the postrun hooks
+      'oclif.postrunHookMs': Performance.highlights.hookRunTimes.postrun?.total,
 
       // Salesforce Information
       // Set the usernames so the uploader can resolve it to orgIds.
@@ -138,19 +155,18 @@ export class CommandExecution extends AsyncCreatable {
 
   protected async init(): Promise<void> {
     const argv = this.argv;
-    const flagDefinitions = this.command.flags || {};
+    const flagDefinitions = this.command.flags ?? {};
 
-    // We can't get varargs on type Class, so we need to cast to any to parse flags properly
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const anyCmd: any = this.command;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    const commandDef = { flags: flagDefinitions, args: this.command.args, strict: !anyCmd.varargs };
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let flags: FlagInput = {};
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      flags = (await Parser.parse(argv, commandDef)).flags;
+      flags = (
+        await Parser.parse(argv, {
+          flags: flagDefinitions,
+          args: this.command.args,
+          // @ts-expect-error because varargs is not on SfCommand but is on SfdxCommand
+          strict: this.command.strict ?? !this.command.varargs,
+        })
+      ).flags;
     } catch (error) {
       debug('Error parsing flags');
     }
@@ -162,8 +178,7 @@ export class CommandExecution extends AsyncCreatable {
     this.vcs = await CommandExecution.resolveVCSInfo();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private determineSpecifiedFlags(argv: string[], flags: any, flagDefinitions: FlagInput): void {
+  private determineSpecifiedFlags(argv: string[], flags: FlagInput, flagDefinitions: FlagInput): void {
     // Help won't be in the parsed flags
     const shortHelp = argv.find((arg) => /^-h$/.test(arg));
     const fullHelp = argv.find((arg) => /^--help$/.test(arg));
@@ -176,9 +191,7 @@ export class CommandExecution extends AsyncCreatable {
       this.specifiedFlagFullNames.push('help');
       // All other flags don't matter if help is specified, so end here.
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       Object.keys(flags).forEach((flagName) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         const shortCode = flagDefinitions[flagName] && (flagDefinitions[flagName].char as string);
         // Oclif will include the flag if there is a default, but we only want to add it if the
         // user specified it, so confirm in the argv list.

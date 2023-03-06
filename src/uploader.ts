@@ -9,7 +9,7 @@ import { Org, SfError } from '@salesforce/core';
 import TelemetryReporter from '@salesforce/telemetry';
 import { asString, Dictionary } from '@salesforce/ts-types';
 import Telemetry from './telemetry';
-import { debug, version } from './debuger';
+import { debug, version } from './debugger';
 
 import { TelemetryGlobal } from './telemetryGlobal';
 

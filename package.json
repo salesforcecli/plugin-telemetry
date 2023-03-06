@@ -5,7 +5,7 @@
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/cli/issues",
   "dependencies": {
-    "@oclif/core": "^2.0.7",
+    "@oclif/core": "^2.5.0",
     "@salesforce/core": "^3.32.2",
     "@salesforce/telemetry": "^3.2.5",
     "debug": "^4.3.4",
@@ -67,7 +67,6 @@
     "commands": "./lib/commands",
     "bin": "sfdx",
     "hooks": {
-      "init": "./lib/hooks/telemetryInit.js",
       "prerun": "./lib/hooks/telemetryPrerun.js"
     },
     "devPlugins": [

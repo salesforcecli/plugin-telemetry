@@ -12,7 +12,7 @@ import { TelemetryReporter } from '@salesforce/telemetry';
 import Telemetry from '../telemetry';
 import { TelemetryGlobal } from '../telemetryGlobal';
 import { CommandExecution } from '../commandExecution';
-import { debug } from '../debuger';
+import { debug } from '../debugger';
 
 declare const global: TelemetryGlobal;
 
@@ -56,13 +56,13 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
 
     try {
       Lifecycle.getInstance().onTelemetry(async (data) => {
-        // lifecycle wants promises, telemetry is not a promise
-        // eslint-disable-next-line @typescript-eslint/await-thenable
-        await telemetry.record({
-          type: 'EVENT',
-          ...commonDataMemoized(),
-          ...data,
-        });
+        await Promise.resolve(
+          telemetry.record({
+            type: 'EVENT',
+            ...commonDataMemoized(),
+            ...data,
+          })
+        );
       });
     } catch (err) {
       // even if this throws, the rest of telemetry is not affected
@@ -98,7 +98,10 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
       if (telemetry.firstRun) {
         telemetry.record({
           eventName: 'INSTALL',
-          installType: this.config.binPath?.includes(join('sfdx', 'client')) ? 'installer' : 'npm',
+          installType:
+            this.config.binPath?.includes(join('sfdx', 'client')) || this.config.binPath?.includes(join('sf', 'client'))
+              ? 'installer'
+              : 'npm',
           platform: this.config.platform,
         });
       }

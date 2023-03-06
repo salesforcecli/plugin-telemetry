@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { Interfaces } from '@oclif/core';
+import { Interfaces, Performance } from '@oclif/core';
 import { stubInterface, stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
 import { createSandbox } from 'sinon';
@@ -17,6 +17,20 @@ describe('toJson', () => {
 
   beforeEach(() => {
     stubMethod(sandbox, CommandExecution, 'resolveVCSInfo').returns('git');
+    stubMethod(sandbox, Performance, 'highlights').get(() => ({
+      runTime: 0,
+      initTime: 0,
+      configLoadTime: 0,
+      commandLoadTime: 0,
+      corePluginsLoadTime: 0,
+      userPluginsLoadTime: 0,
+      linkedPluginsLoadTime: 0,
+      hookRunTimes: {
+        init: { total: 0 },
+        prerun: { total: 0 },
+        postrun: { total: 0 },
+      },
+    }));
     process.env = {};
   });
 
