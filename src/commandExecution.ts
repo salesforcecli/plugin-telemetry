@@ -71,6 +71,35 @@ export class CommandExecution extends AsyncCreatable {
 
   public toJson(): JsonMap {
     const pluginInfo = this.getPluginInfo();
+
+    let oclifPerf: Record<string, number> = {};
+
+    try {
+      oclifPerf = {
+        'oclif.runMs': Performance.highlights.runTime,
+        // The amount of time (ms) required for oclif to get to the point where it can start running the command.
+        'oclif.initMs': Performance.highlights.initTime,
+        // The amount of time (ms) required for oclif to load the Config.
+        'oclif.configLoadMs': Performance.highlights.configLoadTime,
+        // The amount of time (ms) required for oclif to load the command.
+        'oclif.commandLoadMs': Performance.highlights.commandLoadTime,
+        // The amount of time (ms) required for oclif to load core (i.e. bundled) plugins.
+        'oclif.corePluginsLoadMs': Performance.highlights.corePluginsLoadTime,
+        // The amount of time (ms) required for oclif to load user plugins.
+        'oclif.userPluginsLoadMs': Performance.highlights.userPluginsLoadTime,
+        // The amount of time (ms) required for oclif to load linked plugins.
+        'oclif.linkedPluginsLoadMs': Performance.highlights.linkedPluginsLoadTime,
+        // The amount of time (ms) required for oclif to run all the init hooks
+        'oclif.initHookMs': Performance.highlights.hookRunTimes.init?.total,
+        // The amount of time (ms) required for oclif to run all the prerun hooks
+        'oclif.prerunHookMs': Performance.highlights.hookRunTimes.prerun?.total,
+        // The amount of time (ms) required for oclif to run all the postrun hooks
+        'oclif.postrunHookMs': Performance.highlights.hookRunTimes.postrun?.total,
+      };
+    } catch (err) {
+      debug('Unable to get oclif performance metrics', err);
+    }
+
     return {
       eventName: 'COMMAND_EXECUTION',
       // System information
@@ -107,31 +136,8 @@ export class CommandExecution extends AsyncCreatable {
       status: isNumber(this.status) ? this.status.toString() : undefined,
       timestamp: String(Date.now()),
 
-      // The amount of time (ms) required for oclif to execute the main `run` function.
-      // This does not represent the entire execution time of the command. The `processUptime`
-      // metric is the most accurate measure of how long the command execution.
-      //
-      // Our CLIs instantiate the Config before running oclif's `run` method, meaning that
-      // this metric will be less than the actual time spent in oclif.
-      'oclif.runMs': Performance.highlights.runTime,
-      // The amount of time (ms) required for oclif to get to the point where it can start running the command.
-      'oclif.initMs': Performance.highlights.initTime,
-      // The amount of time (ms) required for oclif to load the Config.
-      'oclif.configLoadMs': Performance.highlights.configLoadTime,
-      // The amount of time (ms) required for oclif to load the command.
-      'oclif.commandLoadMs': Performance.highlights.commandLoadTime,
-      // The amount of time (ms) required for oclif to load core (i.e. bundled) plugins.
-      'oclif.corePluginsLoadMs': Performance.highlights.corePluginsLoadTime,
-      // The amount of time (ms) required for oclif to load user plugins.
-      'oclif.userPluginsLoadMs': Performance.highlights.userPluginsLoadTime,
-      // The amount of time (ms) required for oclif to load linked plugins.
-      'oclif.linkedPluginsLoadMs': Performance.highlights.linkedPluginsLoadTime,
-      // The amount of time (ms) required for oclif to run all the init hooks
-      'oclif.initHookMs': Performance.highlights.hookRunTimes.init?.total,
-      // The amount of time (ms) required for oclif to run all the prerun hooks
-      'oclif.prerunHookMs': Performance.highlights.hookRunTimes.prerun?.total,
-      // The amount of time (ms) required for oclif to run all the postrun hooks
-      'oclif.postrunHookMs': Performance.highlights.hookRunTimes.postrun?.total,
+      // Oclif Performance Metrics
+      ...oclifPerf,
 
       // Salesforce Information
       // Set the usernames so the uploader can resolve it to orgIds.
