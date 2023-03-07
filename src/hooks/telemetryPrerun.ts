@@ -6,7 +6,7 @@
  */
 
 import { join } from 'path';
-import { Hook } from '@oclif/core';
+import { Hook, Performance } from '@oclif/core';
 import { Org, SfError, Lifecycle } from '@salesforce/core';
 import { TelemetryReporter } from '@salesforce/telemetry';
 import Telemetry from '../telemetry';
@@ -117,6 +117,7 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
       'cmdError',
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       async (cmdErr: SfError, _, org?: Org): Promise<void> => {
+        await Performance.collect();
         const apiVersion = org ? org.getConnection().getApiVersion() : undefined;
         let orgType: string | undefined;
 
