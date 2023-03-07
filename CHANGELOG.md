@@ -1,3 +1,16 @@
+## [2.1.3](https://github.com/salesforcecli/plugin-telemetry/compare/2.1.2...2.1.3) (2023-03-07)
+
+
+### Bug Fixes
+
+* collect perf results on failed command executions ([#431](https://github.com/salesforcecli/plugin-telemetry/issues/431)) ([c829946](https://github.com/salesforcecli/plugin-telemetry/commit/c8299467c2c25e52ff4ec9637ec76997d47ba1bc))
+
+
+
+## [2.1.2](https://github.com/salesforcecli/plugin-telemetry/compare/2.1.1...2.1.2) (2023-03-06)
+
+
+
 ## [2.1.1](https://github.com/salesforcecli/plugin-telemetry/compare/2.1.0...2.1.1) (2023-02-04)
 
 
