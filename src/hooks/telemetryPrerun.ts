@@ -113,6 +113,7 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
     // Log command errors to the server.  The ts-ignore is necessary
     // because TS is strict about the events that can be handled on process.
 
+    // Record failed command executions from commands that extend SfdxCommand
     process.on(
       'cmdError',
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -142,6 +143,25 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
         );
       }
     );
+
+    // Record failed command executions from commands that extend SfCommand
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    process.on('sfCommandError', async (cmdErr: SfError) => {
+      await Performance.collect();
+
+      // Telemetry will scrub the exception
+      telemetry.recordError(
+        cmdErr,
+        Object.assign(commandExecution.toJson(), {
+          eventName: 'COMMAND_ERROR',
+          // These properties are sent for failed SfdxCommand executions but SfCommand
+          // doesn't store the Org on the class, so currently there's no way for us to
+          // get the api version or org type.
+          // apiVersion,
+          // orgType,
+        })
+      );
+    });
 
     const commonDataMemoized = (): CommonData => {
       if (!commonData) {
