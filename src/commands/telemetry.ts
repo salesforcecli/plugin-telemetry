@@ -5,18 +5,24 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { Command } from '@oclif/core';
+import { SfCommand } from '@salesforce/sf-plugins-core';
 import TelemetryReporter from '@salesforce/telemetry';
 import Telemetry from '../telemetry';
 import { TelemetryGlobal } from '../telemetryGlobal';
 
 declare const global: TelemetryGlobal;
 
-export default class TelemetryGet extends Command {
-  public static hidden = true;
-  public static enableJsonFlag = true;
+export type TelemetryGetResult = {
+  enabled: boolean;
+  cliId: string;
+  tmpDir: string;
+  cacheDir: string;
+};
 
-  public async run(): Promise<{ enabled: boolean; cliId: string; tmpDir: string; cacheDir: string }> {
+export default class TelemetryGet extends SfCommand<TelemetryGetResult> {
+  public static hidden = true;
+
+  public async run(): Promise<TelemetryGetResult> {
     const enabled = await TelemetryReporter.determineSfdxTelemetryEnabled();
     const cliId = global.cliTelemetry?.getCLIId();
 

@@ -119,18 +119,8 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       async (cmdErr: SfError, _, org?: Org): Promise<void> => {
         await Performance.collect();
-        const apiVersion = org ? org.getConnection().getApiVersion() : undefined;
-        let orgType: string | undefined;
 
-        try {
-          orgType = org && (await org.determineIfDevHubOrg()) ? 'devhub' : undefined;
-          if (!orgType && org) {
-            await org.checkScratchOrg();
-            orgType = 'scratch';
-          }
-        } catch (err) {
-          /* leave the org as unknown for app insights */
-        }
+        const { orgType, apiVersion } = await getOrgInfo(org);
 
         // Telemetry will scrub the exception
         telemetry.recordError(
@@ -146,22 +136,41 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
 
     // Record failed command executions from commands that extend SfCommand
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    process.on('sfCommandError', async (cmdErr: SfError) => {
-      await Performance.collect();
+    process.on(
+      'sfCommandError',
+      async (cmdErr: SfError, flags: Record<string, unknown> & { 'target-org'?: Org; 'target-dev-hub'?: Org }) => {
+        await Performance.collect();
+        const { orgType, apiVersion } = await getOrgInfo(flags['target-org'] ?? flags['target-dev-hub']);
+        // Telemetry will scrub the exception
+        telemetry.recordError(
+          cmdErr,
+          Object.assign(commandExecution.toJson(), {
+            eventName: 'COMMAND_ERROR',
+            apiVersion,
+            orgType,
+          })
+        );
+      }
+    );
 
-      // Telemetry will scrub the exception
-      telemetry.recordError(
-        cmdErr,
-        Object.assign(commandExecution.toJson(), {
-          eventName: 'COMMAND_ERROR',
-          // These properties are sent for failed SfdxCommand executions but SfCommand
-          // doesn't store the Org on the class, so currently there's no way for us to
-          // get the api version or org type.
-          // apiVersion,
-          // orgType,
-        })
-      );
-    });
+    const getOrgInfo = async (
+      org: Org | undefined
+    ): Promise<{ apiVersion: string | undefined; orgType: 'devhub' | 'scratch' | undefined }> => {
+      const apiVersion = org ? org.getConnection().getApiVersion() : undefined;
+      let orgType: 'devhub' | 'scratch' | undefined;
+
+      try {
+        orgType = org && (await org.determineIfDevHubOrg()) ? 'devhub' : undefined;
+        if (!orgType && org) {
+          await org.checkScratchOrg();
+          orgType = 'scratch';
+        }
+      } catch (err) {
+        /* leave the org as unknown for app insights */
+      }
+
+      return { apiVersion, orgType };
+    };
 
     const commonDataMemoized = (): CommonData => {
       if (!commonData) {
