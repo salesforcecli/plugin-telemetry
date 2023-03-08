@@ -135,9 +135,9 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
     );
 
     // Record failed command executions from commands that extend SfCommand
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     process.on(
       'sfCommandError',
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       async (cmdErr: SfError, flags: Record<string, unknown> & { 'target-org'?: Org; 'target-dev-hub'?: Org }) => {
         await Performance.collect();
         const { orgType, apiVersion } = await getOrgInfo(flags['target-org'] ?? flags['target-dev-hub']);
