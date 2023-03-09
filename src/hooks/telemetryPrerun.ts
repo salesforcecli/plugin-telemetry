@@ -7,7 +7,8 @@
 
 import { join } from 'path';
 import { Hook, Performance } from '@oclif/core';
-import { Org, SfError, Lifecycle } from '@salesforce/core';
+import { SfError, Lifecycle } from '@salesforce/core';
+import { JsonMap } from '@salesforce/ts-types';
 import { TelemetryReporter } from '@salesforce/telemetry';
 import Telemetry from '../telemetry';
 import { TelemetryGlobal } from '../telemetryGlobal';
@@ -16,13 +17,13 @@ import { debug } from '../debugger';
 
 declare const global: TelemetryGlobal;
 
-interface CommonData {
+type CommonData = {
   nodeVersion: string;
   plugin: string;
   // eslint-disable-next-line camelcase
   plugin_version: string;
   command: string;
-}
+};
 /**
  * A hook that runs before every command that:
  * 1. Warns the user about command usage data collection the CLI does unless they have already acknowledged the warning.
@@ -38,6 +39,8 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
   }
 
   try {
+    const errors: Array<{ event: JsonMap; error: SfError }> = [];
+
     // Instantiating telemetry shows data collection warning.
     // Adding this to the global so that telemetry events are sent even when different
     // versions of this plugin are in use by the CLI.
@@ -82,8 +85,40 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
 
     debug('Setting up process exit handler');
     process.once('exit', (status) => {
+      let oclifPerf: Record<string, number> = {};
+
+      try {
+        oclifPerf = {
+          'oclif.runMs': Performance.highlights.runTime,
+          // The amount of time (ms) required for oclif to get to the point where it can start running the command.
+          'oclif.initMs': Performance.highlights.initTime,
+          // The amount of time (ms) required for oclif to load the Config.
+          'oclif.configLoadMs': Performance.highlights.configLoadTime,
+          // The amount of time (ms) required for oclif to load the command.
+          'oclif.commandLoadMs': Performance.highlights.commandLoadTime,
+          // The amount of time (ms) required for oclif to load core (i.e. bundled) plugins.
+          'oclif.corePluginsLoadMs': Performance.highlights.corePluginsLoadTime,
+          // The amount of time (ms) required for oclif to load user plugins.
+          'oclif.userPluginsLoadMs': Performance.highlights.userPluginsLoadTime,
+          // The amount of time (ms) required for oclif to load linked plugins.
+          'oclif.linkedPluginsLoadMs': Performance.highlights.linkedPluginsLoadTime,
+          // The amount of time (ms) required for oclif to run all the init hooks
+          'oclif.initHookMs': Performance.highlights.hookRunTimes.init?.total,
+          // The amount of time (ms) required for oclif to run all the prerun hooks
+          'oclif.prerunHookMs': Performance.highlights.hookRunTimes.prerun?.total,
+          // The amount of time (ms) required for oclif to run all the postrun hooks
+          'oclif.postrunHookMs': Performance.highlights.hookRunTimes.postrun?.total,
+        };
+      } catch (err) {
+        debug('Unable to get oclif performance metrics', err);
+      }
+
+      for (const { event, error } of errors) {
+        telemetry.recordError(error, { ...event, ...oclifPerf });
+      }
+
       commandExecution.status = status;
-      telemetry.record(commandExecution.toJson());
+      telemetry.record({ ...commandExecution.toJson(), ...oclifPerf });
 
       if (process.listenerCount('exit') >= 20) {
         // On exit listeners have been a problem in the past. Make sure we don't accumulate too many...
@@ -110,67 +145,17 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
       telemetry.upload();
     });
 
-    // Log command errors to the server.  The ts-ignore is necessary
-    // because TS is strict about the events that can be handled on process.
+    // Log command errors to the server.
 
     // Record failed command executions from commands that extend SfdxCommand
-    process.on(
-      'cmdError',
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      async (cmdErr: SfError, _, org?: Org): Promise<void> => {
-        await Performance.collect();
-
-        const { orgType, apiVersion } = await getOrgInfo(org);
-
-        // Telemetry will scrub the exception
-        telemetry.recordError(
-          cmdErr,
-          Object.assign(commandExecution.toJson(), {
-            eventName: 'COMMAND_ERROR',
-            apiVersion,
-            orgType,
-          })
-        );
-      }
-    );
+    process.on('cmdError', (error: SfError) => {
+      errors.push({ error, event: { ...commandExecution.toJson(), eventName: 'COMMAND_ERROR' } });
+    });
 
     // Record failed command executions from commands that extend SfCommand
-    process.on(
-      'sfCommandError',
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      async (cmdErr: SfError, flags: Record<string, unknown> & { 'target-org'?: Org; 'target-dev-hub'?: Org }) => {
-        await Performance.collect();
-        const { orgType, apiVersion } = await getOrgInfo(flags['target-org'] ?? flags['target-dev-hub']);
-        // Telemetry will scrub the exception
-        telemetry.recordError(
-          cmdErr,
-          Object.assign(commandExecution.toJson(), {
-            eventName: 'COMMAND_ERROR',
-            apiVersion,
-            orgType,
-          })
-        );
-      }
-    );
-
-    const getOrgInfo = async (
-      org: Org | undefined
-    ): Promise<{ apiVersion: string | undefined; orgType: 'devhub' | 'scratch' | undefined }> => {
-      const apiVersion = org ? org.getConnection().getApiVersion() : undefined;
-      let orgType: 'devhub' | 'scratch' | undefined;
-
-      try {
-        orgType = org && (await org.determineIfDevHubOrg()) ? 'devhub' : undefined;
-        if (!orgType && org) {
-          await org.checkScratchOrg();
-          orgType = 'scratch';
-        }
-      } catch (err) {
-        /* leave the org as unknown for app insights */
-      }
-
-      return { apiVersion, orgType };
-    };
+    process.on('sfCommandError', (error: SfError) => {
+      errors.push({ error, event: { ...commandExecution.toJson(), eventName: 'COMMAND_ERROR' } });
+    });
 
     const commonDataMemoized = (): CommonData => {
       if (!commonData) {
