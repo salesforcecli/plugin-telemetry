@@ -6,7 +6,6 @@
  */
 
 import { Hook, Config } from '@oclif/core';
-import { SfError } from '@salesforce/core';
 import TelemetryReporter from '@salesforce/telemetry';
 import { StubbedType, stubInterface, stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
@@ -43,7 +42,7 @@ describe('telemetry prerun hook', () => {
     context = stubInterface<Hook.Context>(sandbox, { config });
 
     processExitStub = stubMethod(sandbox, process, 'once');
-    processCmdErrorStub = stubMethod(sandbox, process, 'on').withArgs('cmdError');
+    processCmdErrorStub = stubMethod(sandbox, process, 'on').withArgs('sfCommandError');
     createCommandStub = stubMethod(sandbox, CommandExecution, 'create').callsFake(async () => ({
       toJson: () => ({}),
       getPluginInfo: () => ({
@@ -53,10 +52,10 @@ describe('telemetry prerun hook', () => {
       getCommandName: () => 'foo:bar',
     }));
     stubMethod(sandbox, Telemetry, 'create').callsFake(async () => ({
-        record: recordStub,
-        recordError: recordErrorStub,
-        upload: uploadStub,
-      }));
+      record: recordStub,
+      recordError: recordErrorStub,
+      upload: uploadStub,
+    }));
   });
 
   afterEach(() => {
@@ -126,117 +125,6 @@ describe('telemetry prerun hook', () => {
       expect(uploadStub.called).to.equal(true);
 
       expect(recordErrorStub.called).to.equal(false);
-    });
-
-    it('calls recordError on cmdError with no org', async () => {
-      await hook.call(context, args);
-
-      expect(createCommandStub.called).to.equal(true);
-      expect(processExitStub.called).to.equal(true);
-      expect(processCmdErrorStub.called).to.equal(true);
-
-      await processCmdErrorStub.firstCall.args[1](new SfError('test'), {});
-
-      expect(recordErrorStub.called).to.equal(true);
-      expect(recordErrorStub.firstCall.args[1].orgType).to.equal(undefined);
-
-      expect(recordStub.called).to.equal(false);
-      expect(uploadStub.called).to.equal(false);
-    });
-
-    it('calls recordError on cmdError with devhub org', async () => {
-      await hook.call(context, args);
-
-      expect(createCommandStub.called).to.equal(true);
-      expect(processExitStub.called).to.equal(true);
-      expect(processCmdErrorStub.called).to.equal(true);
-
-      await processCmdErrorStub.firstCall.args[1](
-        new SfError('test'),
-        {},
-        {
-          determineIfDevHubOrg: async () => true,
-          getConnection: () => ({ getApiVersion: () => '47.0' }),
-        }
-      );
-
-      expect(recordErrorStub.called).to.equal(true);
-      expect(recordErrorStub.firstCall.args[1].orgType).to.equal('devhub');
-
-      expect(recordStub.called).to.equal(false);
-      expect(uploadStub.called).to.equal(false);
-    });
-
-    it('calls recordError on cmdError with scratch org', async () => {
-      await hook.call(context, args);
-
-      expect(createCommandStub.called).to.equal(true);
-      expect(processExitStub.called).to.equal(true);
-      expect(processCmdErrorStub.called).to.equal(true);
-
-      await processCmdErrorStub.firstCall.args[1](
-        new SfError('test'),
-        {},
-        {
-          determineIfDevHubOrg: async () => false,
-          checkScratchOrg: async () => {},
-          getConnection: () => ({ getApiVersion: () => '47.0' }),
-        }
-      );
-
-      expect(recordErrorStub.called).to.equal(true);
-      expect(recordErrorStub.firstCall.args[1].orgType).to.equal('scratch');
-
-      expect(recordStub.called).to.equal(false);
-      expect(uploadStub.called).to.equal(false);
-    });
-
-    it('calls recordError on cmdError with undefined org when not a scratch org', async () => {
-      await hook.call(context, args);
-
-      expect(createCommandStub.called).to.equal(true);
-      expect(processExitStub.called).to.equal(true);
-      expect(processCmdErrorStub.called).to.equal(true);
-
-      await processCmdErrorStub.firstCall.args[1](
-        new SfError('test'),
-        {},
-        {
-          determineIfDevHubOrg: async () => false,
-          checkScratchOrg: async () => Promise.reject(new Error()),
-          getConnection: () => ({ getApiVersion: () => '47.0' }),
-        }
-      );
-
-      expect(recordErrorStub.called).to.equal(true);
-      expect(recordErrorStub.firstCall.args[1].orgType).to.equal(undefined);
-
-      expect(recordStub.called).to.equal(false);
-      expect(uploadStub.called).to.equal(false);
-    });
-
-    it('calls recordError on cmdError when failing to determine org type', async () => {
-      await hook.call(context, args);
-
-      expect(createCommandStub.called).to.equal(true);
-      expect(processExitStub.called).to.equal(true);
-      expect(processCmdErrorStub.called).to.equal(true);
-
-      await processCmdErrorStub.firstCall.args[1](
-        new SfError('test'),
-        {},
-        {
-          determineIfDevHubOrg: async () => Promise.reject(new Error()),
-          checkScratchOrg: async () => {},
-          getConnection: () => ({ getApiVersion: () => '47.0' }),
-        }
-      );
-
-      expect(recordErrorStub.called).to.equal(true);
-      expect(recordErrorStub.firstCall.args[1].orgType).to.equal(undefined);
-
-      expect(recordStub.called).to.equal(false);
-      expect(uploadStub.called).to.equal(false);
     });
   });
 });

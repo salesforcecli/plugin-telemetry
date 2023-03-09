@@ -5,7 +5,6 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { Org } from '@salesforce/core';
 import TelemetryReporter from '@salesforce/telemetry';
 import { stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
@@ -22,7 +21,6 @@ describe('uploader', () => {
   let readStub: sinon.SinonStub;
   let clearStub: sinon.SinonStub;
   let getCliIdStub: sinon.SinonStub;
-  let orgCreateStub: sinon.SinonStub;
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
@@ -39,11 +37,10 @@ describe('uploader', () => {
       stop: stopStub,
     }));
     stubMethod(sandbox, Telemetry, 'create').callsFake(async () => ({
-        getCLIId: getCliIdStub,
-        read: readStub,
-        clear: clearStub,
-      }));
-    orgCreateStub = stubMethod(sandbox, Org, 'create').resolves({ getOrgId: () => '000XXX' });
+      getCLIId: getCliIdStub,
+      read: readStub,
+      clear: clearStub,
+    }));
   });
 
   afterEach(() => {
@@ -99,21 +96,5 @@ describe('uploader', () => {
     readStub.resolves([]);
     await Uploader.upload('test', 'test');
     expect(clearStub.called).to.equal(true);
-  });
-
-  it('shows default org ids', async () => {
-    readStub.resolves([
-      {
-        orgUsername: 'org',
-        devHubUsername: 'devhub',
-      },
-    ]);
-    await Uploader.upload('test', 'test');
-
-    expect(orgCreateStub.called).to.equal(true);
-    expect(orgCreateStub.firstCall.args[0].aliasOrUsername).to.equal('org');
-    expect(orgCreateStub.secondCall.args[0].aliasOrUsername).to.equal('devhub');
-    expect(sendTelemetryEventStub.firstCall.args[1].devHubId).to.equal('000XXX');
-    expect(sendTelemetryEventStub.firstCall.args[1].orgId).to.equal('000XXX');
   });
 });
