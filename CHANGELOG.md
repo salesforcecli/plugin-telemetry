@@ -1,3 +1,12 @@
+## [2.1.5](https://github.com/salesforcecli/plugin-telemetry/compare/2.1.4...2.1.5) (2023-04-22)
+
+
+### Bug Fixes
+
+* **deps:** bump @oclif/core from 2.8.0 to 2.8.2 ([f8d0888](https://github.com/salesforcecli/plugin-telemetry/commit/f8d0888ecd2536ad8bbe28ca13dcfd1555a04179))
+
+
+
 ## [2.1.4](https://github.com/salesforcecli/plugin-telemetry/compare/2.1.3...2.1.4) (2023-04-15)
 
 
