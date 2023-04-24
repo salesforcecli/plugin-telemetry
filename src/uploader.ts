@@ -5,7 +5,8 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { Org, SfError } from '@salesforce/core';
+/* eslint-disable no-await-in-loop */
+import { SfError } from '@salesforce/core';
 import TelemetryReporter from '@salesforce/telemetry';
 import { asString, Dictionary } from '@salesforce/ts-types';
 import Telemetry from './telemetry';
@@ -53,22 +54,13 @@ export class Uploader {
     try {
       const events = await this.telemetry.read();
       for (const event of events) {
+        event.telemetryVersion = version;
         const eventType = asString(event.type) || Telemetry.EVENT;
         const eventName = asString(event.eventName) || 'UNKNOWN';
         delete event.type;
         delete event.eventName;
 
         if (eventType === Telemetry.EVENT) {
-          event.telemetryVersion = version;
-          // Resolve orgs for all events.
-          // eslint-disable-next-line no-await-in-loop
-          event.orgId = await getOrgId(false, asString(event.orgUsername));
-          // eslint-disable-next-line no-await-in-loop
-          event.devHubId = await getOrgId(true, asString(event.devHubUsername));
-          // Usernames are GDPR info, so don't log.
-          delete event.orgUsername;
-          delete event.devHubUsername;
-
           reporter.sendTelemetryEvent(eventName, event);
         } else if (eventType === Telemetry.EXCEPTION) {
           const error = new Error();
@@ -100,17 +92,3 @@ export class Uploader {
     }
   }
 }
-
-const getOrgId = async (isDevHub: boolean, aliasOrUsername?: string): Promise<string | undefined> => {
-  const orgOptions: Org.Options = { isDevHub };
-
-  // If no aliasOrUsername, it will try to get the default
-  if (aliasOrUsername) {
-    orgOptions.aliasOrUsername = aliasOrUsername;
-  }
-  try {
-    return (await Org.create(orgOptions)).getOrgId();
-  } catch (error) {
-    // Don't do anything, there is no specified or default.
-  }
-};

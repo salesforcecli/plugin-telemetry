@@ -91,32 +91,4 @@ describe('toJson', () => {
     expect(actual.specifiedFlags).to.equal('help');
     expect(actual.specifiedFlagFullNames).to.equal('help');
   });
-
-  it('shows default org ids', async () => {
-    process.env.CI = 'true';
-    const config = stubInterface<Interfaces.Config>(sandbox, {});
-    const execution = await CommandExecution.create({
-      argv: [],
-      command: MyCommand,
-      config,
-    });
-    const actual = execution.toJson();
-
-    expect(actual.devHubUsername).to.equal(undefined);
-    expect(actual.orgUsername).to.equal(undefined);
-  });
-
-  it('shows org ids with flags', async () => {
-    process.env.CI = 'true';
-    const config = stubInterface<Interfaces.Config>(sandbox, {});
-    const execution = await CommandExecution.create({
-      argv: ['--targetusername=org', '--targetdevhubusername=devhub'],
-      command: MyCommand,
-      config,
-    });
-    const actual = execution.toJson();
-
-    expect(actual.devHubUsername).to.equal('devhub');
-    expect(actual.orgUsername).to.equal('org');
-  });
 });

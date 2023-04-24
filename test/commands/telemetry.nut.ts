@@ -20,7 +20,7 @@ describe('telemetry', () => {
     await testSession?.clean();
   });
 
-  it('should enable the telemetry', () => {
+  it('should show that telemetry is enabled', () => {
     const command = 'telemetry';
     const result = execCmd(command, { ensureExitCode: 0 });
     const output = getString(result, 'shellOutput.stdout').split('\n');

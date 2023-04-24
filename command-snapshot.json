@@ -2,7 +2,7 @@
   {
     "command": "telemetry",
     "plugin": "@salesforce/plugin-telemetry",
-    "flags": [],
+    "flags": ["json"],
     "alias": []
   }
 ]

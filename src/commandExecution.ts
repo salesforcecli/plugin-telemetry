@@ -7,9 +7,9 @@
 
 import { join } from 'path';
 import * as fs from 'fs';
-import { Config, Command, Parser, Performance } from '@oclif/core';
+import { Config, Command, Parser } from '@oclif/core';
 import { FlagInput } from '@oclif/core/lib/interfaces/parser';
-import { SfProject } from '@salesforce/core';
+import { Org, SfProject } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
 import { isNumber, JsonMap, Optional } from '@salesforce/ts-types';
 import { debug } from './debugger';
@@ -20,10 +20,10 @@ export type CommandExecutionOptions = {
   config: Partial<Config>;
 };
 
-interface PluginInfo {
+type PluginInfo = {
   name: Optional<string>;
   version: Optional<string>;
-}
+};
 
 export class CommandExecution extends AsyncCreatable {
   public status?: number;
@@ -34,9 +34,10 @@ export class CommandExecution extends AsyncCreatable {
   private config: Partial<Config>;
   private vcs?: string;
 
-  // These will be removed by the uploader
-  private orgUsername?: string;
-  private devHubOrgUsername?: string;
+  private orgId?: string;
+  private devhubId?: string;
+  private orgApiVersion?: string;
+  private devhubApiVersion?: string;
 
   public constructor(options: CommandExecutionOptions) {
     super(options);
@@ -71,34 +72,6 @@ export class CommandExecution extends AsyncCreatable {
 
   public toJson(): JsonMap {
     const pluginInfo = this.getPluginInfo();
-
-    let oclifPerf: Record<string, number> = {};
-
-    try {
-      oclifPerf = {
-        'oclif.runMs': Performance.highlights.runTime,
-        // The amount of time (ms) required for oclif to get to the point where it can start running the command.
-        'oclif.initMs': Performance.highlights.initTime,
-        // The amount of time (ms) required for oclif to load the Config.
-        'oclif.configLoadMs': Performance.highlights.configLoadTime,
-        // The amount of time (ms) required for oclif to load the command.
-        'oclif.commandLoadMs': Performance.highlights.commandLoadTime,
-        // The amount of time (ms) required for oclif to load core (i.e. bundled) plugins.
-        'oclif.corePluginsLoadMs': Performance.highlights.corePluginsLoadTime,
-        // The amount of time (ms) required for oclif to load user plugins.
-        'oclif.userPluginsLoadMs': Performance.highlights.userPluginsLoadTime,
-        // The amount of time (ms) required for oclif to load linked plugins.
-        'oclif.linkedPluginsLoadMs': Performance.highlights.linkedPluginsLoadTime,
-        // The amount of time (ms) required for oclif to run all the init hooks
-        'oclif.initHookMs': Performance.highlights.hookRunTimes.init?.total,
-        // The amount of time (ms) required for oclif to run all the prerun hooks
-        'oclif.prerunHookMs': Performance.highlights.hookRunTimes.prerun?.total,
-        // The amount of time (ms) required for oclif to run all the postrun hooks
-        'oclif.postrunHookMs': Performance.highlights.hookRunTimes.postrun?.total,
-      };
-    } catch (err) {
-      debug('Unable to get oclif performance metrics', err);
-    }
 
     return {
       eventName: 'COMMAND_EXECUTION',
@@ -136,15 +109,11 @@ export class CommandExecution extends AsyncCreatable {
       status: isNumber(this.status) ? this.status.toString() : undefined,
       timestamp: String(Date.now()),
 
-      // Oclif Performance Metrics
-      ...oclifPerf,
-
       // Salesforce Information
-      // Set the usernames so the uploader can resolve it to orgIds.
-      // Since resolving org ids can make API calls, we want to do that in the
-      // uploader process so we don't slow down the CLI.
-      devHubUsername: this.devHubOrgUsername,
-      orgUsername: this.orgUsername,
+      orgId: this.orgId,
+      devhubId: this.devhubId,
+      orgApiVersion: this.orgApiVersion,
+      devhubApiVersion: this.devhubApiVersion,
     };
   }
 
@@ -176,8 +145,15 @@ export class CommandExecution extends AsyncCreatable {
     } catch (error) {
       debug('Error parsing flags');
     }
-    this.orgUsername = flags['targetusername'] as unknown as string;
-    this.devHubOrgUsername = flags['targetdevhubusername'] as unknown as string;
+
+    this.orgId = flags['target-org'] ? (flags['target-org'] as unknown as Org).getOrgId() : null;
+    this.devhubId = flags['target-dev-hub'] ? (flags['target-dev-hub'] as unknown as Org).getOrgId() : null;
+    this.orgApiVersion = flags['target-org']
+      ? (flags['target-org'] as unknown as Org).getConnection().getApiVersion()
+      : null;
+    this.devhubApiVersion = flags['target-dev-hub']
+      ? (flags['target-dev-hub'] as unknown as Org).getConnection().getApiVersion()
+      : null;
 
     this.determineSpecifiedFlags(argv, flags, flagDefinitions);
 
