@@ -1,3 +1,12 @@
+# [2.2.0](https://github.com/salesforcecli/plugin-telemetry/compare/2.1.6...2.2.0) (2023-04-28)
+
+
+### Features
+
+* bump telemetry for config fix ([#449](https://github.com/salesforcecli/plugin-telemetry/issues/449)) ([1c5debd](https://github.com/salesforcecli/plugin-telemetry/commit/1c5debd08de7e28f44f3d37062f1df67f8d76f49))
+
+
+
 ## [2.1.6](https://github.com/salesforcecli/plugin-telemetry/compare/2.1.5...2.1.6) (2023-04-24)
 
 
