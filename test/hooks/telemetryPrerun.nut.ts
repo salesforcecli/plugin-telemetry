@@ -6,7 +6,7 @@
  */
 import * as fs from 'fs';
 import * as path from 'path';
-import { expect } from 'chai';
+import { assert, expect } from 'chai';
 import { execCmd, TestSession } from '@salesforce/cli-plugins-testkit';
 import { JsonMap } from '@salesforce/ts-types';
 import Telemetry from '../../src/telemetry';
@@ -60,8 +60,7 @@ describe('telemetry hook', () => {
     const events = await getTelemetryData();
 
     const cmdExecution = events.find((obj) => obj.command === 'telemetry');
-
-    expect(cmdExecution).to.not.be.undefined;
+    assert(cmdExecution);
     expect(cmdExecution.eventName).to.equal('COMMAND_EXECUTION');
     expect(cmdExecution.status).to.equal('0');
     expect(cmdExecution.cliId).to.not.be.undefined;

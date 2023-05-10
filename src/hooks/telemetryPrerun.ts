@@ -19,10 +19,10 @@ declare const global: TelemetryGlobal;
 
 type CommonData = {
   nodeVersion: string;
-  plugin: string;
+  plugin?: string;
   // eslint-disable-next-line camelcase
-  plugin_version: string;
-  command: string;
+  plugin_version?: string;
+  command?: string;
 };
 /**
  * A hook that runs before every command that:

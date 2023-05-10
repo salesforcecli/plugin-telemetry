@@ -5,9 +5,8 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 import * as fs from 'fs';
-import { expect } from 'chai';
+import { assert, expect } from 'chai';
 import { execCmd, TestSession } from '@salesforce/cli-plugins-testkit';
-import { getString } from '@salesforce/ts-types';
 
 describe('telemetry', () => {
   let testSession: TestSession;
@@ -22,10 +21,13 @@ describe('telemetry', () => {
 
   it('should show that telemetry is enabled', () => {
     const command = 'telemetry';
-    const result = execCmd(command, { ensureExitCode: 0 });
-    const output = getString(result, 'shellOutput.stdout').split('\n');
-    const tempDir = output[1].split(' ').slice(-1).pop().slice(0, -1);
-    const cacheDir = output[2].split(' ').slice(-1).pop().slice(0, -1);
+    const result = execCmd(command, { ensureExitCode: 0 }).shellOutput.stdout;
+    const output = result.split('\n');
+
+    const tempDir = output[1].split(' ').slice(-1).pop()?.slice(0, -1);
+    const cacheDir = output[2].split(' ').slice(-1).pop()?.slice(0, -1);
+    assert(tempDir);
+    assert(cacheDir);
     expect(fs.existsSync(tempDir)).to.be.true;
     expect(fs.existsSync(cacheDir)).to.be.true;
     expect(output[0]).to.include('Telemetry is enabled');

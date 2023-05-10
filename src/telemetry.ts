@@ -253,12 +253,12 @@ export default class Telemetry extends AsyncCreatable {
       dataToRecord.eventName = 'UNKNOWN';
 
       // Don't break this into a utility because the stack HAS to start from this method.
-      const stack = new Error().stack || '';
+      const stack = new Error().stack ?? '';
       const locations = stack.split(/\r?\n/).filter((line) => /\s*at /.test(line));
       if (locations.length >= 2) {
         // The first location is this file, the second is the calling file.
         // Replace HOME for GDPR.
-        dataToRecord.requestorLocation = locations[1].replace(process.env.HOME || '', '');
+        dataToRecord.requestorLocation = locations[1].replace(process.env.HOME ?? '', '');
       }
       debug('Missing event name!');
     }

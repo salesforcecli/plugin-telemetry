@@ -34,10 +34,10 @@ export class CommandExecution extends AsyncCreatable {
   private config: Partial<Config>;
   private vcs?: string;
 
-  private orgId?: string;
-  private devhubId?: string;
-  private orgApiVersion?: string;
-  private devhubApiVersion?: string;
+  private orgId?: string | null;
+  private devhubId?: string | null;
+  private orgApiVersion?: string | null;
+  private devhubApiVersion?: string | null;
 
   public constructor(options: CommandExecutionOptions) {
     super(options);
@@ -124,7 +124,7 @@ export class CommandExecution extends AsyncCreatable {
     };
   }
 
-  public getCommandName(): string {
+  public getCommandName(): string | undefined {
     return this.command.id;
   }
 

@@ -14,7 +14,7 @@ declare const global: TelemetryGlobal;
 
 export type TelemetryGetResult = {
   enabled: boolean;
-  cliId: string;
+  cliId?: string;
   tmpDir: string;
   cacheDir: string;
 };
