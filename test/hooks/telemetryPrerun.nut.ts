@@ -100,6 +100,10 @@ describe('telemetry hook', () => {
 
   it('should not populate the telemetry cache when telemetry is disabled', async () => {
     await clearTelemetryCache();
+
+    const filesBeforeRun = await getTelemetryFiles();
+    expect(filesBeforeRun).to.deep.equal([]);
+
     execCmd('telemetry --json', {
       ensureExitCode: 0,
       env: {
