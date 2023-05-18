@@ -4,14 +4,19 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
+/* eslint-disable no-console */
+
 import * as fs from 'fs';
 import * as path from 'path';
-import { assert, expect } from 'chai';
+import { assert, expect, config } from 'chai';
 import { execCmd, TestSession } from '@salesforce/cli-plugins-testkit';
 import { JsonMap } from '@salesforce/ts-types';
 import Telemetry from '../../src/telemetry';
 
+config.truncateThreshold = 0;
+
 async function getTelemetryFiles(): Promise<string[]> {
+  console.log(`reading telemetry files from ${Telemetry.tmpDir}`);
   const files = (await fs.promises.readdir(Telemetry.tmpDir)) ?? [];
   return files.map((file) => path.join(Telemetry.tmpDir, file));
 }
@@ -33,6 +38,7 @@ async function getTelemetryData(): Promise<JsonMap[]> {
 
 async function clearTelemetryCache(): Promise<void> {
   const files = await getTelemetryFiles();
+  console.log(`clearing ${files.length} telemetry files`);
   await Promise.all(files.map((file) => fs.promises.rm(file, { force: true })));
 }
 
@@ -105,6 +111,6 @@ describe('telemetry hook', () => {
     });
 
     const files = await getTelemetryFiles();
-    expect(files).to.be.empty;
+    expect(files).to.deep.equal([]);
   });
 });
