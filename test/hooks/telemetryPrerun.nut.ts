@@ -37,9 +37,7 @@ async function getTelemetryData(): Promise<JsonMap[]> {
 }
 
 async function clearTelemetryCache(): Promise<void> {
-  const files = await getTelemetryFiles();
-  console.log(`clearing ${files.length} telemetry files: ${files.join(', ')}`);
-  await Promise.all(files.map((file) => fs.promises.rm(file, { force: true })));
+  return fs.promises.rm(Telemetry.tmpDir, { recursive: true, force: true });
 }
 
 describe('telemetry hook', () => {
