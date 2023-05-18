@@ -41,12 +41,10 @@ describe('telemetry hook', () => {
 
   before('prepare session', async () => {
     testSession = await TestSession.create();
-    process.env.SFDX_TELEMETRY_PATH = path.join(testSession.dir, 'telemetryTmpPath');
   });
 
   after(async () => {
     await testSession?.clean();
-    delete process.env.SFDX_TELEMETRY_PATH;
   });
 
   it('should populate the telemetry cache with command execution data', async () => {
