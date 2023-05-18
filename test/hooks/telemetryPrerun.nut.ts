@@ -16,8 +16,8 @@ import Telemetry from '../../src/telemetry';
 config.truncateThreshold = 0;
 
 async function getTelemetryFiles(): Promise<string[]> {
-  console.log(`reading telemetry files from ${Telemetry.tmpDir}`);
   const files = (await fs.promises.readdir(Telemetry.tmpDir)) ?? [];
+  console.log(`reading ${files.length} files from ${Telemetry.tmpDir}`);
   return files.map((file) => path.join(Telemetry.tmpDir, file));
 }
 
@@ -38,7 +38,7 @@ async function getTelemetryData(): Promise<JsonMap[]> {
 
 async function clearTelemetryCache(): Promise<void> {
   const files = await getTelemetryFiles();
-  console.log(`clearing ${files.length} telemetry files`);
+  console.log(`clearing ${files.length} telemetry files: ${files.join(', ')}`);
   await Promise.all(files.map((file) => fs.promises.rm(file, { force: true })));
 }
 
@@ -61,6 +61,7 @@ describe('telemetry hook', () => {
         SFDX_TELEMETRY_DEBUG: 'true',
         SF_TELEMETRY_DEBUG: 'true',
         SF_DISABLE_TELEMETRY: 'false',
+        SFDX_DISABLE_TELEMETRY: 'false',
       },
     });
 
