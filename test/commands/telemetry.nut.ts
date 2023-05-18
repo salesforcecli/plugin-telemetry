@@ -21,7 +21,8 @@ describe('telemetry', () => {
 
   it('should show that telemetry is enabled', () => {
     const command = 'telemetry';
-    const result = execCmd(command, { ensureExitCode: 0 }).shellOutput.stdout;
+    const result = execCmd(command, { ensureExitCode: 0, env: { ...process.env, SF_DISABLE_TELEMETRY: 'false' } })
+      .shellOutput.stdout;
     const output = result.split('\n');
 
     const tempDir = output[1].split(' ').slice(-1).pop()?.slice(0, -1);

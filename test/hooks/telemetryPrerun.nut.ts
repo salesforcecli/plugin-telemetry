@@ -54,6 +54,7 @@ describe('telemetry hook', () => {
         ...process.env,
         SFDX_TELEMETRY_DEBUG: 'true',
         SF_TELEMETRY_DEBUG: 'true',
+        SF_DISABLE_TELEMETRY: 'false',
       },
     });
 
