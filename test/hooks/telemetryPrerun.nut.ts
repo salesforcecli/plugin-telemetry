@@ -8,17 +8,20 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import * as os from 'os';
 import { assert, expect, config } from 'chai';
 import { execCmd, TestSession } from '@salesforce/cli-plugins-testkit';
 import { JsonMap } from '@salesforce/ts-types';
-import Telemetry from '../../src/telemetry';
 
 config.truncateThreshold = 0;
 
+const getTmpDir = () => path.join(path.join(os.tmpdir(), 'sfdx-telemetry'));
+
 async function getTelemetryFiles(): Promise<string[]> {
-  const files = (await fs.promises.readdir(Telemetry.tmpDir)) ?? [];
-  console.log(`reading ${files.length} files from ${Telemetry.tmpDir}`);
-  return files.map((file) => path.join(Telemetry.tmpDir, file));
+  const tmp = getTmpDir();
+  const files = (await fs.promises.readdir(tmp)) ?? [];
+  console.log(`reading ${files.length} files from ${getTmpDir()}`);
+  return files.map((file) => path.join(tmp, file));
 }
 
 async function getMostRecentFile(): Promise<string> {
@@ -37,9 +40,11 @@ async function getTelemetryData(): Promise<JsonMap[]> {
 }
 
 async function clearTelemetryCache(): Promise<void> {
+  const tmp = getTmpDir();
+
   // delete the whole dir and then put it back--only telemetry init does that
-  await fs.promises.rm(Telemetry.tmpDir, { recursive: true, force: true, maxRetries: 10, retryDelay: 1000 });
-  await fs.promises.mkdir(Telemetry.tmpDir, { recursive: true });
+  await fs.promises.rm(tmp, { recursive: true, force: true, maxRetries: 10, retryDelay: 1000 });
+  await fs.promises.mkdir(tmp, { recursive: true });
 }
 
 describe('telemetry hook', () => {
