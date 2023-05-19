@@ -37,7 +37,8 @@ async function getTelemetryData(): Promise<JsonMap[]> {
 }
 
 async function clearTelemetryCache(): Promise<void> {
-  return fs.promises.rm(Telemetry.tmpDir, { recursive: true, force: true });
+  await fs.promises.rm(Telemetry.tmpDir, { recursive: true, force: true, maxRetries: 10, retryDelay: 1000 });
+  await fs.promises.mkdir(Telemetry.tmpDir, { recursive: true });
 }
 
 describe('telemetry hook', () => {
