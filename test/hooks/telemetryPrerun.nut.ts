@@ -104,8 +104,12 @@ describe('telemetry hook', () => {
     let hasFiles = true;
 
     while (hasFiles) {
-      // eslint-disable-next-line no-await-in-loop
-      await clearTelemetryCache();
+      try {
+        // eslint-disable-next-line no-await-in-loop
+        await clearTelemetryCache();
+      } catch (e) {
+        console.log(e);
+      }
       // eslint-disable-next-line no-await-in-loop
       const filesBeforeRun = await getTelemetryFiles();
       hasFiles = filesBeforeRun.length > 0;
