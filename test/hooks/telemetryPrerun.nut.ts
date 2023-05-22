@@ -103,7 +103,7 @@ describe('telemetry hook', () => {
   it('should not populate the telemetry cache when telemetry is disabled', async () => {
     let hasFiles = true;
 
-    while (!hasFiles) {
+    while (hasFiles) {
       // eslint-disable-next-line no-await-in-loop
       await clearTelemetryCache();
       // eslint-disable-next-line no-await-in-loop
