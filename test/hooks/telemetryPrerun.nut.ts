@@ -7,21 +7,12 @@
 /* eslint-disable no-console */
 
 import * as fs from 'fs';
-import * as path from 'path';
-import { sleep, Duration } from '@salesforce/kit';
 import { assert, expect, config } from 'chai';
 import { execCmd, TestSession } from '@salesforce/cli-plugins-testkit';
 import { JsonMap } from '@salesforce/ts-types';
-import Telemetry from '../../src/telemetry';
+import { getTelemetryFiles } from '../helpers/getTelemetryFiles';
 
 config.truncateThreshold = 0;
-
-async function getTelemetryFiles(): Promise<string[]> {
-  const tmp = Telemetry.tmpDir;
-  const files = (await fs.promises.readdir(tmp)) ?? [];
-  console.log(`reading ${files.length} files from ${tmp}`);
-  return files.map((file) => path.join(tmp, file));
-}
 
 async function getMostRecentFile(): Promise<string> {
   const file = (await getTelemetryFiles())
@@ -36,12 +27,6 @@ async function getTelemetryData(): Promise<JsonMap[]> {
     .filter(Boolean)
     .map((line) => JSON.parse(line) as JsonMap);
   return events;
-}
-
-async function clearTelemetryCache(): Promise<void> {
-  const files = await getTelemetryFiles();
-  console.log(`clearing ${files.length} files from ${Telemetry.tmpDir}.  They are ${files.join(', ')}`);
-  await Promise.all(files.map((file) => fs.promises.rm(file)));
 }
 
 describe('telemetry hook', () => {
@@ -98,40 +83,5 @@ describe('telemetry hook', () => {
     expect(cmdExecution['oclif.postrunHookMs']).to.not.be.undefined;
     expect(cmdExecution.specifiedFlags).to.deep.equal('json');
     expect(cmdExecution.specifiedFlagFullNames).to.deep.equal('json');
-  });
-
-  it('should not populate the telemetry cache when telemetry is disabled', async () => {
-    let hasFiles = true;
-
-    while (hasFiles) {
-      try {
-        // eslint-disable-next-line no-await-in-loop
-        await clearTelemetryCache();
-      } catch (e) {
-        console.log(e);
-      }
-      // eslint-disable-next-line no-await-in-loop
-      const filesBeforeRun = await getTelemetryFiles();
-      hasFiles = filesBeforeRun.length > 0;
-      // eslint-disable-next-line no-await-in-loop
-      await sleep(Duration.milliseconds(1000));
-    }
-
-    const filesBeforeRun = await getTelemetryFiles();
-    expect(filesBeforeRun).to.deep.equal([]);
-
-    execCmd('telemetry --json', {
-      ensureExitCode: 0,
-      env: {
-        ...process.env,
-        SFDX_TELEMETRY_DEBUG: 'true',
-        SF_TELEMETRY_DEBUG: 'true',
-        SFDX_DISABLE_TELEMETRY: 'true',
-        SF_DISABLE_TELEMETRY: 'true',
-      },
-    });
-
-    const files = await getTelemetryFiles();
-    expect(files).to.deep.equal([]);
   });
 });
