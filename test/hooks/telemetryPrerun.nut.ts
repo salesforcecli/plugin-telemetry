@@ -43,7 +43,7 @@ async function clearTelemetryCache(): Promise<void> {
   const tmp = getTmpDir();
 
   // delete the whole dir and then put it back--only telemetry init does that
-  await fs.promises.rm(tmp, { recursive: true, force: true, maxRetries: 10, retryDelay: 1000 });
+  await fs.promises.rm(tmp, { recursive: true, force: true });
   await fs.promises.mkdir(tmp, { recursive: true });
 }
 
