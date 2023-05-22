@@ -23,8 +23,9 @@ describe('telemetry hook', () => {
   });
 
   it('should not populate the telemetry cache when telemetry is disabled', async () => {
+    // we are agnostic as to what's still around in the telemetry files, we just don't want this command to add another one.
+    // we can't delete them because we don't have permission to do that in the GHA windows temp dir
     const filesBeforeRun = await getTelemetryFiles();
-    expect(filesBeforeRun).to.deep.equal([]);
 
     execCmd('telemetry --json', {
       ensureExitCode: 0,
@@ -37,7 +38,8 @@ describe('telemetry hook', () => {
       },
     });
 
-    const files = await getTelemetryFiles();
-    expect(files).to.deep.equal([]);
+    const filesAfterRun = await getTelemetryFiles();
+    // sometimes the telemetry uploader runs and removes files, so it's ok if they WERE there but now aren't, but there can't be any new ones
+    expect(filesAfterRun.every((file) => filesBeforeRun.includes(file)));
   });
 });
