@@ -8,19 +8,17 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import * as os from 'os';
 import { assert, expect, config } from 'chai';
 import { execCmd, TestSession } from '@salesforce/cli-plugins-testkit';
 import { JsonMap } from '@salesforce/ts-types';
+import Telemetry from '../../src/telemetry';
 
 config.truncateThreshold = 0;
 
-const getTmpDir = () => path.join(path.join(os.tmpdir(), 'sfdx-telemetry'));
-
 async function getTelemetryFiles(): Promise<string[]> {
-  const tmp = getTmpDir();
+  const tmp = Telemetry.tmpDir;
   const files = (await fs.promises.readdir(tmp)) ?? [];
-  console.log(`reading ${files.length} files from ${getTmpDir()}`);
+  console.log(`reading ${files.length} files from ${tmp}`);
   return files.map((file) => path.join(tmp, file));
 }
 
@@ -41,7 +39,7 @@ async function getTelemetryData(): Promise<JsonMap[]> {
 
 async function clearTelemetryCache(): Promise<void> {
   const files = await getTelemetryFiles();
-  await Promise.all(files.map((file) => fs.promises.rm(file, { force: true })));
+  await Promise.all(files.map((file) => fs.promises.rm(file)));
 }
 
 describe('telemetry hook', () => {
