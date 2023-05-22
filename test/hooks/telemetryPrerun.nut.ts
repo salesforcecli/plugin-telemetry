@@ -40,11 +40,8 @@ async function getTelemetryData(): Promise<JsonMap[]> {
 }
 
 async function clearTelemetryCache(): Promise<void> {
-  const tmp = getTmpDir();
-
-  // delete the whole dir and then put it back--only telemetry init does that
-  await fs.promises.rm(tmp, { recursive: true, force: true });
-  await fs.promises.mkdir(tmp, { recursive: true });
+  const files = await getTelemetryFiles();
+  await Promise.all(files.map((file) => fs.promises.rm(file, { force: true })));
 }
 
 describe('telemetry hook', () => {
