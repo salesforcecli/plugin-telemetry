@@ -8,6 +8,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { sleep, Duration } from '@salesforce/kit';
 import { assert, expect, config } from 'chai';
 import { execCmd, TestSession } from '@salesforce/cli-plugins-testkit';
 import { JsonMap } from '@salesforce/ts-types';
@@ -108,6 +109,8 @@ describe('telemetry hook', () => {
       // eslint-disable-next-line no-await-in-loop
       const filesBeforeRun = await getTelemetryFiles();
       hasFiles = filesBeforeRun.length > 0;
+      // eslint-disable-next-line no-await-in-loop
+      await sleep(Duration.milliseconds(1000));
     }
 
     const filesBeforeRun = await getTelemetryFiles();
