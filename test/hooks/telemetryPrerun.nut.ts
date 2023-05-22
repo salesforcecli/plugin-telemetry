@@ -39,6 +39,7 @@ async function getTelemetryData(): Promise<JsonMap[]> {
 
 async function clearTelemetryCache(): Promise<void> {
   const files = await getTelemetryFiles();
+  console.log(`clearing ${files.length} files from ${Telemetry.tmpDir}.  They are ${files.join(', ')}`);
   await Promise.all(files.map((file) => fs.promises.rm(file)));
 }
 
@@ -99,7 +100,15 @@ describe('telemetry hook', () => {
   });
 
   it('should not populate the telemetry cache when telemetry is disabled', async () => {
-    await clearTelemetryCache();
+    let hasFiles = true;
+
+    while (!hasFiles) {
+      // eslint-disable-next-line no-await-in-loop
+      await clearTelemetryCache();
+      // eslint-disable-next-line no-await-in-loop
+      const filesBeforeRun = await getTelemetryFiles();
+      hasFiles = filesBeforeRun.length > 0;
+    }
 
     const filesBeforeRun = await getTelemetryFiles();
     expect(filesBeforeRun).to.deep.equal([]);
