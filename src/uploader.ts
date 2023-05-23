@@ -55,8 +55,8 @@ export class Uploader {
       const events = await this.telemetry.read();
       for (const event of events) {
         event.telemetryVersion = version;
-        const eventType = asString(event.type) || Telemetry.EVENT;
-        const eventName = asString(event.eventName) || 'UNKNOWN';
+        const eventType = asString(event.type) ?? Telemetry.EVENT;
+        const eventName = asString(event.eventName) ?? 'UNKNOWN';
         delete event.type;
         delete event.eventName;
 
@@ -69,9 +69,9 @@ export class Uploader {
           delete event.error;
 
           Object.assign(error, errorObject);
-          error.name = asString(errorObject.name) || 'Unknown';
-          error.message = asString(errorObject.message) || 'Unknown';
-          error.stack = asString(errorObject.stack) || 'Unknown';
+          error.name = asString(errorObject.name) ?? 'Unknown';
+          error.message = asString(errorObject.message) ?? 'Unknown';
+          error.stack = asString(errorObject.stack) ?? 'Unknown';
           reporter.sendTelemetryException(error, event);
         }
       }

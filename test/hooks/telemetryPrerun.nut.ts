@@ -4,17 +4,15 @@
  * Licensed under the BSD 3-Clause license.
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
+/* eslint-disable no-console */
+
 import * as fs from 'fs';
-import * as path from 'path';
-import { expect } from 'chai';
+import { assert, expect, config } from 'chai';
 import { execCmd, TestSession } from '@salesforce/cli-plugins-testkit';
 import { JsonMap } from '@salesforce/ts-types';
-import Telemetry from '../../src/telemetry';
+import { getTelemetryFiles } from '../helpers/getTelemetryFiles';
 
-async function getTelemetryFiles(): Promise<string[]> {
-  const files = (await fs.promises.readdir(Telemetry.tmpDir)) ?? [];
-  return files.map((file) => path.join(Telemetry.tmpDir, file));
-}
+config.truncateThreshold = 0;
 
 async function getMostRecentFile(): Promise<string> {
   const file = (await getTelemetryFiles())
@@ -29,11 +27,6 @@ async function getTelemetryData(): Promise<JsonMap[]> {
     .filter(Boolean)
     .map((line) => JSON.parse(line) as JsonMap);
   return events;
-}
-
-async function clearTelemetryCache(): Promise<void> {
-  const files = await getTelemetryFiles();
-  await Promise.all(files.map((file) => fs.promises.rm(file, { force: true })));
 }
 
 describe('telemetry hook', () => {
@@ -54,14 +47,15 @@ describe('telemetry hook', () => {
         ...process.env,
         SFDX_TELEMETRY_DEBUG: 'true',
         SF_TELEMETRY_DEBUG: 'true',
+        SF_DISABLE_TELEMETRY: 'false',
+        SFDX_DISABLE_TELEMETRY: 'false',
       },
     });
 
     const events = await getTelemetryData();
 
     const cmdExecution = events.find((obj) => obj.command === 'telemetry');
-
-    expect(cmdExecution).to.not.be.undefined;
+    assert(cmdExecution);
     expect(cmdExecution.eventName).to.equal('COMMAND_EXECUTION');
     expect(cmdExecution.status).to.equal('0');
     expect(cmdExecution.cliId).to.not.be.undefined;
@@ -89,22 +83,5 @@ describe('telemetry hook', () => {
     expect(cmdExecution['oclif.postrunHookMs']).to.not.be.undefined;
     expect(cmdExecution.specifiedFlags).to.deep.equal('json');
     expect(cmdExecution.specifiedFlagFullNames).to.deep.equal('json');
-  });
-
-  it('should not populate the telemetry cache when telemetry is disabled', async () => {
-    await clearTelemetryCache();
-    execCmd('telemetry --json', {
-      ensureExitCode: 0,
-      env: {
-        ...process.env,
-        SFDX_TELEMETRY_DEBUG: 'true',
-        SF_TELEMETRY_DEBUG: 'true',
-        SFDX_DISABLE_TELEMETRY: 'true',
-        SF_DISABLE_TELEMETRY: 'true',
-      },
-    });
-
-    const files = await getTelemetryFiles();
-    expect(files).to.be.empty;
   });
 });

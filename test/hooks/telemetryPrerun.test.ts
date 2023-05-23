@@ -6,6 +6,7 @@
  */
 
 import { Hook, Config } from '@oclif/core';
+
 import TelemetryReporter from '@salesforce/telemetry';
 import { StubbedType, stubInterface, stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
@@ -15,9 +16,7 @@ import { CommandExecution } from '../../src/commandExecution';
 import hook from '../../src/hooks/telemetryPrerun';
 import { MyCommand } from '../helpers/myCommand';
 
-// The hook doesn't like the stubInterface type, so just set it to any.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const args: any = { argv: [], Command: MyCommand };
+const args = { argv: [], Command: MyCommand, config: {} as Config };
 
 describe('telemetry prerun hook', () => {
   let sandbox: sinon.SinonSandbox;
