@@ -1,3 +1,12 @@
+## [2.2.2](https://github.com/salesforcecli/plugin-telemetry/compare/2.2.1...2.2.2) (2023-07-08)
+
+
+### Bug Fixes
+
+* **deps:** bump tough-cookie from 4.0.0 to 4.1.3 ([1fdc7d6](https://github.com/salesforcecli/plugin-telemetry/commit/1fdc7d60ef1c789a6dae3f9686b70f87aa70d0c6))
+
+
+
 ## [2.2.1](https://github.com/salesforcecli/plugin-telemetry/compare/2.2.0...2.2.1) (2023-06-10)
 
 
