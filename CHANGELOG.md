@@ -1,3 +1,12 @@
+## [2.2.3](https://github.com/salesforcecli/plugin-telemetry/compare/2.2.2...2.2.3) (2023-07-11)
+
+
+### Bug Fixes
+
+* **deps:** bump semver from 5.7.1 to 5.7.2 ([b510c02](https://github.com/salesforcecli/plugin-telemetry/commit/b510c02f3bacfb7be9477c16177088d1b6035d09))
+
+
+
 ## [2.2.2](https://github.com/salesforcecli/plugin-telemetry/compare/2.2.1...2.2.2) (2023-07-08)
 
 
