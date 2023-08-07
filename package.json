@@ -8,12 +8,12 @@
     "@oclif/core": "^2.11.7",
     "@salesforce/core": "^5.2.0",
     "@salesforce/sf-plugins-core": "^3.1.14",
-    "@salesforce/telemetry": "^3.2.29",
+    "@salesforce/telemetry": "^4.0.16",
     "debug": "^4.3.4",
     "tslib": "^2"
   },
   "devDependencies": {
-    "@oclif/plugin-command-snapshot": "^4.0.2",
+    "@oclif/plugin-command-snapshot": "^4.0.11",
     "@oclif/plugin-help": "^5.2.9",
     "@salesforce/cli-plugins-testkit": "^4.2.9",
     "@salesforce/dev-config": "^4.0.1",
