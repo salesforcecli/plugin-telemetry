@@ -29,8 +29,10 @@ export class CommandExecution extends AsyncCreatable {
   public status?: number;
   private specifiedFlags: string[] = [];
   private specifiedFlagFullNames: string[] = [];
+  private deprecatedFlagsUsed: string[] = [];
+  private deprecatedCommandUsed?: string | null;
   private command: Partial<Command.Class>;
-  private argv: string[];
+  private readonly argv: string[];
   private config: Partial<Config>;
   private vcs?: string;
 
@@ -97,6 +99,8 @@ export class CommandExecution extends AsyncCreatable {
       specifiedFlags: this.specifiedFlags.join(' '),
       // Flags the user specified, only the full names
       specifiedFlagFullNames: this.specifiedFlagFullNames.join(' '),
+      deprecatedFlagsUsed: this.deprecatedFlagsUsed.join(' '),
+      deprecatedCommandUsed: this.deprecatedCommandUsed,
       sfdxEnv: process.env.SFDX_ENV,
       s3HostOverride: process.env.SFDX_S3_HOST,
       npmRegistryOverride: process.env.SFDX_NPM_REGISTRY,
@@ -132,6 +136,23 @@ export class CommandExecution extends AsyncCreatable {
     const argv = this.argv;
     const flagDefinitions = this.command.flags ?? {};
 
+    // slice off node or bin path, and the executable path, and then remove anything that's been processed as a flag
+    const typedCommand = process.argv
+      .splice(2)
+      .filter((arg) => !argv.includes(arg))
+      .join(':');
+
+    if (
+      this.command.deprecationOptions ||
+      (typedCommand !== this.command.id &&
+        this.command.aliases?.includes(typedCommand) &&
+        this.command.deprecateAliases)
+    ) {
+      // check the deprecationOptions for cases where we've used OCLIF to point to a replacement
+      // check the aliases and deprecated aliases for where we're deprecating in place
+      this.deprecatedCommandUsed = typedCommand;
+    }
+
     let flags: FlagInput = {};
     try {
       flags = (
@@ -154,7 +175,6 @@ export class CommandExecution extends AsyncCreatable {
     this.devhubApiVersion = flags['target-dev-hub']
       ? (flags['target-dev-hub'] as unknown as Org).getConnection().getApiVersion()
       : null;
-
     this.determineSpecifiedFlags(argv, flags, flagDefinitions);
 
     this.vcs = await CommandExecution.resolveVCSInfo();
@@ -183,6 +203,10 @@ export class CommandExecution extends AsyncCreatable {
         } else if (argv.find((arg) => new RegExp(`^--${flagName}(=.*)?$`).test(arg))) {
           this.specifiedFlags.push(flagName);
           this.specifiedFlagFullNames.push(flagName);
+        } else if (flagDefinitions[flagName].deprecateAliases) {
+          // we can't find the flag as the key (long name) or short char, so it must be a deprecated flag
+          const argvFlags = this.argv.map((a) => a.match(/-(\w+)/g)).map((a) => a?.[0].replace('-', ''));
+          this.deprecatedFlagsUsed.push(flagDefinitions[flagName].aliases?.find((a) => argvFlags.includes(a)) ?? '');
         }
       });
     }

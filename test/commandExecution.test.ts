@@ -64,6 +64,102 @@ describe('toJson', () => {
     expect(actual.specifiedFlagFullNames).to.equal('flag test');
   });
 
+  it('shows deprecated chars as chars', async () => {
+    process.env.CI = 'true';
+    const config = stubInterface<Interfaces.Config>(sandbox, {});
+    const execution = await CommandExecution.create({
+      // -i is deprecated
+      argv: ['--flag', '-i="abc"'],
+      command: MyCommand,
+      config,
+    });
+    const actual = execution.toJson();
+
+    expect(actual.deprecatedFlagsUsed).to.equal('i');
+    expect(actual.specifiedFlags).to.equal('flag');
+    expect(actual.specifiedFlagFullNames).to.equal('flag');
+  });
+
+  it('shows multiple deprecated chars as chars', async () => {
+    process.env.CI = 'true';
+    const config = stubInterface<Interfaces.Config>(sandbox, {});
+    const execution = await CommandExecution.create({
+      // -i and -o are deprecated
+      argv: ['--flag', '-i="abc"', '-o="why"'],
+      command: MyCommand,
+      config,
+    });
+    const actual = execution.toJson();
+
+    expect(actual.deprecatedFlagsUsed).to.equal('i o');
+    expect(actual.specifiedFlags).to.equal('flag');
+    expect(actual.specifiedFlagFullNames).to.equal('flag');
+  });
+
+  it('shows deprecated flags as flags', async () => {
+    process.env.CI = 'true';
+    const config = stubInterface<Interfaces.Config>(sandbox, {});
+    const execution = await CommandExecution.create({
+      // --invalid is deprecated
+      argv: ['--flag', '--invalid="abc"'],
+      command: MyCommand,
+      config,
+    });
+    const actual = execution.toJson();
+
+    expect(actual.deprecatedFlagsUsed).to.equal('invalid');
+    expect(actual.specifiedFlags).to.equal('flag');
+    expect(actual.specifiedFlagFullNames).to.equal('flag');
+  });
+
+  it('shows multiple deprecated flags as flags', async () => {
+    process.env.CI = 'true';
+    const config = stubInterface<Interfaces.Config>(sandbox, {});
+    const execution = await CommandExecution.create({
+      // --invalid and --oldflag are deprecated
+      argv: ['--flag', '--invalid="abc"', '--oldflag="why"'],
+      command: MyCommand,
+      config,
+    });
+    const actual = execution.toJson();
+
+    expect(actual.deprecatedFlagsUsed).to.equal('invalid oldflag');
+    expect(actual.specifiedFlags).to.equal('flag');
+    expect(actual.specifiedFlagFullNames).to.equal('flag');
+  });
+
+  it('shows multiple deprecated flags and chars as flags and chars', async () => {
+    process.env.CI = 'true';
+    const config = stubInterface<Interfaces.Config>(sandbox, {});
+    const execution = await CommandExecution.create({
+      // --invalid and -o are deprecated
+      argv: ['--flag', '--invalid="abc"', '-o="why"'],
+      command: MyCommand,
+      config,
+    });
+    const actual = execution.toJson();
+
+    expect(actual.deprecatedFlagsUsed).to.equal('invalid o');
+    expect(actual.specifiedFlags).to.equal('flag');
+    expect(actual.specifiedFlagFullNames).to.equal('flag');
+  });
+
+  it('shows captures deprecated alias usage', async () => {
+    process.env.CI = 'true';
+    // call with deprecated alias
+    process.argv = ['path/to/my/node', 'path/to/sf', 'deprecated:alias', '--oldflag="why"'];
+    const config = stubInterface<Interfaces.Config>(sandbox, {});
+    const execution = await CommandExecution.create({
+      argv: ['--oldflag="why"'],
+      command: MyCommand,
+      config,
+    });
+    const actual = execution.toJson();
+
+    expect(actual.deprecatedFlagsUsed).to.equal('oldflag');
+    expect(actual.deprecatedCommandUsed).to.equal('deprecated:alias');
+  });
+
   it('shows short help flag', async () => {
     process.env.CI = 'true';
     const config = stubInterface<Interfaces.Config>(sandbox, {});
