@@ -1,3 +1,12 @@
+## [2.2.4](https://github.com/salesforcecli/plugin-telemetry/compare/2.2.3...2.2.4) (2023-08-07)
+
+
+### Bug Fixes
+
+* **deps:** core 5 ([f1a2fb0](https://github.com/salesforcecli/plugin-telemetry/commit/f1a2fb0cc1a8a6e0574ed769f49a12eb693561bc))
+
+
+
 ## [2.2.3](https://github.com/salesforcecli/plugin-telemetry/compare/2.2.2...2.2.3) (2023-07-11)
 
 
