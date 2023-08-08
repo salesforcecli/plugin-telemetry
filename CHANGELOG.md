@@ -1,3 +1,12 @@
+## [2.2.5](https://github.com/salesforcecli/plugin-telemetry/compare/2.2.4...2.2.5) (2023-08-07)
+
+
+### Bug Fixes
+
+* bump telemetry and core5 ([#494](https://github.com/salesforcecli/plugin-telemetry/issues/494)) ([572699c](https://github.com/salesforcecli/plugin-telemetry/commit/572699c8c5c615ddd630a1da2f127dcd718359d4))
+
+
+
 ## [2.2.4](https://github.com/salesforcecli/plugin-telemetry/compare/2.2.3...2.2.4) (2023-08-07)
 
 
