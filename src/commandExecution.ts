@@ -205,7 +205,7 @@ export class CommandExecution extends AsyncCreatable {
           this.specifiedFlagFullNames.push(flagName);
         } else if (flagDefinitions[flagName].deprecateAliases) {
           // we can't find the flag as the key (long name) or short char, so it must be a deprecated flag
-          const argvFlags = this.argv.map((a) => a.match(/-(\w+)/g)).map((a) => a?.[0].replace('-', ''));
+          const argvFlags = this.argv.map((a) => a.match(/-([a-zA-Z]+)/g)).map((a) => a?.[0].replace('-', ''));
           this.deprecatedFlagsUsed.push(flagDefinitions[flagName].aliases?.find((a) => argvFlags.includes(a)) ?? '');
         }
       });
