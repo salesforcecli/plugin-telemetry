@@ -76,8 +76,8 @@ describe('toJson', () => {
     const actual = execution.toJson();
 
     expect(actual.deprecatedFlagsUsed).to.equal('i');
-    expect(actual.specifiedFlags).to.equal('flag');
-    expect(actual.specifiedFlagFullNames).to.equal('flag');
+    expect(actual.specifiedFlags).to.equal('flag valid');
+    expect(actual.specifiedFlagFullNames).to.equal('flag valid');
   });
 
   it('shows multiple deprecated chars as chars', async () => {
@@ -92,8 +92,8 @@ describe('toJson', () => {
     const actual = execution.toJson();
 
     expect(actual.deprecatedFlagsUsed).to.equal('i o');
-    expect(actual.specifiedFlags).to.equal('flag');
-    expect(actual.specifiedFlagFullNames).to.equal('flag');
+    expect(actual.specifiedFlags).to.equal('flag valid newflag');
+    expect(actual.specifiedFlagFullNames).to.equal('flag valid newflag');
   });
 
   it('shows deprecated flags as flags', async () => {
@@ -108,8 +108,8 @@ describe('toJson', () => {
     const actual = execution.toJson();
 
     expect(actual.deprecatedFlagsUsed).to.equal('invalid');
-    expect(actual.specifiedFlags).to.equal('flag');
-    expect(actual.specifiedFlagFullNames).to.equal('flag');
+    expect(actual.specifiedFlags).to.equal('flag valid');
+    expect(actual.specifiedFlagFullNames).to.equal('flag valid');
   });
 
   it('shows multiple deprecated flags as flags', async () => {
@@ -124,8 +124,8 @@ describe('toJson', () => {
     const actual = execution.toJson();
 
     expect(actual.deprecatedFlagsUsed).to.equal('invalid oldflag');
-    expect(actual.specifiedFlags).to.equal('flag');
-    expect(actual.specifiedFlagFullNames).to.equal('flag');
+    expect(actual.specifiedFlags).to.equal('flag valid newflag');
+    expect(actual.specifiedFlagFullNames).to.equal('flag valid newflag');
   });
 
   it('shows multiple deprecated flags and chars as flags and chars', async () => {
@@ -140,8 +140,8 @@ describe('toJson', () => {
     const actual = execution.toJson();
 
     expect(actual.deprecatedFlagsUsed).to.equal('invalid o');
-    expect(actual.specifiedFlags).to.equal('flag');
-    expect(actual.specifiedFlagFullNames).to.equal('flag');
+    expect(actual.specifiedFlags).to.equal('flag valid newflag');
+    expect(actual.specifiedFlagFullNames).to.equal('flag valid newflag');
   });
 
   it('shows captures deprecated alias usage', async () => {
@@ -155,7 +155,8 @@ describe('toJson', () => {
       config,
     });
     const actual = execution.toJson();
-
+    expect(actual.specifiedFlags).to.equal('newflag');
+    expect(actual.specifiedFlagFullNames).to.equal('newflag');
     expect(actual.deprecatedFlagsUsed).to.equal('oldflag');
     expect(actual.deprecatedCommandUsed).to.equal('deprecated:alias');
   });
