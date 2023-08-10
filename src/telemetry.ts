@@ -63,7 +63,7 @@ export default class Telemetry extends AsyncCreatable {
   /**
    * The temporary directory where telemetry log files are stored.
    */
-  public static tmpDir = env.getString('SFDX_TELEMETRY_PATH', join(tmpdir(), 'sfdx-telemetry'));
+  public static tmpDir = env.getString('SF_TELEMETRY_PATH', join(tmpdir(), 'sf-telemetry'));
 
   private static cacheDir: string;
   private static executable = 'sfdx';
@@ -111,7 +111,7 @@ export default class Telemetry extends AsyncCreatable {
     } catch (error) {
       const err = error as SfError;
       if (err.code === 'ENOENT') {
-        if (!env.getBoolean('SFDX_TELEMETRY_DISABLE_ACKNOWLEDGEMENT', false)) {
+        if (!env.getBoolean('SF_TELEMETRY_DISABLE_ACKNOWLEDGEMENT', false)) {
           // eslint-disable-next-line no-console
           console.warn(
             `You acknowledge and agree that the CLI tool may collect usage information, user environment, and crash reports for the purposes of providing services or functions that are relevant to use of the CLI tool and product improvements.${EOL}`
@@ -316,7 +316,7 @@ export default class Telemetry extends AsyncCreatable {
     // Completely disconnect from this process so it doesn't wait for telemetry to upload
     const processPath = join(__dirname, '..', 'processes', 'upload');
 
-    const telemetryDebug = env.getBoolean('SFDX_TELEMETRY_DEBUG', false);
+    const telemetryDebug = env.getBoolean('SF_TELEMETRY_DEBUG', false);
     const nodePath = process.argv[0];
 
     // Don't spawn if we are in telemetry debug. This allows us to run the process manually with --inspect-brk.

@@ -86,7 +86,7 @@ export class Uploader {
         const error = err as SfError;
         debug(`Error stopping telemetry reporter: ${error.message}`);
       } finally {
-        // We alway want to clear the file.
+        // We always want to clear the file.
         await this.telemetry.clear();
       }
     }

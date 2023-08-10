@@ -10,10 +10,13 @@ import { Flags, SfCommand } from '@salesforce/sf-plugins-core';
 export class MyCommand extends SfCommand<void> {
   public static id = 'test';
   public static hidden = false;
-  public static aliases = [];
+  public static aliases = ['deprecated:alias'];
+  public static deprecateAliases = true;
   public static flags = {
     flag: Flags.boolean(),
     test: Flags.string({ char: 't' }),
+    valid: Flags.string({ aliases: ['invalid', 'i'], char: 'v', deprecateAliases: true }),
+    newflag: Flags.string({ aliases: ['oldflag', 'o'], char: 'n', deprecateAliases: true }),
   };
   public static args = {};
 
