@@ -1,3 +1,12 @@
+## [2.2.6](https://github.com/salesforcecli/plugin-telemetry/compare/2.2.5...2.2.6) (2023-08-10)
+
+
+### Bug Fixes
+
+* identify deprecated commands and flags used ([#493](https://github.com/salesforcecli/plugin-telemetry/issues/493)) ([b413571](https://github.com/salesforcecli/plugin-telemetry/commit/b4135716237a09be2994a9c31f6f2f86725647a3))
+
+
+
 ## [2.2.5](https://github.com/salesforcecli/plugin-telemetry/compare/2.2.4...2.2.5) (2023-08-07)
 
 
