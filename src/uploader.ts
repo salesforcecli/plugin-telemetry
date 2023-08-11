@@ -7,7 +7,6 @@
 
 /* eslint-disable no-await-in-loop */
 import { SfError } from '@salesforce/core';
-import TelemetryReporter from '@salesforce/telemetry';
 import { asString, Dictionary } from '@salesforce/ts-types';
 import Telemetry from './telemetry';
 import { debug, version } from './debugger';
@@ -35,7 +34,8 @@ export class Uploader {
    * Reads the telemetry events from file and sends them to the telemetry service.
    */
   private async sendToTelemetry(): Promise<void> {
-    let reporter: TelemetryReporter;
+    const { TelemetryReporter } = await import('@salesforce/telemetry');
+    let reporter: InstanceType<typeof TelemetryReporter>;
     try {
       reporter = await TelemetryReporter.create({
         project: PROJECT,
