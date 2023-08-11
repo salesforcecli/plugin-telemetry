@@ -7,7 +7,7 @@
 
 import { Hook, Config } from '@oclif/core';
 
-import TelemetryReporter from '@salesforce/telemetry';
+import * as enabledCheckStubs from '@salesforce/telemetry/enabledCheck';
 import { StubbedType, stubInterface, stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
 import * as sinon from 'sinon';
@@ -33,7 +33,7 @@ describe('telemetry prerun hook', () => {
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
-    determineSfdxTelemetryEnabledStub = stubMethod(sandbox, TelemetryReporter, 'determineSfdxTelemetryEnabled');
+    determineSfdxTelemetryEnabledStub = stubMethod(sandbox, enabledCheckStubs, 'isEnabled');
     recordStub = sandbox.stub();
     recordErrorStub = sandbox.stub();
     uploadStub = sandbox.stub();
