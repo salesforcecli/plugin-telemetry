@@ -5,11 +5,9 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { join } from 'path';
-import * as fs from 'fs';
 import { Config, Command, Parser } from '@oclif/core';
 import { FlagInput } from '@oclif/core/lib/interfaces/parser';
-import { Org, SfProject } from '@salesforce/core';
+import { Org } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
 import { isNumber, JsonMap, Optional } from '@salesforce/ts-types';
 import { debug } from './debugger';
@@ -34,7 +32,6 @@ export class CommandExecution extends AsyncCreatable {
   private command: Partial<Command.Class>;
   private readonly argv: string[];
   private config: Partial<Config>;
-  private vcs?: string;
 
   private orgId?: string | null;
   private devhubId?: string | null;
@@ -50,26 +47,10 @@ export class CommandExecution extends AsyncCreatable {
   }
 
   /**
-   * Determines whether the SFDX project is using GIT for version control or some other VCS.
-   * Returns a token indicating the VCS for usage stats, or an empty string if the command
-   * was executed outside of an SFDX project.
+   * @deprecated.  Will always return en empty string.
    */
   public static async resolveVCSInfo(): Promise<string> {
-    let possibleVcsPath: string;
-    try {
-      possibleVcsPath = await SfProject.resolveProjectPath();
-    } catch (err) {
-      debug('Not in a sfdx project, using current working directory');
-      possibleVcsPath = process.cwd();
-    }
-
-    const gitPath = join(possibleVcsPath, '.git');
-    try {
-      await fs.promises.access(gitPath, fs.constants.R_OK);
-      return 'git';
-    } catch (err) {
-      return 'other';
-    }
+    return Promise.resolve('');
   }
 
   public toJson(): JsonMap {
@@ -81,7 +62,6 @@ export class CommandExecution extends AsyncCreatable {
       platform: this.config.platform,
       shell: this.config.shell,
       arch: this.config.arch,
-      vcs: this.vcs,
       nodeEnv: process.env.NODE_ENV,
       nodeVersion: process.version,
       processUptime: process.uptime() * 1000,
@@ -176,8 +156,6 @@ export class CommandExecution extends AsyncCreatable {
       ? (flags['target-dev-hub'] as unknown as Org).getConnection().getApiVersion()
       : null;
     this.determineSpecifiedFlags(argv, flags, flagDefinitions);
-
-    this.vcs = await CommandExecution.resolveVCSInfo();
   }
 
   private determineSpecifiedFlags(argv: string[], flags: FlagInput, flagDefinitions: FlagInput): void {
