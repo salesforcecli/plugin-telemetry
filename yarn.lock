@@ -1147,10 +1147,10 @@
     chalk "^4"
     inquirer "^8.2.5"
 
-"@salesforce/telemetry@^4.0.16":
-  version "4.0.16"
-  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-4.0.16.tgz#7c2168ff1f9838c87be044e7419f260f30b90aad"
-  integrity sha512-W1cBQdS7Mu78IyyVzLWucdoqLHDy5ZJ49Q6Oo1LLHi2gYD3o5zvDY/Sj6euy4Skms3OrFfOuusxBxu5NG6H3NQ==
+"@salesforce/telemetry@^4.0.17-qa.0":
+  version "4.0.17-qa.0"
+  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-4.0.17-qa.0.tgz#76ddd2bcd0857e8d67dc545a49da8a13a27413b2"
+  integrity sha512-czixTrbXf8VNdgyBRJixognZV7toSYoqUhe6idlIShmy73BMMtbcFtt58NNUooKDc3sIzaI0h10oTV+5rMVAxg==
   dependencies:
     "@salesforce/core" "^5.2.0"
     "@salesforce/ts-types" "^2.0.6"
