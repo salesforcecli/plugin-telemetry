@@ -1,3 +1,12 @@
+# [2.3.0](https://github.com/salesforcecli/plugin-telemetry/compare/2.2.6...2.3.0) (2023-08-14)
+
+
+### Features
+
+* **perf:** remove vcs check, defer-app-insights ([6772427](https://github.com/salesforcecli/plugin-telemetry/commit/6772427820e419314b41fccfb0f6d1182df8b3f4)), closes [#497](https://github.com/salesforcecli/plugin-telemetry/issues/497)
+
+
+
 ## [2.2.6](https://github.com/salesforcecli/plugin-telemetry/compare/2.2.5...2.2.6) (2023-08-10)
 
 
