@@ -9,7 +9,7 @@ import { join } from 'path';
 import { Hook, Performance } from '@oclif/core';
 import { SfError, Lifecycle } from '@salesforce/core';
 import { JsonMap } from '@salesforce/ts-types';
-import { TelemetryReporter } from '@salesforce/telemetry';
+import { isEnabled } from '@salesforce/telemetry/enabledCheck';
 import Telemetry from '../telemetry';
 import { TelemetryGlobal } from '../telemetryGlobal';
 import { CommandExecution } from '../commandExecution';
@@ -31,9 +31,8 @@ type CommonData = {
  * 3. Logs command usage data to the server right after the process ends by spawning a detached process.
  */
 const hook: Hook.Prerun = async function (options): Promise<void> {
-  const telemetryEnabled = await TelemetryReporter.determineSfdxTelemetryEnabled();
   // Don't even bother logging if telemetry is disabled
-  if (!telemetryEnabled) {
+  if (!(await isEnabled())) {
     debug('Telemetry disabled. Doing nothing.');
     return;
   }

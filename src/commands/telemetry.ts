@@ -6,7 +6,7 @@
  */
 
 import { SfCommand } from '@salesforce/sf-plugins-core';
-import TelemetryReporter from '@salesforce/telemetry';
+import { isEnabled } from '@salesforce/telemetry/enabledCheck';
 import Telemetry from '../telemetry';
 import { TelemetryGlobal } from '../telemetryGlobal';
 
@@ -23,7 +23,7 @@ export default class TelemetryGet extends SfCommand<TelemetryGetResult> {
   public static hidden = true;
 
   public async run(): Promise<TelemetryGetResult> {
-    const enabled = await TelemetryReporter.determineSfdxTelemetryEnabled();
+    const enabled = await isEnabled();
     const cliId = global.cliTelemetry?.getCLIId();
 
     this.log(`Telemetry is ${enabled ? 'enabled' : 'disabled'}.`);
