@@ -16,7 +16,6 @@ describe('toJson', () => {
   const sandbox = createSandbox();
 
   beforeEach(() => {
-    stubMethod(sandbox, CommandExecution, 'resolveVCSInfo').returns('git');
     stubMethod(sandbox, Performance, 'highlights').get(() => ({
       runTime: 0,
       initTime: 0,

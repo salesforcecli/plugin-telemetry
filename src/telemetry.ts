@@ -10,7 +10,7 @@ import { randomBytes } from 'crypto';
 import * as fs from 'fs';
 import { EOL, tmpdir } from 'os';
 import { join } from 'path';
-import { Attributes } from '@salesforce/telemetry';
+import type { Attributes } from '@salesforce/telemetry';
 import { AsyncCreatable, env } from '@salesforce/kit';
 import { SfError } from '@salesforce/core';
 import { isBoolean, isNumber, isString, JsonMap } from '@salesforce/ts-types';
