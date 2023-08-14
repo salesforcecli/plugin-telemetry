@@ -1158,12 +1158,12 @@
     got "^11"
     proxy-agent "^6.3.0"
 
-"@salesforce/ts-sinon@^1.4.13":
-  version "1.4.13"
-  resolved "https://registry.yarnpkg.com/@salesforce/ts-sinon/-/ts-sinon-1.4.13.tgz#918d0bf7764932dabbb5cb078f34a42dcf28a677"
-  integrity sha512-1eFEzZIoA72XRqwr693i4emfKfZroKaxv2kLXgi9iSzeANALv8SaXrYhH1qoQKiSZKAN9AhwwZzgPEUsgW2cgQ==
+"@salesforce/ts-sinon@^1.4.14":
+  version "1.4.14"
+  resolved "https://registry.yarnpkg.com/@salesforce/ts-sinon/-/ts-sinon-1.4.14.tgz#f36ff049f39f8f712b51e1b655e03cf2988d8a6b"
+  integrity sha512-Le8gueZW8opoJ7PeCS9C4lKad1bUKoBYaArGhBPUDaK+ZItcIeOMT8IXtjP0ajVBHk5wbqGgoxXyThTnTu8jRA==
   dependencies:
-    "@salesforce/ts-types" "^2.0.5"
+    "@salesforce/ts-types" "^2.0.6"
     sinon "^5.1.1"
     tslib "^2.6.1"
 
@@ -7515,6 +7515,17 @@ widest-line@^3.1.0:
   integrity sha512-NsmoXalsWVDMGupxZ5R08ka9flZjjiLvHVAWYOKtiKM8ujtZWr9cRffak+uSE48+Ob8ObalXpwyeUiyDD6QFgg==
   dependencies:
     string-width "^4.0.0"
+
+wireit@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/wireit/-/wireit-0.10.0.tgz#9f2fe35dbf47b232650c488491651858cd7aaff1"
+  integrity sha512-4TX6V9D/2iXUBzdqQaUG+cRePle0mDx1Q7x4Ka2cA8lgp1+ZBhrOTiLsXYRl2roQEldEFgQ2Ff1W8YgyNWAa6w==
+  dependencies:
+    braces "^3.0.2"
+    chokidar "^3.5.3"
+    fast-glob "^3.2.11"
+    jsonc-parser "^3.0.0"
+    proper-lockfile "^4.1.2"
 
 wireit@^0.9.5:
   version "0.9.5"
