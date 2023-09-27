@@ -84,40 +84,25 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
 
     debug('Setting up process exit handler');
     process.once('exit', (status) => {
-      let oclifPerf: Record<string, number> = {};
-
+      let oclifPerf: typeof Performance.oclifPerf | undefined;
+      let nonOclifPerf: Record<string, number> | undefined;
       try {
-        oclifPerf = {
-          'oclif.runMs': Performance.highlights.runTime,
-          // The amount of time (ms) required for oclif to get to the point where it can start running the command.
-          'oclif.initMs': Performance.highlights.initTime,
-          // The amount of time (ms) required for oclif to load the Config.
-          'oclif.configLoadMs': Performance.highlights.configLoadTime,
-          // The amount of time (ms) required for oclif to load the command.
-          'oclif.commandLoadMs': Performance.highlights.commandLoadTime,
-          // The amount of time (ms) required for oclif to load core (i.e. bundled) plugins.
-          'oclif.corePluginsLoadMs': Performance.highlights.corePluginsLoadTime,
-          // The amount of time (ms) required for oclif to load user plugins.
-          'oclif.userPluginsLoadMs': Performance.highlights.userPluginsLoadTime,
-          // The amount of time (ms) required for oclif to load linked plugins.
-          'oclif.linkedPluginsLoadMs': Performance.highlights.linkedPluginsLoadTime,
-          // The amount of time (ms) required for oclif to run all the init hooks
-          'oclif.initHookMs': Performance.highlights.hookRunTimes.init?.total,
-          // The amount of time (ms) required for oclif to run all the prerun hooks
-          'oclif.prerunHookMs': Performance.highlights.hookRunTimes.prerun?.total,
-          // The amount of time (ms) required for oclif to run all the postrun hooks
-          'oclif.postrunHookMs': Performance.highlights.hookRunTimes.postrun?.total,
-        };
+        oclifPerf = Performance.oclifPerf;
+        nonOclifPerf = Object.fromEntries(
+          Array.from(Performance.results.entries()).flatMap(([owner, results]) =>
+            results.map((result): [string, number] => [`${owner}__${result.name}`, result.duration ?? 0])
+          )
+        );
       } catch (err) {
         debug('Unable to get oclif performance metrics', err);
       }
 
       for (const { event, error } of errors) {
-        telemetry.recordError(error, { ...event, ...oclifPerf });
+        telemetry.recordError(error, { ...event, ...oclifPerf, ...nonOclifPerf });
       }
 
       commandExecution.status = status;
-      telemetry.record({ ...commandExecution.toJson(), ...oclifPerf });
+      telemetry.record({ ...commandExecution.toJson(), ...oclifPerf, ...nonOclifPerf });
 
       if (process.listenerCount('exit') >= 20) {
         // On exit listeners have been a problem in the past. Make sure we don't accumulate too many...
