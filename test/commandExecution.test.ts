@@ -16,7 +16,7 @@ describe('toJson', () => {
   const sandbox = createSandbox();
 
   beforeEach(() => {
-    stubMethod(sandbox, Performance, 'highlights').get(() => ({
+    stubMethod(sandbox, Performance, 'oclifPerf').get(() => ({
       runTime: 0,
       initTime: 0,
       configLoadTime: 0,
