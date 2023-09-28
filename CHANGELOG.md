@@ -1,3 +1,9 @@
+## [2.3.5](https://github.com/salesforcecli/plugin-telemetry/compare/2.3.4...2.3.5) (2023-09-28)
+
+### Bug Fixes
+
+- **deps:** bump get-func-name from 2.0.0 to 2.0.2 ([ca468df](https://github.com/salesforcecli/plugin-telemetry/commit/ca468dfe82f95764e69ad286cd82b230f8d4e54d))
+
 ## [2.3.4](https://github.com/salesforcecli/plugin-telemetry/compare/2.3.3...2.3.4) (2023-09-23)
 
 ### Bug Fixes
