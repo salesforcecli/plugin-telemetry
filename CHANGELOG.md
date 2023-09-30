@@ -1,3 +1,9 @@
+## [2.3.6](https://github.com/salesforcecli/plugin-telemetry/compare/2.3.5...2.3.6) (2023-09-30)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/core from 5.2.9 to 5.3.1 ([707ab3d](https://github.com/salesforcecli/plugin-telemetry/commit/707ab3d1340efa5b6dc7e0a29598e2f873f831e9))
+
 ## [2.3.5](https://github.com/salesforcecli/plugin-telemetry/compare/2.3.4...2.3.5) (2023-09-28)
 
 ### Bug Fixes
