@@ -1001,15 +1001,15 @@
     strip-ansi "6.0.1"
     ts-retry-promise "^0.7.0"
 
-"@salesforce/core@^5.2.0", "@salesforce/core@^5.2.1", "@salesforce/core@^5.2.5", "@salesforce/core@^5.2.9":
-  version "5.2.9"
-  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-5.2.9.tgz#812478061d766cdff28f7a0e8abefc9de562465a"
-  integrity sha512-ZWNxHnCPGT1pcJe1bjeRjd8VAeHELK4fftt/2WO+ZsPFHZnzmdowz2Th407v04et+uIzL0Z6+qOaRY/bZr5tLA==
+"@salesforce/core@^5.2.0", "@salesforce/core@^5.2.1", "@salesforce/core@^5.2.5", "@salesforce/core@^5.2.9", "@salesforce/core@^5.3.1":
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-5.3.1.tgz#93c49760faa7b503bbfea8376d80a66815065e4a"
+  integrity sha512-LEQ3Yp7GxexsGXxT85Pp4AgOzzqY9Y3kol8ByVsHpHGvs8XLRbKl44IPxTXBdMB2roFM+Iosd46i0KbTuh2MQg==
   dependencies:
     "@salesforce/kit" "^3.0.11"
     "@salesforce/schemas" "^1.6.0"
     "@salesforce/ts-types" "^2.0.7"
-    "@types/semver" "^7.5.1"
+    "@types/semver" "^7.5.2"
     ajv "^8.12.0"
     change-case "^4.1.2"
     faye "^1.4.0"
@@ -1421,10 +1421,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/semver@^7.3.12", "@types/semver@^7.5.1":
-  version "7.5.2"
-  resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.2.tgz#31f6eec1ed7ec23f4f05608d3a2d381df041f564"
-  integrity sha512-7aqorHYgdNO4DM36stTiGO3DvKoex9TQRwsJU6vMaFGyqpBA1MNZkz+PG3gaNUPpTAOYhT1WR7M1JyA3fbS9Cw==
+"@types/semver@^7.3.12", "@types/semver@^7.5.2":
+  version "7.5.3"
+  resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.3.tgz#9a726e116beb26c24f1ccd6850201e1246122e04"
+  integrity sha512-OxepLK9EuNEIPxWNME+C6WwbRAOOI2o2BaQEGzz5Lu2e4Z5eDnEo+/aVEDMIXywoJitJ7xWd641wrGLZdtwRyw==
 
 "@types/shelljs@^0.8.12":
   version "0.8.12"
