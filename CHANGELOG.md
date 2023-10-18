@@ -1,3 +1,9 @@
+## [2.3.7](https://github.com/salesforcecli/plugin-telemetry/compare/2.3.6...2.3.7) (2023-10-18)
+
+### Bug Fixes
+
+- **deps:** bump @babel/traverse from 7.17.10 to 7.23.2 ([1437127](https://github.com/salesforcecli/plugin-telemetry/commit/14371273addbabc39b2ef32296ccb2307112322f))
+
 ## [2.3.6](https://github.com/salesforcecli/plugin-telemetry/compare/2.3.5...2.3.6) (2023-09-30)
 
 ### Bug Fixes
