@@ -1105,10 +1105,10 @@
     strip-ansi "6.0.1"
     ts-retry-promise "^0.7.1"
 
-"@salesforce/core@^5.2.5", "@salesforce/core@^5.3.1", "@salesforce/core@^5.3.5":
-  version "5.3.9"
-  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-5.3.9.tgz#1c8f793ce1a0798c5c7767a5a370a5926d3298de"
-  integrity sha512-/HX0PiXq3Sjc5eVJ0EaYetcDGsKU9O9Nj8jFGw5qYlITx8zogfxc0j07liH67tQXS1KbTysYoj/MQ2zbHSNkPA==
+"@salesforce/core@^5.3.1", "@salesforce/core@^5.3.5", "@salesforce/core@^5.3.9":
+  version "5.3.10"
+  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-5.3.10.tgz#897d315dcfbe025ff7d69f6c127577611154a6ee"
+  integrity sha512-PVBLRt28CBbDHbElChDsFIy+hMfc66pg/Vz0EzWiwL0XImN8Cw6n+viPV8uX7FGQVeA2P2RHGdRb83NCDt58dA==
   dependencies:
     "@salesforce/kit" "^3.0.13"
     "@salesforce/schemas" "^1.6.0"
@@ -1119,7 +1119,7 @@
     faye "^1.4.0"
     form-data "^4.0.0"
     js2xmlparser "^4.0.1"
-    jsforce "^2.0.0-beta.27"
+    jsforce "^2.0.0-beta.28"
     jsonwebtoken "9.0.2"
     jszip "3.10.1"
     pino "^8.15.6"
@@ -1217,16 +1217,16 @@
     chalk "^4"
     inquirer "^8.2.5"
 
-"@salesforce/telemetry@^4.1.3":
-  version "4.1.3"
-  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-4.1.3.tgz#d34b94e22aa95b1534ca314a02a5ed8e0d68bcf3"
-  integrity sha512-xD1iLTESQXiakCI81gJ/c63VW07/SciXqUcQVkKwm8/Uvmq9+6RryonyOkzfE+Ry1sKMEzmzbFZCMUEw05PFVQ==
+"@salesforce/telemetry@^4.1.15":
+  version "4.1.15"
+  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-4.1.15.tgz#4e46fef0138e4635a159a1ea54aed06353c58edc"
+  integrity sha512-fpMWDjlgmmonYmhC+T5X7NuKoIeVEtNm8JA1TGJkXhBkv0twWl7kt3DwFQlXQb9H4QtD92lAsRAPkW66tnzWag==
   dependencies:
-    "@salesforce/core" "^5.2.5"
-    "@salesforce/ts-types" "^2.0.6"
-    applicationinsights "^2.7.3"
+    "@salesforce/core" "^5.3.9"
+    "@salesforce/ts-types" "^2.0.8"
+    applicationinsights "^2.9.0"
     got "^11"
-    proxy-agent "^6.3.0"
+    proxy-agent "^6.3.1"
 
 "@salesforce/ts-sinon@^1.4.15":
   version "1.4.15"
@@ -1699,7 +1699,7 @@ agent-base@6, agent-base@^6.0.2:
   dependencies:
     debug "4"
 
-agent-base@^7.0.1, agent-base@^7.0.2, agent-base@^7.1.0:
+agent-base@^7.0.2, agent-base@^7.1.0:
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-7.1.0.tgz#536802b76bc0b34aa50195eb2442276d613e3434"
   integrity sha512-o/zjMZRhJxny7OyEF+Op8X+efiELC7k7yOjMzgfzVqOzXqkBkWI79YoTdOtsuWd5BWhAGAuOY/Xa6xpiaWXiNg==
@@ -1799,10 +1799,10 @@ append-transform@^2.0.0:
   dependencies:
     default-require-extensions "^3.0.0"
 
-applicationinsights@^2.7.3:
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/applicationinsights/-/applicationinsights-2.7.3.tgz#8781454d29c0b14c9773f2e892b4cf5e7468ffa5"
-  integrity sha512-JY8+kTEkjbA+kAVNWDtpfW2lqsrDALfDXuxOs74KLPu2y13fy/9WB52V4LfYVTVcW1/jYOXjTxNS2gPZIDh1iw==
+applicationinsights@^2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/applicationinsights/-/applicationinsights-2.9.0.tgz#62d6fb0d7cdcdbd2dd0a38a085943f9c262ff317"
+  integrity sha512-W90WNjtvZ10GUInpkyNM0xBGe2qRYChHhdb44SE5KU7hXtCZLxs3IZjWw1gJINQem0qGAgtZlxrVvKPj5SlTbQ==
   dependencies:
     "@azure/core-auth" "^1.5.0"
     "@azure/core-rest-pipeline" "1.10.1"
@@ -4112,10 +4112,10 @@ https-proxy-agent@^5.0.0:
     agent-base "6"
     debug "4"
 
-https-proxy-agent@^7.0.0:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-7.0.1.tgz#0277e28f13a07d45c663633841e20a40aaafe0ab"
-  integrity sha512-Eun8zV0kcYS1g19r78osiQLEFIRspRUDd9tIfBCTBPBeMieF/EsJNL8VI3xOIdYRDEkjQnqOYPsZ2DsWsVsFwQ==
+https-proxy-agent@^7.0.2:
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-7.0.2.tgz#e2645b846b90e96c6e6f347fb5b2e41f1590b09b"
+  integrity sha512-NmLNjm6ucYwtcUmL7JQC1ZQ57LmHP4lT15FQ8D61nak1rO6DH+fz5qNK2Ap5UN4ZapYICE3/0KodcLYSPsPbaA==
   dependencies:
     agent-base "^7.0.2"
     debug "4"
@@ -4700,10 +4700,10 @@ jsesc@^2.5.1:
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-2.5.2.tgz#80564d2e483dacf6e8ef209650a67df3f0c283a4"
   integrity sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==
 
-jsforce@^2.0.0-beta.27:
-  version "2.0.0-beta.27"
-  resolved "https://registry.yarnpkg.com/jsforce/-/jsforce-2.0.0-beta.27.tgz#ba822b18b77bea4529491060a9b07bc1009735ac"
-  integrity sha512-d9dDWWeHwayRKPo8FJBAIUyk8sNXGSHwdUjR6al3yK0YKci27Jc1XfNaQTxEAuymHQJVaCb1gxTKqmA4uznFdQ==
+jsforce@^2.0.0-beta.28:
+  version "2.0.0-beta.28"
+  resolved "https://registry.yarnpkg.com/jsforce/-/jsforce-2.0.0-beta.28.tgz#5fd8d9b8e5efc798698793b147e00371f3d74e8f"
+  integrity sha512-tTmKRhr4yWNinhmurY/tiiltLFQq9RQ+gpYAt3wjFdCGjzd49/wqYQIFw4SsI3+iLjxXnc0uTgGwdAkDjxDWnA==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@babel/runtime-corejs3" "^7.12.5"
@@ -5926,19 +5926,19 @@ p-try@^2.0.0:
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
 
-pac-proxy-agent@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/pac-proxy-agent/-/pac-proxy-agent-7.0.0.tgz#db42120c64292685dafaf2bd921e223c56bfb13b"
-  integrity sha512-t4tRAMx0uphnZrio0S0Jw9zg3oDbz1zVhQ/Vy18FjLfP1XOLNUEjaVxYCYRI6NS+BsMBXKIzV6cTLOkO9AtywA==
+pac-proxy-agent@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/pac-proxy-agent/-/pac-proxy-agent-7.0.1.tgz#6b9ddc002ec3ff0ba5fdf4a8a21d363bcc612d75"
+  integrity sha512-ASV8yU4LLKBAjqIPMbrgtaKIvxQri/yh2OpI+S6hVa9JRkUI3Y3NPFbfngDtY7oFtSMD3w31Xns89mDa3Feo5A==
   dependencies:
     "@tootallnate/quickjs-emscripten" "^0.23.0"
     agent-base "^7.0.2"
     debug "^4.3.4"
     get-uri "^6.0.1"
     http-proxy-agent "^7.0.0"
-    https-proxy-agent "^7.0.0"
+    https-proxy-agent "^7.0.2"
     pac-resolver "^7.0.0"
-    socks-proxy-agent "^8.0.1"
+    socks-proxy-agent "^8.0.2"
 
 pac-resolver@^7.0.0:
   version "7.0.0"
@@ -6270,19 +6270,19 @@ proper-lockfile@^4.1.2:
     retry "^0.12.0"
     signal-exit "^3.0.2"
 
-proxy-agent@^6.3.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/proxy-agent/-/proxy-agent-6.3.0.tgz#72f7bb20eb06049db79f7f86c49342c34f9ba08d"
-  integrity sha512-0LdR757eTj/JfuU7TL2YCuAZnxWXu3tkJbg4Oq3geW/qFNT/32T0sp2HnZ9O0lMR4q3vwAt0+xCA8SR0WAD0og==
+proxy-agent@^6.3.1:
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/proxy-agent/-/proxy-agent-6.3.1.tgz#40e7b230552cf44fd23ffaf7c59024b692612687"
+  integrity sha512-Rb5RVBy1iyqOtNl15Cw/llpeLH8bsb37gM1FUfKQ+Wck6xHlbAhWGUFiTRHtkjqGTA5pSHz6+0hrPW/oECihPQ==
   dependencies:
     agent-base "^7.0.2"
     debug "^4.3.4"
     http-proxy-agent "^7.0.0"
-    https-proxy-agent "^7.0.0"
+    https-proxy-agent "^7.0.2"
     lru-cache "^7.14.1"
-    pac-proxy-agent "^7.0.0"
+    pac-proxy-agent "^7.0.1"
     proxy-from-env "^1.1.0"
-    socks-proxy-agent "^8.0.1"
+    socks-proxy-agent "^8.0.2"
 
 proxy-from-env@^1.1.0:
   version "1.1.0"
@@ -6871,12 +6871,12 @@ socks-proxy-agent@^6.0.0, socks-proxy-agent@^6.1.1:
     debug "^4.3.3"
     socks "^2.6.2"
 
-socks-proxy-agent@^8.0.1:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/socks-proxy-agent/-/socks-proxy-agent-8.0.1.tgz#ffc5859a66dac89b0c4dab90253b96705f3e7120"
-  integrity sha512-59EjPbbgg8U3x62hhKOFVAmySQUcfRQ4C7Q/D5sEHnZTQRrQlNKINks44DMR1gwXp0p4LaVIeccX2KHTTcHVqQ==
+socks-proxy-agent@^8.0.2:
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/socks-proxy-agent/-/socks-proxy-agent-8.0.2.tgz#5acbd7be7baf18c46a3f293a840109a430a640ad"
+  integrity sha512-8zuqoLv1aP/66PHF5TqwJ7Czm3Yv32urJQHrVyhD7mmA6d61Zv8cIXQYPTWwmg6qlupnPvs/QKDmfa4P/qct2g==
   dependencies:
-    agent-base "^7.0.1"
+    agent-base "^7.0.2"
     debug "^4.3.4"
     socks "^2.7.1"
 
