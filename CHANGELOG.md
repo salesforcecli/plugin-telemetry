@@ -1,3 +1,9 @@
+## [2.3.8](https://github.com/salesforcecli/plugin-telemetry/compare/2.3.7...2.3.8) (2023-10-21)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/telemetry from 4.1.3 to 4.1.15 ([0c9f48a](https://github.com/salesforcecli/plugin-telemetry/commit/0c9f48a7c3a6d966b60acf49957823551ae0c41f))
+
 ## [2.3.7](https://github.com/salesforcecli/plugin-telemetry/compare/2.3.6...2.3.7) (2023-10-18)
 
 ### Bug Fixes
