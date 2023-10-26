@@ -1,3 +1,27 @@
+## [2.3.8](https://github.com/salesforcecli/plugin-telemetry/compare/2.3.7...2.3.8) (2023-10-21)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/telemetry from 4.1.3 to 4.1.15 ([0c9f48a](https://github.com/salesforcecli/plugin-telemetry/commit/0c9f48a7c3a6d966b60acf49957823551ae0c41f))
+
+## [2.3.7](https://github.com/salesforcecli/plugin-telemetry/compare/2.3.6...2.3.7) (2023-10-18)
+
+### Bug Fixes
+
+- **deps:** bump @babel/traverse from 7.17.10 to 7.23.2 ([1437127](https://github.com/salesforcecli/plugin-telemetry/commit/14371273addbabc39b2ef32296ccb2307112322f))
+
+## [2.3.6](https://github.com/salesforcecli/plugin-telemetry/compare/2.3.5...2.3.6) (2023-09-30)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/core from 5.2.9 to 5.3.1 ([707ab3d](https://github.com/salesforcecli/plugin-telemetry/commit/707ab3d1340efa5b6dc7e0a29598e2f873f831e9))
+
+## [2.3.5](https://github.com/salesforcecli/plugin-telemetry/compare/2.3.4...2.3.5) (2023-09-28)
+
+### Bug Fixes
+
+- **deps:** bump get-func-name from 2.0.0 to 2.0.2 ([ca468df](https://github.com/salesforcecli/plugin-telemetry/commit/ca468dfe82f95764e69ad286cd82b230f8d4e54d))
+
 ## [2.3.4](https://github.com/salesforcecli/plugin-telemetry/compare/2.3.3...2.3.4) (2023-09-23)
 
 ### Bug Fixes
