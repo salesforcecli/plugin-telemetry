@@ -7,14 +7,14 @@
 
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 
-import * as cp from 'child_process';
-import { EOL } from 'os';
-import * as path from 'path';
-import * as fs from 'fs';
+import cp from 'node:child_process';
+import { EOL } from 'node:os';
+import path from 'node:path';
+import fs from 'node:fs';
 import { stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
-import * as sinon from 'sinon';
-import Telemetry from '../src/telemetry';
+import sinon from 'sinon';
+import Telemetry from '../src/telemetry.js';
 
 describe('telemetry', () => {
   let sandbox: sinon.SinonSandbox;

@@ -7,13 +7,4 @@
 
 import Debug from 'debug';
 
-interface PackageJson {
-  [key: string]: unknown;
-  version: string;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const packageJson = require('../package.json') as PackageJson;
-export const version = packageJson.version;
-
-export const debug = Debug(`sfdx:telemetry@${version}`);
+export const debug = Debug('sf:telemetry');

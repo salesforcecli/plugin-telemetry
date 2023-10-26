@@ -5,15 +5,15 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { join } from 'path';
+import { join } from 'node:path';
 import { Hook, Performance } from '@oclif/core';
 import { SfError, Lifecycle } from '@salesforce/core';
 import { JsonMap } from '@salesforce/ts-types';
-import { isEnabled } from '@salesforce/telemetry/enabledCheck';
-import Telemetry from '../telemetry';
-import { TelemetryGlobal } from '../telemetryGlobal';
-import { CommandExecution } from '../commandExecution';
-import { debug } from '../debugger';
+import enabledCheck from '@salesforce/telemetry/enabledCheck';
+import Telemetry from '../telemetry.js';
+import { TelemetryGlobal } from '../telemetryGlobal.js';
+import { CommandExecution } from '../commandExecution.js';
+import { debug } from '../debugger.js';
 
 declare const global: TelemetryGlobal;
 
@@ -32,7 +32,7 @@ type CommonData = {
  */
 const hook: Hook.Prerun = async function (options): Promise<void> {
   // Don't even bother logging if telemetry is disabled
-  if (!(await isEnabled())) {
+  if (!(await enabledCheck.isEnabled())) {
     debug('Telemetry disabled. Doing nothing.');
     return;
   }

@@ -6,11 +6,11 @@
  */
 
 import { Config, Command, Parser } from '@oclif/core';
-import { FlagInput } from '@oclif/core/lib/interfaces/parser';
+import { FlagInput } from '@oclif/core/lib/interfaces/parser.js';
 import { Org } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
 import { isNumber, JsonMap, Optional } from '@salesforce/ts-types';
-import { debug } from './debugger';
+import { debug } from './debugger.js';
 
 export type CommandExecutionOptions = {
   command: Partial<Command.Class>;

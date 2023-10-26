@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import Telemetry from './telemetry';
+import Telemetry from './telemetry.js';
 
 export interface TelemetryGlobal extends NodeJS.Global {
   cliTelemetry?: Telemetry;

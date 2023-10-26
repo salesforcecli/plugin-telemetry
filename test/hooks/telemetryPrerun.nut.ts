@@ -6,11 +6,11 @@
  */
 /* eslint-disable no-console */
 
-import * as fs from 'fs';
+import fs from 'node:fs';
 import { assert, expect, config } from 'chai';
 import { execCmd, TestSession } from '@salesforce/cli-plugins-testkit';
 import { JsonMap } from '@salesforce/ts-types';
-import { getTelemetryFiles } from '../helpers/getTelemetryFiles';
+import { getTelemetryFiles } from '../helpers/getTelemetryFiles.js';
 
 config.truncateThreshold = 0;
 

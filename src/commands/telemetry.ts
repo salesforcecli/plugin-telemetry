@@ -7,8 +7,8 @@
 
 import { SfCommand } from '@salesforce/sf-plugins-core';
 import { isEnabled } from '@salesforce/telemetry/enabledCheck';
-import Telemetry from '../telemetry';
-import { TelemetryGlobal } from '../telemetryGlobal';
+import Telemetry from '../telemetry.js';
+import { TelemetryGlobal } from '../telemetryGlobal.js';
 
 declare const global: TelemetryGlobal;
 
