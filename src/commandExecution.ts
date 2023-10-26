@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { Config, Command, Parser } from '@oclif/core';
+import { Config, Command, Flags, Parser } from '@oclif/core';
 import { FlagInput } from '@oclif/core/lib/interfaces/parser.js';
 import { Org } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
@@ -114,7 +114,11 @@ export class CommandExecution extends AsyncCreatable {
 
   protected async init(): Promise<void> {
     const argv = this.argv;
-    const flagDefinitions = this.command.flags ?? {};
+    const flagDefinitions = {
+      ...this.command.flags,
+      ...this.command.baseFlags,
+      ...(this.command.enableJsonFlag ? { json: Flags.boolean() } : {}),
+    };
 
     // slice off node or bin path, and the executable path, and then remove anything that's been processed as a flag
     const typedCommand = process.argv
