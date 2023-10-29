@@ -6,7 +6,7 @@
  */
 /* eslint-disable no-console */
 
-import * as fs from 'fs';
+import * as fs from 'node:fs';
 import { assert, expect, config } from 'chai';
 import { execCmd, TestSession } from '@salesforce/cli-plugins-testkit';
 import { JsonMap } from '@salesforce/ts-types';

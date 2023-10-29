@@ -7,10 +7,10 @@
 
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 
-import * as cp from 'child_process';
-import { EOL } from 'os';
-import * as path from 'path';
-import * as fs from 'fs';
+import * as cp from 'node:child_process';
+import { EOL } from 'node:os';
+import * as path from 'node:path';
+import * as fs from 'node:fs';
 import { stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
 import * as sinon from 'sinon';

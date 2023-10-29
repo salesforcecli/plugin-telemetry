@@ -5,11 +5,11 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { spawn } from 'child_process';
-import { randomBytes } from 'crypto';
-import * as fs from 'fs';
-import { EOL, tmpdir } from 'os';
-import { join } from 'path';
+import { spawn } from 'node:child_process';
+import { randomBytes } from 'node:crypto';
+import * as fs from 'node:fs';
+import { EOL, tmpdir } from 'node:os';
+import { join } from 'node:path';
 import type { Attributes } from '@salesforce/telemetry';
 import { AsyncCreatable, env } from '@salesforce/kit';
 import { SfError } from '@salesforce/core';
