@@ -37,9 +37,11 @@
   "keywords": [
     "force",
     "salesforce",
-    "sfdx",
     "salesforcedx",
-    "sfdx-plugin"
+    "sf-plugin",
+    "sf",
+    "sfdx-plugin",
+    "sfdx"
   ],
   "license": "BSD-3-Clause",
   "oclif": {
