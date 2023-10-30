@@ -65,7 +65,8 @@ describe('telemetry hook', () => {
     expect(cmdExecution.platform).to.not.be.undefined;
     expect(cmdExecution.shell).to.not.be.undefined;
     expect(cmdExecution.arch).to.not.be.undefined;
-    expect(cmdExecution.nodeEnv).to.not.be.undefined;
+    expect(cmdExecution.nodeEnv).to.not.equal('test');
+    expect(cmdExecution.nodeEnv).to.not.equal('development');
     expect(cmdExecution.nodeVersion).to.not.be.undefined;
     expect(cmdExecution.channel).to.not.be.undefined;
     expect(cmdExecution.executable).to.not.be.undefined;
