@@ -8,15 +8,15 @@
 import { Interfaces, Performance } from '@oclif/core';
 import { stubInterface, stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
-import { createSandbox } from 'sinon';
-import { CommandExecution } from '../src/commandExecution';
-import { MyCommand } from './helpers/myCommand';
+import sinon from 'sinon';
+import { CommandExecution } from '../src/commandExecution.js';
+import { MyCommand } from './helpers/myCommand.js';
 
 describe('toJson', () => {
-  const sandbox = createSandbox();
+  const sandbox = sinon.createSandbox();
 
   beforeEach(() => {
-    stubMethod(sandbox, Performance, 'highlights').get(() => ({
+    stubMethod(sandbox, Performance, 'oclifPerf').get(() => ({
       runTime: 0,
       initTime: 0,
       configLoadTime: 0,

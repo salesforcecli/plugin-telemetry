@@ -10,10 +10,10 @@ This plugin is bundled with the CLI and will automatically collect usage data on
 
 All command usage is recorded by initializing on the `init` oclif hook, recording all events to a log file, then spawning a process on exit to send the data to appinsights.
 
-To debug the telemetry spawned process, run a command with the environment variables `SF_TELEMETRY_DEBUG=true` and `DEBUG=sfdx:telemetry*`.
+To debug the telemetry spawned process, run a command with the environment variables `SF_TELEMETRY_DEBUG=true` and `DEBUG=sf:telemetry`.
 
 ```bash
-SF_TELEMETRY_DEBUG=true DEBUG=sfdx:telemetry* ./bin/dev telemetry
+SF_TELEMETRY_DEBUG=true DEBUG=sf:telemetry* ./bin/dev telemetry
 ```
 
 ## Getting Started

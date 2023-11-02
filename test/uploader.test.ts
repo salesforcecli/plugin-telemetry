@@ -8,9 +8,9 @@
 import TelemetryReporter from '@salesforce/telemetry';
 import { stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
-import * as sinon from 'sinon';
-import Telemetry from '../src/telemetry';
-import { Uploader } from '../src/uploader';
+import sinon from 'sinon';
+import Telemetry from '../src/telemetry.js';
+import { Uploader } from '../src/uploader.js';
 
 describe('uploader', () => {
   let sandbox: sinon.SinonSandbox;
@@ -31,7 +31,7 @@ describe('uploader', () => {
     clearStub = sandbox.stub();
     getCliIdStub = sandbox.stub().returns('testId');
 
-    createStub = stubMethod(sandbox, TelemetryReporter, 'create').callsFake(async () => ({
+    createStub = stubMethod(sandbox, TelemetryReporter.default, 'create').callsFake(async () => ({
       sendTelemetryEvent: sendTelemetryEventStub,
       sendTelemetryException: sendTelemetryExceptionStub,
       stop: stopStub,
@@ -56,7 +56,7 @@ describe('uploader', () => {
       },
     ]);
 
-    await Uploader.upload('test', 'test');
+    await Uploader.upload('test', 'test', '1.0.0');
     expect(sendTelemetryEventStub.called).to.equal(true);
     expect(sendTelemetryEventStub.firstCall.args[0]).to.equal('test');
     expect(sendTelemetryEventStub.firstCall.args[1].eventName).to.equal(undefined);
@@ -74,7 +74,7 @@ describe('uploader', () => {
       },
     ]);
 
-    await Uploader.upload('test', 'test');
+    await Uploader.upload('test', 'test', '1.0.0');
     expect(sendTelemetryExceptionStub.called).to.equal(true);
 
     const error = sendTelemetryExceptionStub.firstCall.args[0];
@@ -87,14 +87,14 @@ describe('uploader', () => {
 
   it('telemetry sets cliId as userId', async () => {
     readStub.resolves([]);
-    await Uploader.upload('test', 'test');
+    await Uploader.upload('test', 'test', '1.0.0');
     expect(createStub.called).to.equal(true);
     expect(createStub.firstCall.args[0].userId).to.equal('testId');
   });
 
   it('clears telemetry file', async () => {
     readStub.resolves([]);
-    await Uploader.upload('test', 'test');
+    await Uploader.upload('test', 'test', '1.0.0');
     expect(clearStub.called).to.equal(true);
   });
 });

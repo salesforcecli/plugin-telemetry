@@ -6,11 +6,11 @@
  */
 /* eslint-disable no-console */
 
-import * as fs from 'fs';
+import fs from 'node:fs';
 import { assert, expect, config } from 'chai';
 import { execCmd, TestSession } from '@salesforce/cli-plugins-testkit';
 import { JsonMap } from '@salesforce/ts-types';
-import { getTelemetryFiles } from '../helpers/getTelemetryFiles';
+import { getTelemetryFiles } from '../helpers/getTelemetryFiles.js';
 
 config.truncateThreshold = 0;
 
@@ -65,7 +65,8 @@ describe('telemetry hook', () => {
     expect(cmdExecution.platform).to.not.be.undefined;
     expect(cmdExecution.shell).to.not.be.undefined;
     expect(cmdExecution.arch).to.not.be.undefined;
-    expect(cmdExecution.nodeEnv).to.not.be.undefined;
+    expect(cmdExecution.nodeEnv).to.not.equal('test');
+    expect(cmdExecution.nodeEnv).to.not.equal('development');
     expect(cmdExecution.nodeVersion).to.not.be.undefined;
     expect(cmdExecution.channel).to.not.be.undefined;
     expect(cmdExecution.executable).to.not.be.undefined;

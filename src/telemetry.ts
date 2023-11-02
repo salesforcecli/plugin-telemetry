@@ -5,16 +5,18 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { spawn } from 'child_process';
-import { randomBytes } from 'crypto';
-import * as fs from 'fs';
-import { EOL, tmpdir } from 'os';
-import { join } from 'path';
+import cp from 'node:child_process';
+import { randomBytes } from 'node:crypto';
+import fs from 'node:fs';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { EOL, tmpdir } from 'node:os';
+import { join } from 'node:path';
 import type { Attributes } from '@salesforce/telemetry';
 import { AsyncCreatable, env } from '@salesforce/kit';
 import { SfError } from '@salesforce/core';
 import { isBoolean, isNumber, isString, JsonMap } from '@salesforce/ts-types';
-import { debug } from './debugger';
+import { debug } from './debugger.js';
 
 const CLI_ID_FILE_NAME = 'CLIID.txt';
 const USAGE_ACKNOWLEDGEMENT_FILE_NAME = 'acknowledgedUsageCollection.json';
@@ -314,7 +316,7 @@ export default class Telemetry extends AsyncCreatable {
 
   public upload(): void {
     // Completely disconnect from this process so it doesn't wait for telemetry to upload
-    const processPath = join(__dirname, '..', 'processes', 'upload');
+    const processPath = join(dirname(fileURLToPath(import.meta.url)), '..', 'processes', 'upload.js');
 
     const telemetryDebug = env.getBoolean('SF_TELEMETRY_DEBUG', false);
     const nodePath = process.argv[0];
@@ -322,7 +324,7 @@ export default class Telemetry extends AsyncCreatable {
     // Don't spawn if we are in telemetry debug. This allows us to run the process manually with --inspect-brk.
     if (!telemetryDebug) {
       debug(`Spawning "${nodePath} ${processPath} ${Telemetry.cacheDir} ${this.getTelemetryFilePath()}"`);
-      spawn(nodePath, [processPath, Telemetry.cacheDir, this.getTelemetryFilePath()], {
+      cp.spawn(nodePath, [processPath, Telemetry.cacheDir, this.getTelemetryFilePath()], {
         detached: true,
         stdio: 'ignore',
       }).unref();

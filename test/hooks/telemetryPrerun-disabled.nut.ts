@@ -7,7 +7,7 @@
 
 import { expect, config } from 'chai';
 import { execCmd, TestSession } from '@salesforce/cli-plugins-testkit';
-import { getTelemetryFiles } from '../helpers/getTelemetryFiles';
+import { getTelemetryFiles } from '../helpers/getTelemetryFiles.js';
 
 config.truncateThreshold = 0;
 

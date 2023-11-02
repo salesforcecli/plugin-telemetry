@@ -7,14 +7,14 @@
 
 import { Hook, Config } from '@oclif/core';
 
-import * as enabledCheckStubs from '@salesforce/telemetry/enabledCheck';
+import enabledCheckStubs from '@salesforce/telemetry/enabledCheck';
 import { StubbedType, stubInterface, stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
-import * as sinon from 'sinon';
-import Telemetry from '../../src/telemetry';
-import { CommandExecution } from '../../src/commandExecution';
-import hook from '../../src/hooks/telemetryPrerun';
-import { MyCommand } from '../helpers/myCommand';
+import sinon from 'sinon';
+import Telemetry from '../../src/telemetry.js';
+import { CommandExecution } from '../../src/commandExecution.js';
+import hook from '../../src/hooks/telemetryPrerun.js';
+import { MyCommand } from '../helpers/myCommand.js';
 
 const args = { argv: [], Command: MyCommand, config: {} as Config };
 

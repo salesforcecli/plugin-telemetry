@@ -8,10 +8,10 @@
 /* eslint-disable no-await-in-loop */
 import { SfError } from '@salesforce/core';
 import { asString, Dictionary } from '@salesforce/ts-types';
-import Telemetry from './telemetry';
-import { debug, version } from './debugger';
+import Telemetry from './telemetry.js';
+import { debug } from './debugger.js';
 
-import { TelemetryGlobal } from './telemetryGlobal';
+import { TelemetryGlobal } from './telemetryGlobal.js';
 
 declare const global: TelemetryGlobal;
 
@@ -19,14 +19,14 @@ const PROJECT = 'salesforce-cli';
 const APP_INSIGHTS_KEY = '2ca64abb-6123-4c7b-bd9e-4fe73e71fe9c';
 
 export class Uploader {
-  private constructor(private telemetry: Telemetry) {}
+  private constructor(private telemetry: Telemetry, private version: string) {}
 
   /**
    * Sends events from telemetry.
    */
-  public static async upload(cacheDir: string, telemetryFilePath: string): Promise<void> {
+  public static async upload(cacheDir: string, telemetryFilePath: string, version: string): Promise<void> {
     const telemetry = (global.cliTelemetry = await Telemetry.create({ cacheDir, telemetryFilePath }));
-    const uploader = new Uploader(telemetry);
+    const uploader = new Uploader(telemetry, version);
     await uploader.sendToTelemetry();
   }
 
@@ -54,7 +54,7 @@ export class Uploader {
     try {
       const events = await this.telemetry.read();
       for (const event of events) {
-        event.telemetryVersion = version;
+        event.telemetryVersion = this.version;
         const eventType = asString(event.type) ?? Telemetry.EVENT;
         const eventName = asString(event.eventName) ?? 'UNKNOWN';
         delete event.type;
