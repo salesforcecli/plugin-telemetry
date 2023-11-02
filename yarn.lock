@@ -1020,10 +1020,10 @@
   resolved "https://registry.yarnpkg.com/@opentelemetry/semantic-conventions/-/semantic-conventions-1.15.2.tgz#3bafb5de3e20e841dff6cb3c66f4d6e9694c4241"
   integrity sha512-CjbOKwk2s+3xPIMcd5UNYQzsf+v94RczbdNix9/kQh38WiQkM90sUOi3if8eyHFgiBjBjhwXrA7W3ydiSQP9mw==
 
-"@salesforce/cli-plugins-testkit@^5.0.0-dev.1":
-  version "5.0.0-dev.1"
-  resolved "https://registry.yarnpkg.com/@salesforce/cli-plugins-testkit/-/cli-plugins-testkit-5.0.0-dev.1.tgz#2497f48764b8ba164eb5c6f2d5d5b7475ddc0abc"
-  integrity sha512-Eq5PCsBICJsjGeXc+rt5T/Z8or7/WgxZKE8xIoGzIcgwkTOojGP1v23kndaBAilr01W9q9Tv4DSnBtq9iuLYeg==
+"@salesforce/cli-plugins-testkit@^5":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@salesforce/cli-plugins-testkit/-/cli-plugins-testkit-5.0.0.tgz#0ced85db4ca9f38ea0f486782c1e132fa43fe843"
+  integrity sha512-j0M7XC09ctpreFL6aPXkDIEZujlnNId4JMtTzfWA++Lpzj4PVj84zPBdXzGWSold/m9pf4EC7HZWaFS9kK/KVQ==
   dependencies:
     "@salesforce/core" "^5.3.10"
     "@salesforce/kit" "^3.0.15"
