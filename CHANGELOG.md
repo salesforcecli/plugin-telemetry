@@ -1,3 +1,15 @@
+# [3.1.0](https://github.com/salesforcecli/plugin-telemetry/compare/2.3.9-dev.0...3.1.0) (2023-11-02)
+
+### Bug Fixes
+
+- upgrade dev-scripts ([533baca](https://github.com/salesforcecli/plugin-telemetry/commit/533bacad214533f9da2f72e55902ac2c7c2887db))
+
+## [2.3.9-dev.0](https://github.com/salesforcecli/plugin-telemetry/compare/2.3.8...2.3.9-dev.0) (2023-10-27)
+
+### Features
+
+- non-oclif perf ([375a9ab](https://github.com/salesforcecli/plugin-telemetry/commit/375a9abb10818e2993872911b39ded06b8a90873))
+
 ## [2.3.8](https://github.com/salesforcecli/plugin-telemetry/compare/2.3.7...2.3.8) (2023-10-21)
 
 ### Bug Fixes
