@@ -15,7 +15,7 @@
     "@oclif/plugin-command-snapshot": "^5.0.1",
     "@oclif/plugin-help": "^6.0.4",
     "@salesforce/cli-plugins-testkit": "^5",
-    "@salesforce/dev-scripts": "^6.0.1",
+    "@salesforce/dev-scripts": "^6.0.3",
     "@salesforce/plugin-command-reference": "^3.0.45",
     "@salesforce/ts-sinon": "^1.4.15",
     "@types/debug": "^4.1.8",
