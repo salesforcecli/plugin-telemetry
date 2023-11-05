@@ -794,10 +794,10 @@
     wordwrap "^1.0.0"
     wrap-ansi "^7.0.0"
 
-"@oclif/core@^3.0.0", "@oclif/core@^3.0.4", "@oclif/core@^3.3.1", "@oclif/core@^3.5.0", "@oclif/core@^3.8.0":
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-3.8.0.tgz#45f5f630b3b593c3486e7835953ad6fb2af01bcb"
-  integrity sha512-fKqg9QzjIflDcYljZkZEeY6zoRyk4AZ5e2V4LUIsSOR7+B78qpqNqDPJFTI8TvrEU3+Q+ssELntOL2VA3SMsqQ==
+"@oclif/core@^3.0.0", "@oclif/core@^3.0.4", "@oclif/core@^3.10.1", "@oclif/core@^3.3.1", "@oclif/core@^3.5.0":
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-3.10.1.tgz#c8e6c7a557983de1c55990177c16c78d26e10083"
+  integrity sha512-zBjujYmLyEu7T6PBlaPqmsum/Cc5KMwc6XmcKzUC/PUQspENGd4z0n4eBlNlKjfO/1sLdts99xUlSoIYXoFimg==
   dependencies:
     ansi-escapes "^4.3.2"
     ansi-styles "^4.3.0"
@@ -821,6 +821,7 @@
     strip-ansi "^6.0.1"
     supports-color "^8.1.1"
     supports-hyperlinks "^2.2.0"
+    tsconfck "^3.0.0"
     widest-line "^3.1.0"
     wordwrap "^1.0.0"
     wrap-ansi "^7.0.0"
@@ -7290,6 +7291,11 @@ ts-retry-promise@^0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/ts-retry-promise/-/ts-retry-promise-0.7.1.tgz#176d6eee6415f07b6c7c286d3657355e284a6906"
   integrity sha512-NhHOCZ2AQORvH42hOPO5UZxShlcuiRtm7P2jIq2L2RY3PBxw2mLnUsEdHrIslVBFya1v5aZmrR55lWkzo13LrQ==
+
+tsconfck@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/tsconfck/-/tsconfck-3.0.0.tgz#b469f1ced12973bbec3209a55ed8de3bb04223c9"
+  integrity sha512-w3wnsIrJNi7avf4Zb0VjOoodoO0woEqGgZGQm+LHH9przdUI+XDKsWAXwxHA1DaRTjeuZNcregSzr7RaA8zG9A==
 
 tsconfig-paths@^3.14.2:
   version "3.14.2"
