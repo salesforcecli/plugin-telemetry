@@ -1035,15 +1035,15 @@
     strip-ansi "6.0.1"
     ts-retry-promise "^0.7.1"
 
-"@salesforce/core@^5.3.1", "@salesforce/core@^5.3.10", "@salesforce/core@^5.3.9":
-  version "5.3.16"
-  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-5.3.16.tgz#93987b0bbe37b73146929ceab658b653215adbe6"
-  integrity sha512-Q5BOFPwACXe/ebwROzpacwPA/WSRfOM7W63exX4b0Gv2rQoMB2NZLxHBQP3FZ4eH4PMHvBB16IzmtNq8vSJktw==
+"@salesforce/core@^5.3.1", "@salesforce/core@^5.3.10", "@salesforce/core@^5.3.17":
+  version "5.3.20"
+  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-5.3.20.tgz#4e934d4551bb70423cb1c4115615bc41cffca41e"
+  integrity sha512-y+O6O2c8OYFDrAy2qsG+pAcNxoyL14nmBXcBRRcYA7Huj8ikK+aLJK84PuVAYdQz+hNwImQF+69IWtDkpK4Irg==
   dependencies:
     "@salesforce/kit" "^3.0.15"
     "@salesforce/schemas" "^1.6.1"
     "@salesforce/ts-types" "^2.0.9"
-    "@types/semver" "^7.5.3"
+    "@types/semver" "^7.5.4"
     ajv "^8.12.0"
     change-case "^4.1.2"
     faye "^1.4.0"
@@ -1151,13 +1151,13 @@
     chalk "^4"
     inquirer "^8.2.5"
 
-"@salesforce/telemetry@^4.1.15":
-  version "4.1.15"
-  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-4.1.15.tgz#4e46fef0138e4635a159a1ea54aed06353c58edc"
-  integrity sha512-fpMWDjlgmmonYmhC+T5X7NuKoIeVEtNm8JA1TGJkXhBkv0twWl7kt3DwFQlXQb9H4QtD92lAsRAPkW66tnzWag==
+"@salesforce/telemetry@^4.1.19":
+  version "4.1.19"
+  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-4.1.19.tgz#d80354acec6929f00a4fe54399e4cb4063082afb"
+  integrity sha512-5nJy0F76bEvxlc9p2TQp7m8FRqfeklWehXs/IUV2ejVcIXD/IBk/lgVVH0IkQ2QOCjy3DfWtj24+L9k9i2N1rA==
   dependencies:
-    "@salesforce/core" "^5.3.9"
-    "@salesforce/ts-types" "^2.0.8"
+    "@salesforce/core" "^5.3.17"
+    "@salesforce/ts-types" "^2.0.9"
     applicationinsights "^2.9.0"
     got "^11"
     proxy-agent "^6.3.1"
@@ -1171,7 +1171,7 @@
     sinon "^5.1.1"
     tslib "^2.6.1"
 
-"@salesforce/ts-types@^2.0.6", "@salesforce/ts-types@^2.0.7", "@salesforce/ts-types@^2.0.8", "@salesforce/ts-types@^2.0.9":
+"@salesforce/ts-types@^2.0.6", "@salesforce/ts-types@^2.0.7", "@salesforce/ts-types@^2.0.9":
   version "2.0.9"
   resolved "https://registry.yarnpkg.com/@salesforce/ts-types/-/ts-types-2.0.9.tgz#66bff7b41720065d6b01631b6f6a3ccca02857c5"
   integrity sha512-boUD9jw5vQpTCPCCmK/NFTWjSuuW+lsaxOynkyNXLW+zxOc4GDjhtKc4j0vWZJQvolpafbyS8ZLFHZJvs12gYA==
@@ -1419,10 +1419,15 @@
   dependencies:
     "@types/node" "*"
 
-"@types/semver@^7.3.12", "@types/semver@^7.5.0", "@types/semver@^7.5.3":
+"@types/semver@^7.3.12", "@types/semver@^7.5.0":
   version "7.5.4"
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.4.tgz#0a41252ad431c473158b22f9bfb9a63df7541cff"
   integrity sha512-MMzuxN3GdFwskAnb6fz0orFvhfqi752yjaXylr0Rp4oDg5H0Zn1IuyRhDVvYOwAXoJirx2xuS16I3WjxnAIHiQ==
+
+"@types/semver@^7.5.4":
+  version "7.5.5"
+  resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.5.tgz#deed5ab7019756c9c90ea86139106b0346223f35"
+  integrity sha512-+d+WYC1BxJ6yVOgUgzK8gWvp5qF8ssV5r4nsDcZWKRWcDQLQ619tvWAxJQYGgBrO1MnLJC7a5GtiYsAoQ47dJg==
 
 "@types/shelljs@^0.8.14":
   version "0.8.14"
