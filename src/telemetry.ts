@@ -156,7 +156,7 @@ export default class Telemetry extends AsyncCreatable {
     if (keys.find((key) => key.startsWith('GITHUB_ACTION'))) {
       return 'github_actions';
     }
-    if (keys.find((key) => key.startsWith('AGENT_NAME')) || keys.find((key) => key.startsWith('BUILD_BUILDNUMBER'))) {
+    if (keys.find((key) => key.startsWith('AGENT_NAME')) ?? keys.find((key) => key.startsWith('BUILD_BUILDNUMBER'))) {
       return 'azure_pipelines';
     }
     if (keys.find((key) => key.startsWith('TEAMCITY'))) {

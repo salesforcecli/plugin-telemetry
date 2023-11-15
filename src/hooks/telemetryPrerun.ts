@@ -118,7 +118,7 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
         telemetry.record({
           eventName: 'INSTALL',
           installType:
-            this.config.binPath?.includes(join('sfdx', 'client')) || this.config.binPath?.includes(join('sf', 'client'))
+            this.config.binPath?.includes(join('sfdx', 'client')) ?? this.config.binPath?.includes(join('sf', 'client'))
               ? 'installer'
               : 'npm',
           platform: this.config.platform,
