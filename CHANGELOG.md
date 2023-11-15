@@ -1,3 +1,9 @@
+## [3.1.2](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.1...3.1.2) (2023-11-15)
+
+### Bug Fixes
+
+- **deps:** corev6 and devScripts ([#536](https://github.com/salesforcecli/plugin-telemetry/issues/536)) ([4913115](https://github.com/salesforcecli/plugin-telemetry/commit/491311559263d45dbb1536c1c20d132ae2a99661))
+
 ## [3.1.1](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.0...3.1.1) (2023-11-11)
 
 ### Bug Fixes
