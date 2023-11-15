@@ -127,7 +127,7 @@ export class CommandExecution extends AsyncCreatable {
       .join(':');
 
     if (
-      this.command.deprecationOptions ||
+      Boolean(this.command.deprecationOptions) ||
       (typedCommand !== this.command.id &&
         this.command.aliases?.includes(typedCommand) &&
         this.command.deprecateAliases)
@@ -166,7 +166,7 @@ export class CommandExecution extends AsyncCreatable {
     // Help won't be in the parsed flags
     const shortHelp = argv.find((arg) => /^-h$/.test(arg));
     const fullHelp = argv.find((arg) => /^--help$/.test(arg));
-    if (shortHelp || fullHelp) {
+    if (Boolean(shortHelp) || fullHelp) {
       if (shortHelp) {
         this.specifiedFlags.push('h');
       } else {

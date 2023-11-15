@@ -16,7 +16,7 @@ import { CommandExecution } from '../../src/commandExecution.js';
 import hook from '../../src/hooks/telemetryPrerun.js';
 import { MyCommand } from '../helpers/myCommand.js';
 
-const args = { argv: [], Command: MyCommand, config: {} as Config };
+const args = { argv: [], Command: MyCommand, config: {} as Config, context: {} as Hook.Context };
 
 describe('telemetry prerun hook', () => {
   let sandbox: sinon.SinonSandbox;
