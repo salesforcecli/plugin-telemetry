@@ -18,7 +18,7 @@
     "@salesforce/dev-scripts": "^7.1.1",
     "@salesforce/plugin-command-reference": "^3.0.46",
     "@salesforce/ts-sinon": "^1.4.15",
-    "@types/debug": "^4.1.8",
+    "@types/debug": "^4.1.12",
     "oclif": "^4.0.3",
     "shx": "0.3.4",
     "typescript": "^5.2.2"
