@@ -17,6 +17,18 @@ export class MyCommand extends SfCommand<void> {
     test: Flags.string({ char: 't' }),
     valid: Flags.string({ aliases: ['invalid', 'i'], char: 'v', deprecateAliases: true }),
     newflag: Flags.string({ aliases: ['oldflag', 'o'], char: 'n', deprecateAliases: true }),
+    user: Flags.string({
+      aliases: ['targetuser'],
+      deprecateAliases: true,
+      default: async () => 'test',
+    }),
+    blue: Flags.string({
+      aliases: ['bleu'],
+    }),
+    red: Flags.string({
+      charAliases: ['e'],
+      char: 'r',
+    }),
   };
   public static args = {};
 
