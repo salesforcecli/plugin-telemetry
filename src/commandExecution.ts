@@ -194,12 +194,14 @@ export class CommandExecution extends AsyncCreatable {
 
           let possibleAliases = flagDefinitions[flagName].aliases ?? [];
 
+          // charAliases is optional
+          // this check also ensure compatibility with commands using oclif/core < 3 where `charAliases` isn't supported.
           if (flagDefinitions[flagName].charAliases) {
             possibleAliases = possibleAliases?.concat(flagDefinitions[flagName].charAliases as string[]);
           }
 
           // if you have a flag that sets a default value and has aliases
-          // this check will ensure it only gets captured if the user specified using aliases
+          // this check will ensure it only gets captured if the user specified it using aliases
           const specifiedFlag = possibleAliases.find((a) => argvFlags.includes(a));
 
           if (specifiedFlag) {
