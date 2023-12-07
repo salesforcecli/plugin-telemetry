@@ -160,6 +160,60 @@ describe('toJson', () => {
     expect(actual.deprecatedCommandUsed).to.equal('deprecated:alias');
   });
 
+  it('does not capture flags that have a default value but were not specified by the user', async () => {
+    process.env.CI = 'true';
+    const config = stubInterface<Interfaces.Config>(sandbox, {});
+
+    // the `test` command has `user` flag that sets a default value
+    // we run this command with no flags to ensure only flags specified (typed by user) are captured in telemetry
+    const execution = await CommandExecution.create({
+      argv: [],
+      command: MyCommand,
+      config,
+    });
+    const actual = execution.toJson();
+    expect(actual.specifiedFlags).to.equal('');
+    expect(actual.specifiedFlagFullNames).to.equal('');
+    expect(actual.deprecatedFlagsUsed).to.equal('');
+  });
+
+  it('captures flag if used non-deprecated alias', async () => {
+    process.env.CI = 'true';
+    const config = stubInterface<Interfaces.Config>(sandbox, {});
+
+    // flag name: "blue"
+    // flag alias: "bleu"
+    // non-deprecated alias
+    const execution = await CommandExecution.create({
+      argv: ['--bleu', 'test'],
+      command: MyCommand,
+      config,
+    });
+    const actual = execution.toJson();
+    expect(actual.specifiedFlags).to.equal('blue');
+    expect(actual.specifiedFlagFullNames).to.equal('blue');
+    expect(actual.deprecatedFlagsUsed).to.equal('');
+  });
+
+  it('captures flag if used non-deprecated char alias', async () => {
+    process.env.CI = 'true';
+    const config = stubInterface<Interfaces.Config>(sandbox, {});
+
+    // flag name: "red"
+    // flag char: "r"
+    // flag char alias: "e"
+    // non-deprecated alias
+    const execution = await CommandExecution.create({
+      argv: ['-e', 'test'],
+      command: MyCommand,
+      config,
+    });
+    const actual = execution.toJson();
+    expect(actual.specifiedFlags).to.equal('red');
+    expect(actual.specifiedFlagFullNames).to.equal('red');
+    expect(actual.deprecatedFlagsUsed).to.equal('');
+  });
+
   it('shows short help flag', async () => {
     process.env.CI = 'true';
     const config = stubInterface<Interfaces.Config>(sandbox, {});

@@ -1,3 +1,9 @@
+## [3.1.4](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.3...3.1.4) (2023-12-01)
+
+### Bug Fixes
+
+- improve flag capture ([bf4206f](https://github.com/salesforcecli/plugin-telemetry/commit/bf4206f181b525af9af100fdc03426c626e952ab))
+
 ## [3.1.3](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.2...3.1.3) (2023-11-25)
 
 ### Bug Fixes
