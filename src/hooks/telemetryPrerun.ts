@@ -5,14 +5,11 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { join } from 'node:path';
-import { Hook, Performance } from '@oclif/core';
-import { SfError, Lifecycle } from '@salesforce/core';
-import { JsonMap } from '@salesforce/ts-types';
+import type { Hook } from '@oclif/core';
+import type { SfError } from '@salesforce/core';
+import type { JsonMap } from '@salesforce/ts-types';
 import enabledCheck from '@salesforce/telemetry/enabledCheck';
-import Telemetry from '../telemetry.js';
-import { TelemetryGlobal } from '../telemetryGlobal.js';
-import { CommandExecution } from '../commandExecution.js';
+import type { TelemetryGlobal } from '../telemetryGlobal.js';
 import { debug } from '../debugger.js';
 
 declare const global: TelemetryGlobal;
@@ -38,6 +35,12 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
   }
 
   try {
+    const path = await import('node:path');
+    const { Performance } = await import('@oclif/core');
+    const { Lifecycle } = await import('@salesforce/core');
+    const { default: Telemetry } = await import('../telemetry.js');
+    const { CommandExecution } = await import('../commandExecution.js');
+
     const errors: Array<{ event: JsonMap; error: SfError }> = [];
 
     // Instantiating telemetry shows data collection warning.
@@ -118,7 +121,8 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
         telemetry.record({
           eventName: 'INSTALL',
           installType:
-            this.config.binPath?.includes(join('sfdx', 'client')) ?? this.config.binPath?.includes(join('sf', 'client'))
+            this.config.binPath?.includes(path.join('sfdx', 'client')) ??
+            this.config.binPath?.includes(path.join('sf', 'client'))
               ? 'installer'
               : 'npm',
           platform: this.config.platform,
