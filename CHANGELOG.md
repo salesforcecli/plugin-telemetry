@@ -1,3 +1,9 @@
+## [3.1.5](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.4...3.1.5) (2023-12-07)
+
+### Bug Fixes
+
+- improve perf when telemetry is disabled ([#546](https://github.com/salesforcecli/plugin-telemetry/issues/546)) ([09cb6ee](https://github.com/salesforcecli/plugin-telemetry/commit/09cb6ee413d3a67273cb816d364f48532e3b730c))
+
 ## [3.1.4](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.3...3.1.4) (2023-12-01)
 
 ### Bug Fixes
