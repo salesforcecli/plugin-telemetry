@@ -1,3 +1,9 @@
+## [3.1.6](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.5...3.1.6) (2023-12-09)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/telemetry from 5.0.0 to 5.0.3 ([95a6d88](https://github.com/salesforcecli/plugin-telemetry/commit/95a6d884d81e6eeeb072250e65bcb93a29a4d2a0))
+
 ## [3.1.5](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.4...3.1.5) (2023-12-07)
 
 ### Bug Fixes
