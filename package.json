@@ -7,7 +7,7 @@
   "dependencies": {
     "@oclif/core": "^3.15.1",
     "@salesforce/core": "^6.4.2",
-    "@salesforce/sf-plugins-core": "^5.0.3",
+    "@salesforce/sf-plugins-core": "^7.0.0",
     "@salesforce/telemetry": "^5.0.5",
     "debug": "^4.3.4"
   },
