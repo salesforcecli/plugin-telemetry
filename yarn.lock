@@ -1093,42 +1093,18 @@
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
 "@salesforce/cli-plugins-testkit@^5":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@salesforce/cli-plugins-testkit/-/cli-plugins-testkit-5.0.0.tgz#0ced85db4ca9f38ea0f486782c1e132fa43fe843"
-  integrity sha512-j0M7XC09ctpreFL6aPXkDIEZujlnNId4JMtTzfWA++Lpzj4PVj84zPBdXzGWSold/m9pf4EC7HZWaFS9kK/KVQ==
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/@salesforce/cli-plugins-testkit/-/cli-plugins-testkit-5.1.3.tgz#5e7a7afebaa9a2c02eadbf533273d496335929d6"
+  integrity sha512-wmaiVR2Hr6AGUBdDF4M5xCEm4iczNdkm3lVlz8dU/8nISEAyNHOUkt2sB07Yx5oXoDMNNuuxM2DthxxMxxwzzA==
   dependencies:
-    "@salesforce/core" "^5.3.10"
+    "@salesforce/core" "^6.4.2"
     "@salesforce/kit" "^3.0.15"
-    "@salesforce/ts-types" "^2.0.6"
-    "@types/shelljs" "^0.8.14"
+    "@salesforce/ts-types" "^2.0.9"
+    "@types/shelljs" "^0.8.15"
     debug "^4.3.1"
     jszip "^3.10.1"
     shelljs "^0.8.4"
     strip-ansi "6.0.1"
-    ts-retry-promise "^0.7.1"
-
-"@salesforce/core@^5.3.10":
-  version "5.3.20"
-  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-5.3.20.tgz#4e934d4551bb70423cb1c4115615bc41cffca41e"
-  integrity sha512-y+O6O2c8OYFDrAy2qsG+pAcNxoyL14nmBXcBRRcYA7Huj8ikK+aLJK84PuVAYdQz+hNwImQF+69IWtDkpK4Irg==
-  dependencies:
-    "@salesforce/kit" "^3.0.15"
-    "@salesforce/schemas" "^1.6.1"
-    "@salesforce/ts-types" "^2.0.9"
-    "@types/semver" "^7.5.4"
-    ajv "^8.12.0"
-    change-case "^4.1.2"
-    faye "^1.4.0"
-    form-data "^4.0.0"
-    js2xmlparser "^4.0.1"
-    jsforce "^2.0.0-beta.28"
-    jsonwebtoken "9.0.2"
-    jszip "3.10.1"
-    pino "^8.16.0"
-    pino-abstract-transport "^1.0.0"
-    pino-pretty "^10.2.3"
-    proper-lockfile "^4.1.2"
-    semver "^7.5.4"
     ts-retry-promise "^0.7.1"
 
 "@salesforce/core@^6.4.1", "@salesforce/core@^6.4.2":
@@ -1270,7 +1246,7 @@
     sinon "^5.1.1"
     tslib "^2.6.1"
 
-"@salesforce/ts-types@^2.0.6", "@salesforce/ts-types@^2.0.9":
+"@salesforce/ts-types@^2.0.9":
   version "2.0.9"
   resolved "https://registry.yarnpkg.com/@salesforce/ts-types/-/ts-types-2.0.9.tgz#66bff7b41720065d6b01631b6f6a3ccca02857c5"
   integrity sha512-boUD9jw5vQpTCPCCmK/NFTWjSuuW+lsaxOynkyNXLW+zxOc4GDjhtKc4j0vWZJQvolpafbyS8ZLFHZJvs12gYA==
@@ -1533,15 +1509,15 @@
   dependencies:
     "@types/node" "*"
 
-"@types/semver@^7.5.0", "@types/semver@^7.5.4", "@types/semver@^7.5.6":
+"@types/semver@^7.5.0", "@types/semver@^7.5.6":
   version "7.5.6"
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.6.tgz#c65b2bfce1bec346582c07724e3f8c1017a20339"
   integrity sha512-dn1l8LaMea/IjDoHNd9J52uBbInB796CDffS6VdIxvqYCPSG0V0DzHp76GpaWnlhg88uYyPbXCDIowa86ybd5A==
 
-"@types/shelljs@^0.8.14":
-  version "0.8.14"
-  resolved "https://registry.yarnpkg.com/@types/shelljs/-/shelljs-0.8.14.tgz#87b8817b2397ffe97b86a4d844036ee0d2a1f0ca"
-  integrity sha512-eqKaGPi60riuxI9pUVeCT02EGo94Y6HT119h7w5bXSELsis6+JqzdEy6H/w2xXl881wcN3VDnb/D0WlgSety5w==
+"@types/shelljs@^0.8.15":
+  version "0.8.15"
+  resolved "https://registry.yarnpkg.com/@types/shelljs/-/shelljs-0.8.15.tgz#22c6ab9dfe05cec57d8e6cb1a95ea173aee9fcac"
+  integrity sha512-vzmnCHl6hViPu9GNLQJ+DZFd6BQI2DBTUeOvYHqkWQLMfKAAQYMb/xAmZkTogZI/vqXHCWkqDRymDI5p0QTi5Q==
   dependencies:
     "@types/glob" "~7.2.0"
     "@types/node" "*"
@@ -4847,7 +4823,7 @@ jsesc@~0.5.0:
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-0.5.0.tgz#e7dee66e35d6fc16f710fe91d5cf69f70f08911d"
   integrity sha512-uZz5UnB7u4T9LvwmFqXii7pZSouaRPorGs5who1Ip7VO0wxanFvBL7GkM6dTHlgX+jhBApRetaWpnDabOeTcnA==
 
-jsforce@^2.0.0-beta.28, jsforce@^2.0.0-beta.29:
+jsforce@^2.0.0-beta.29:
   version "2.0.0-beta.29"
   resolved "https://registry.yarnpkg.com/jsforce/-/jsforce-2.0.0-beta.29.tgz#0b59b026eb0b90dfb199a53656af32a4c8acc48f"
   integrity sha512-Fq7xjOYOikyozZZDQNTfzsAdhcO0rUXwtavsjM+cCYUFiCMVOJJavgco303zOsJk3v8sdAYnGgHyKckLIhnyAg==
@@ -6363,7 +6339,7 @@ pino-abstract-transport@^1.0.0, pino-abstract-transport@^1.1.0, pino-abstract-tr
     readable-stream "^4.0.0"
     split2 "^4.0.0"
 
-pino-pretty@^10.2.3, pino-pretty@^10.3.0:
+pino-pretty@^10.3.0:
   version "10.3.0"
   resolved "https://registry.yarnpkg.com/pino-pretty/-/pino-pretty-10.3.0.tgz#483ff78b98d277c33d00e0419c00601d9152bc7e"
   integrity sha512-JthvQW289q3454mhM3/38wFYGWPiBMR28T3CpDNABzoTQOje9UKS7XCJQSnjWF9LQGQkGd8D7h0oq+qwiM3jFA==
@@ -6388,7 +6364,7 @@ pino-std-serializers@^6.0.0:
   resolved "https://registry.yarnpkg.com/pino-std-serializers/-/pino-std-serializers-6.2.2.tgz#d9a9b5f2b9a402486a5fc4db0a737570a860aab3"
   integrity sha512-cHjPPsE+vhj/tnhCy/wiMh3M3z3h/j15zHQX+S9GkTBgqJuTuJzYJ4gUyACLhDaJ7kk9ba9iRDmbH2tJU03OiA==
 
-pino@^8.16.0, pino@^8.16.2:
+pino@^8.16.2:
   version "8.16.2"
   resolved "https://registry.yarnpkg.com/pino/-/pino-8.16.2.tgz#7a906f2d9a8c5b4c57412c9ca95d6820bd2090cd"
   integrity sha512-2advCDGVEvkKu9TTVSa/kWW7Z3htI/sBKEZpqiHk6ive0i/7f5b1rsU8jn0aimxqfnSz5bj/nOYkwhBUn5xxvg==
