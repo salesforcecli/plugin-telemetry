@@ -17,39 +17,17 @@ import { AsyncCreatable, env } from '@salesforce/kit';
 import { SfError } from '@salesforce/core';
 import { isBoolean, isNumber, isString, JsonMap } from '@salesforce/ts-types';
 import { debug } from './debugger.js';
+import { guessCISystem } from './guessCI.js';
 
 const CLI_ID_FILE_NAME = 'CLIID.txt';
 const USAGE_ACKNOWLEDGEMENT_FILE_NAME = 'acknowledgedUsageCollection.json';
+const generateRandomId = (): string => randomBytes(20).toString('hex');
 
 export type TelemetryOptions = {
   cacheDir?: string;
   telemetryFilePath?: string;
   executable?: string;
 };
-
-export type CI =
-  | 'circleci'
-  | 'travisci'
-  | 'bitbucket'
-  | 'hudson'
-  | 'heroku'
-  | 'codebuild'
-  | 'bamboo'
-  | 'cirrus'
-  | 'jenkins'
-  | 'github_actions'
-  | 'azure_pipelines'
-  | 'teamcity'
-  | 'gitlab'
-  | 'nevercode'
-  | 'wercker'
-  | 'buildkite'
-  | 'semaphore'
-  | 'bitrise'
-  | 'buddy'
-  | 'appveyor'
-  | 'copado'
-  | 'unknown';
 
 export default class Telemetry extends AsyncCreatable {
   /**
@@ -69,7 +47,7 @@ export default class Telemetry extends AsyncCreatable {
 
   private static cacheDir: string;
   private static executable = 'sfdx';
-  private static telemetryTmpFile: string = join(Telemetry.tmpDir, `telemetry-${Telemetry.generateRandomId()}.log`);
+  private static telemetryTmpFile: string = join(Telemetry.tmpDir, `telemetry-${generateRandomId()}.log`);
   private static acknowledged = false;
 
   public firstRun = false;
@@ -129,81 +107,6 @@ export default class Telemetry extends AsyncCreatable {
     }
   }
 
-  // eslint-disable-next-line complexity
-  public static guessCISystem(): CI | undefined {
-    const keys = Object.keys(process.env);
-    if (keys.find((key) => key.startsWith('CIRCLE'))) {
-      return 'circleci';
-    }
-    if (keys.find((key) => key.startsWith('TRAVIS'))) {
-      return 'travisci';
-    }
-    if (keys.find((key) => key.startsWith('BITBUCKET'))) {
-      return 'bitbucket';
-    }
-    if (keys.find((key) => key.startsWith('CIRRUS'))) {
-      return 'cirrus';
-    }
-    if (keys.find((key) => key.startsWith('HEROKU_TEST_RUN_ID'))) {
-      return 'heroku';
-    }
-    if (keys.find((key) => key.startsWith('bamboo') || key.startsWith('BAMBOO'))) {
-      return 'bamboo';
-    }
-    if (keys.find((key) => key.startsWith('CODEBUILD'))) {
-      return 'codebuild';
-    }
-    if (keys.find((key) => key.startsWith('GITHUB_ACTION'))) {
-      return 'github_actions';
-    }
-    if (keys.find((key) => key.startsWith('AGENT_NAME')) ?? keys.find((key) => key.startsWith('BUILD_BUILDNUMBER'))) {
-      return 'azure_pipelines';
-    }
-    if (keys.find((key) => key.startsWith('TEAMCITY'))) {
-      return 'teamcity';
-    }
-    if (keys.find((key) => key.startsWith('GITLAB'))) {
-      return 'gitlab';
-    }
-    if (keys.find((key) => key.startsWith('NEVERCODE'))) {
-      return 'nevercode';
-    }
-    if (keys.find((key) => key.startsWith('WERCKER'))) {
-      return 'wercker';
-    }
-    if (keys.find((key) => key.startsWith('BUILDKITE'))) {
-      return 'buildkite';
-    }
-    if (keys.find((key) => key.startsWith('SEMAPHORE'))) {
-      return 'semaphore';
-    }
-    if (keys.find((key) => key.startsWith('BITRISE'))) {
-      return 'bitrise';
-    }
-    if (keys.find((key) => key.startsWith('BUDDY'))) {
-      return 'buddy';
-    }
-    if (keys.find((key) => key.startsWith('APPVEYOR'))) {
-      return 'appveyor';
-    }
-    if (keys.find((key) => key.startsWith('JENKINS'))) {
-      return 'jenkins';
-    }
-    if (keys.find((key) => key.startsWith('HUDSON'))) {
-      return 'hudson';
-    }
-    if (keys.find((key) => key.startsWith('CF_SF_') || key.startsWith('COPADO_CI'))) {
-      return 'copado';
-    }
-    if (keys.find((key) => key === 'CI' || key === 'CONTINUOUS_INTEGRATION' || key === 'BUILD_ID')) {
-      return 'unknown';
-    }
-  }
-
-  private static generateRandomId(): string {
-    return randomBytes(20).toString('hex');
-  }
-
   // eslint-disable-next-line class-methods-use-this
   public getTelemetryFilePath(): string {
     return Telemetry.telemetryTmpFile;
@@ -218,7 +121,7 @@ export default class Telemetry extends AsyncCreatable {
       this.cliId = fs.readFileSync(cliIdPath, 'utf8');
     } catch (err) {
       debug('Unique CLI ID not found, generating and writing new ID to ', cliIdPath);
-      this.cliId = Telemetry.generateRandomId();
+      this.cliId = generateRandomId();
       fs.writeFileSync(cliIdPath, this.cliId, 'utf8');
 
       // If there is not a unique ID for this CLI, consider it a first run.
@@ -267,7 +170,7 @@ export default class Telemetry extends AsyncCreatable {
 
     // Unique to this CLI installation
     dataToRecord.cliId = this.getCLIId();
-    dataToRecord.ci = Telemetry.guessCISystem();
+    dataToRecord.ci = guessCISystem();
     dataToRecord.executable = Telemetry.executable;
     try {
       fs.writeSync(this.fileDescriptor, JSON.stringify(dataToRecord) + EOL);
