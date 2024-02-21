@@ -1,3 +1,9 @@
+## [3.1.13](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.12...3.1.13) (2024-02-21)
+
+### Bug Fixes
+
+- **deps:** bump ip from 1.1.8 to 1.1.9 ([c0d81a2](https://github.com/salesforcecli/plugin-telemetry/commit/c0d81a275229620af294aba2a5e8c650c424a43c))
+
 ## [3.1.12](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.11...3.1.12) (2024-02-17)
 
 ### Bug Fixes
