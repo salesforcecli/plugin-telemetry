@@ -15,12 +15,11 @@
     "@oclif/plugin-command-snapshot": "^5.0.6",
     "@oclif/plugin-help": "^6.0.9",
     "@salesforce/cli-plugins-testkit": "^5",
-    "@salesforce/dev-scripts": "^8.3.0",
+    "@salesforce/dev-scripts": "^8.4.0",
     "@salesforce/plugin-command-reference": "^3.0.67",
     "@salesforce/ts-sinon": "^1.4.15",
     "@types/debug": "^4.1.12",
     "oclif": "^4.4.8",
-    "shx": "0.3.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },
@@ -30,9 +29,11 @@
   },
   "files": [
     "/lib",
-    "/processes",
+    "/messages",
+    "/npm-shrinkwrap.json",
+    "/oclif.lock",
     "/oclif.manifest.json",
-    "/oclif.lock"
+    "/processes"
   ],
   "homepage": "https://github.com/salesforcecli/plugin-telemetry",
   "keywords": [
@@ -64,13 +65,12 @@
     "build": "wireit",
     "clean": "sf-clean",
     "clean-all": "sf-clean all",
-    "clean:lib": "shx rm -rf lib && shx rm -rf coverage && shx rm -rf .nyc_output && shx rm -f oclif.manifest.json",
     "compile": "wireit",
     "docs": "sf-docs",
     "format": "wireit",
     "link-check": "wireit",
     "lint": "wireit",
-    "postpack": "shx rm -f oclif.manifest.json",
+    "postpack": "sf-clean",
     "prepack": "sf-prepack",
     "prepare": "sf-install",
     "test": "wireit",
