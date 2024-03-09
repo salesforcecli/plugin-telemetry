@@ -1,3 +1,9 @@
+## [3.1.16](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.15...3.1.16) (2024-03-09)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/core from 6.5.5 to 6.7.0 ([3618bfa](https://github.com/salesforcecli/plugin-telemetry/commit/3618bfafe10a21643aa77add6b967024cfd296ad))
+
 ## [3.1.15](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.14...3.1.15) (2024-03-02)
 
 ### Bug Fixes
