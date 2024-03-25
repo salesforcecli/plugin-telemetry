@@ -180,7 +180,7 @@ export default class Telemetry extends AsyncCreatable {
     }
   }
 
-  public recordError(error: Error, data: JsonMap): void {
+  public recordError(error: NodeJS.ErrnoException, data: JsonMap): void {
     data.type = Telemetry.EXCEPTION;
     // Also have on custom attributes since app insights might parse differently
     data.errorName = error.name;
@@ -190,6 +190,7 @@ export default class Telemetry extends AsyncCreatable {
         name: error.name,
         message: error.message,
         stack: error.stack,
+        code: error.code ?? '',
       } as JsonMap,
       error
     );
