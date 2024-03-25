@@ -1326,7 +1326,7 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@microsoft/applicationinsights-web-snippet@^1.0.1":
+"@microsoft/applicationinsights-web-snippet@1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@microsoft/applicationinsights-web-snippet/-/applicationinsights-web-snippet-1.0.1.tgz#6bb788b2902e48bf5d460c38c6bb7fedd686ddd7"
   integrity sha512-2IHAOaLauc8qaAitvWS+U931T+ze+7MNWrDHY47IENP5y2UA0vqJDu67kWZDdpCN1fFC77sfgfB+HV7SrKshnQ==
@@ -1352,7 +1352,7 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@oclif/core@^3.15.1", "@oclif/core@^3.16.0", "@oclif/core@^3.19.1", "@oclif/core@^3.19.2", "@oclif/core@^3.20.0", "@oclif/core@^3.21.0", "@oclif/core@^3.23.0":
+"@oclif/core@^3.15.1", "@oclif/core@^3.16.0", "@oclif/core@^3.19.1", "@oclif/core@^3.21.0", "@oclif/core@^3.23.0", "@oclif/core@^3.26.0":
   version "3.26.0"
   resolved "https://registry.yarnpkg.com/@oclif/core/-/core-3.26.0.tgz#959d5e9f13f4ad6a4e98235ad125189df9ee4279"
   integrity sha512-TpMdfD4tfA2tVVbd4l0PrP02o5KoUXYmudBbTC7CeguDo/GLoprw4uL8cMsaVA26+cbcy7WYtOEydQiHVtJixA==
@@ -1494,10 +1494,10 @@
     strip-ansi "6.0.1"
     ts-retry-promise "^0.8.0"
 
-"@salesforce/core@^6.4.1", "@salesforce/core@^6.5.1", "@salesforce/core@^6.5.3", "@salesforce/core@^6.5.4", "@salesforce/core@^6.7.0", "@salesforce/core@^6.7.1":
-  version "6.7.1"
-  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-6.7.1.tgz#4dcfb62bc3d488462ea6e9438ff092cf202c1696"
-  integrity sha512-SxscNdH2l+K5LmqH9XrosX+fjhPkMLN3hsG50sWQi7DbaI1Z0FGAKVOmVe6fZZsUsVNThKvZ+159IwwtxHWY6w==
+"@salesforce/core@^6.4.1", "@salesforce/core@^6.5.3", "@salesforce/core@^6.7.0", "@salesforce/core@^6.7.3":
+  version "6.7.3"
+  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-6.7.3.tgz#5d8f30c40ac3cebb898c8e845fe9a067bc729268"
+  integrity sha512-uU+PuZZGXxByhvnXLH1V3eY5P1caw401dIZ/QvhzYxoP/alPLk7dpChnZNJYH5Rw3dc/AhSPw+eg0cvUyjhP1Q==
   dependencies:
     "@salesforce/kit" "^3.0.15"
     "@salesforce/schemas" "^1.6.1"
@@ -1600,29 +1600,29 @@
     chalk "^4"
     inquirer "^8.2.5"
 
-"@salesforce/sf-plugins-core@^7.1.11":
-  version "7.1.11"
-  resolved "https://registry.yarnpkg.com/@salesforce/sf-plugins-core/-/sf-plugins-core-7.1.11.tgz#63c0ca8cdc2f94b36b8e4bd5f107f9d806f9f5be"
-  integrity sha512-2EAv1OYxGo5e/rZ+3k3G96oVZKK2FBPKK4CiFhgp8bQ7BB0+7+bmSyBjoQ26Q2AaEp4k0GQeNsh+0RN2ZhTuVg==
+"@salesforce/sf-plugins-core@^8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@salesforce/sf-plugins-core/-/sf-plugins-core-8.0.1.tgz#f155cddfd7695aab0d8264848b634b2a91cdbf2c"
+  integrity sha512-R6SqJ1XqSINSWdZruKtC2SKGnLBh7KbFI7+qS0FYlyPU4IlWoa+AZkGwWvlczuSOumqnlhT95rNKwZTS5rJugA==
   dependencies:
     "@inquirer/confirm" "^2.0.17"
     "@inquirer/password" "^1.1.16"
-    "@oclif/core" "^3.19.2"
-    "@salesforce/core" "^6.5.4"
+    "@oclif/core" "^3.23.0"
+    "@salesforce/core" "^6.7.3"
     "@salesforce/kit" "^3.0.15"
     "@salesforce/ts-types" "^2.0.9"
     chalk "^5.3.0"
 
-"@salesforce/telemetry@^5.0.10":
-  version "5.0.10"
-  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-5.0.10.tgz#c33ae6e771403218fc72f271e500a60999565075"
-  integrity sha512-nIVKwCTurfV9xJeeLWNHZQ4ZYFGDe+x9P/bMdCO4GxM86HASE+GSuv8K6jcSSIOBE+yyOEf+1m1e6313NiDjlg==
+"@salesforce/telemetry@^5.0.19":
+  version "5.0.19"
+  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-5.0.19.tgz#64774abdca82b97bad82c10b8c80a0276a2b716e"
+  integrity sha512-6yaS1oD1o+ldvBC0tcoTraFE6m5xe9y4KY+CZViwyGDfrD6hlrSmpvmPz0kA41Sn+P70cjIDy6hesuPlbbOlrA==
   dependencies:
-    "@salesforce/core" "^6.5.1"
+    "@salesforce/core" "^6.7.3"
     "@salesforce/ts-types" "^2.0.9"
-    applicationinsights "^2.9.2"
+    applicationinsights "^2.9.5"
     got "^11"
-    proxy-agent "^6.3.1"
+    proxy-agent "^6.4.0"
 
 "@salesforce/ts-sinon@^1.4.15":
   version "1.4.19"
@@ -2634,16 +2634,16 @@ append-transform@^2.0.0:
   dependencies:
     default-require-extensions "^3.0.0"
 
-applicationinsights@^2.9.2:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/applicationinsights/-/applicationinsights-2.9.2.tgz#a83b4bb3201da350cf438015d1e5032cb9978fe1"
-  integrity sha512-wlDiD7v0BQNM8oNzsf9C836R5ze25u+CuCEZsbA5xMIXYYBxkqkWE/mo9GFJM7rsKaiGqpxEwWmePHKD2Lwy2w==
+applicationinsights@^2.9.5:
+  version "2.9.5"
+  resolved "https://registry.yarnpkg.com/applicationinsights/-/applicationinsights-2.9.5.tgz#34bcf71ad596721c520987a252e40d7495aa3503"
+  integrity sha512-APQ8IWyYDHFvKbitFKpsmZXxkzQh0yYTFacQqoVW7HwlPo3eeLprwnq5RFNmmG6iqLmvQ+xRJSDLEQCgqPh+bw==
   dependencies:
     "@azure/core-auth" "^1.5.0"
     "@azure/core-rest-pipeline" "1.10.1"
     "@azure/core-util" "1.2.0"
     "@azure/opentelemetry-instrumentation-azure-sdk" "^1.0.0-beta.5"
-    "@microsoft/applicationinsights-web-snippet" "^1.0.1"
+    "@microsoft/applicationinsights-web-snippet" "1.0.1"
     "@opentelemetry/api" "^1.7.0"
     "@opentelemetry/core" "^1.19.0"
     "@opentelemetry/sdk-trace-base" "^1.19.0"
@@ -4761,10 +4761,10 @@ http-proxy-agent@^5.0.0:
     agent-base "6"
     debug "4"
 
-http-proxy-agent@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/http-proxy-agent/-/http-proxy-agent-7.0.0.tgz#e9096c5afd071a3fce56e6252bb321583c124673"
-  integrity sha512-+ZT+iBxVUQ1asugqnD6oWoRiS25AkjNfG085dKJGtGxkdwLQrMKU5wJr2bOOFAXzKcTuqq+7fZlTMgG3SRfIYQ==
+http-proxy-agent@^7.0.0, http-proxy-agent@^7.0.1:
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/http-proxy-agent/-/http-proxy-agent-7.0.2.tgz#9a8b1f246866c028509486585f62b8f2c18c270e"
+  integrity sha512-T1gkAiYYDWYx3V5Bmyu7HcfcvL7mUrTWiM6yOfa3PIphViJ/gFPbvidQ+veqSOHci/PxBcDabeUNCzpOODJZig==
   dependencies:
     agent-base "^7.1.0"
     debug "^4.3.4"
@@ -4793,10 +4793,10 @@ https-proxy-agent@^5.0.0:
     agent-base "6"
     debug "4"
 
-https-proxy-agent@^7.0.1, https-proxy-agent@^7.0.2:
-  version "7.0.2"
-  resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-7.0.2.tgz#e2645b846b90e96c6e6f347fb5b2e41f1590b09b"
-  integrity sha512-NmLNjm6ucYwtcUmL7JQC1ZQ57LmHP4lT15FQ8D61nak1rO6DH+fz5qNK2Ap5UN4ZapYICE3/0KodcLYSPsPbaA==
+https-proxy-agent@^7.0.1, https-proxy-agent@^7.0.2, https-proxy-agent@^7.0.3:
+  version "7.0.4"
+  resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-7.0.4.tgz#8e97b841a029ad8ddc8731f26595bad868cb4168"
+  integrity sha512-wlwpilI7YdjSkWaQ/7omYBMTliDcmCN8OLihO6I9B86g06lMyAoqgoDpV0XqoaPOKj+0DIdAvnsWfyAAhmimcg==
   dependencies:
     agent-base "^7.0.2"
     debug "4"
@@ -6573,15 +6573,15 @@ proper-lockfile@^4.1.2:
     retry "^0.12.0"
     signal-exit "^3.0.2"
 
-proxy-agent@^6.3.1:
-  version "6.3.1"
-  resolved "https://registry.yarnpkg.com/proxy-agent/-/proxy-agent-6.3.1.tgz#40e7b230552cf44fd23ffaf7c59024b692612687"
-  integrity sha512-Rb5RVBy1iyqOtNl15Cw/llpeLH8bsb37gM1FUfKQ+Wck6xHlbAhWGUFiTRHtkjqGTA5pSHz6+0hrPW/oECihPQ==
+proxy-agent@^6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/proxy-agent/-/proxy-agent-6.4.0.tgz#b4e2dd51dee2b377748aef8d45604c2d7608652d"
+  integrity sha512-u0piLU+nCOHMgGjRbimiXmA9kM/L9EHh3zL81xCdp7m+Y2pHIsnmbdDoEDoAz5geaonNR6q6+yOPQs6n4T6sBQ==
   dependencies:
     agent-base "^7.0.2"
     debug "^4.3.4"
-    http-proxy-agent "^7.0.0"
-    https-proxy-agent "^7.0.2"
+    http-proxy-agent "^7.0.1"
+    https-proxy-agent "^7.0.3"
     lru-cache "^7.14.1"
     pac-proxy-agent "^7.0.1"
     proxy-from-env "^1.1.0"
@@ -7276,16 +7276,7 @@ stack-chain@^1.3.7:
   resolved "https://registry.yarnpkg.com/stack-chain/-/stack-chain-1.3.7.tgz#d192c9ff4ea6a22c94c4dd459171e3f00cea1285"
   integrity sha1-0ZLJ/06moiyUxN1FkXHj8AzqEoU=
 
-"string-width-cjs@npm:string-width@^4.2.0":
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
-  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
-  dependencies:
-    emoji-regex "^8.0.0"
-    is-fullwidth-code-point "^3.0.0"
-    strip-ansi "^6.0.1"
-
-string-width@^4.0.0, string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
+"string-width-cjs@npm:string-width@^4.2.0", string-width@^4.0.0, string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -7344,14 +7335,7 @@ string_decoder@~1.1.1:
   dependencies:
     safe-buffer "~5.1.0"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
-  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
-  dependencies:
-    ansi-regex "^5.0.1"
-
-strip-ansi@6.0.1, strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@6.0.1, strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
@@ -7898,7 +7882,7 @@ workerpool@6.2.1:
   resolved "https://registry.yarnpkg.com/workerpool/-/workerpool-6.2.1.tgz#46fc150c17d826b86a008e5a4508656777e9c343"
   integrity sha512-ILEIE97kDZvF9Wb9f6h5aXK4swSlKGUcOEGiIYb2OOu/IrDU9iwj0fD//SsA6E5ibwJxpEvhullJY4Sl4GcpAw==
 
-"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0":
+"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
@@ -7911,15 +7895,6 @@ wrap-ansi@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
   integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==
-  dependencies:
-    ansi-styles "^4.0.0"
-    string-width "^4.1.0"
-    strip-ansi "^6.0.0"
-
-wrap-ansi@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
-  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
   dependencies:
     ansi-styles "^4.0.0"
     string-width "^4.1.0"

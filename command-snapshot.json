@@ -1,8 +1,10 @@
 [
   {
+    "alias": [],
     "command": "telemetry",
-    "plugin": "@salesforce/plugin-telemetry",
-    "flags": ["json"],
-    "alias": []
+    "flagAliases": [],
+    "flagChars": [],
+    "flags": ["flags-dir", "json"],
+    "plugin": "@salesforce/plugin-telemetry"
   }
 ]

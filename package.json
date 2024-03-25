@@ -5,10 +5,12 @@
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/cli/issues",
   "dependencies": {
-    "@oclif/core": "^3.20.0",
-    "@salesforce/core": "^6.7.1",
-    "@salesforce/sf-plugins-core": "^7.1.11",
-    "@salesforce/telemetry": "^5.0.10",
+    "@oclif/core": "^3.26.0",
+    "@salesforce/core": "^6.7.3",
+    "@salesforce/kit": "^3.0.15",
+    "@salesforce/sf-plugins-core": "^8.0.1",
+    "@salesforce/telemetry": "^5.0.19",
+    "@salesforce/ts-types": "^2.0.9",
     "debug": "^4.3.4"
   },
   "devDependencies": {
