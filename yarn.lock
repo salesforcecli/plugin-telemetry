@@ -1352,7 +1352,7 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@oclif/core@^3.15.1", "@oclif/core@^3.16.0", "@oclif/core@^3.19.1", "@oclif/core@^3.21.0", "@oclif/core@^3.23.0", "@oclif/core@^3.26.0":
+"@oclif/core@^3.15.1", "@oclif/core@^3.16.0", "@oclif/core@^3.21.0", "@oclif/core@^3.23.0", "@oclif/core@^3.26.0":
   version "3.26.0"
   resolved "https://registry.yarnpkg.com/@oclif/core/-/core-3.26.0.tgz#959d5e9f13f4ad6a4e98235ad125189df9ee4279"
   integrity sha512-TpMdfD4tfA2tVVbd4l0PrP02o5KoUXYmudBbTC7CeguDo/GLoprw4uL8cMsaVA26+cbcy7WYtOEydQiHVtJixA==
@@ -1494,7 +1494,7 @@
     strip-ansi "6.0.1"
     ts-retry-promise "^0.8.0"
 
-"@salesforce/core@^6.4.1", "@salesforce/core@^6.5.3", "@salesforce/core@^6.7.0", "@salesforce/core@^6.7.3":
+"@salesforce/core@^6.4.1", "@salesforce/core@^6.7.0", "@salesforce/core@^6.7.3":
   version "6.7.3"
   resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-6.7.3.tgz#5d8f30c40ac3cebb898c8e845fe9a067bc729268"
   integrity sha512-uU+PuZZGXxByhvnXLH1V3eY5P1caw401dIZ/QvhzYxoP/alPLk7dpChnZNJYH5Rw3dc/AhSPw+eg0cvUyjhP1Q==
@@ -1563,13 +1563,13 @@
     "@salesforce/ts-types" "^2.0.9"
     tslib "^2.6.2"
 
-"@salesforce/plugin-command-reference@^3.0.67":
-  version "3.0.67"
-  resolved "https://registry.yarnpkg.com/@salesforce/plugin-command-reference/-/plugin-command-reference-3.0.67.tgz#e05cdb1e68e035a27588abbaea2ea5ccdfe524ae"
-  integrity sha512-wUfjiqgok2rshI2ZRnHgBthMHL0z0wb14t43rQrLbRuuKmAODJ9qbVlMVqh+jy9//SH3iBBeA3jHs7XFzsT6aA==
+"@salesforce/plugin-command-reference@^3.0.73":
+  version "3.0.73"
+  resolved "https://registry.yarnpkg.com/@salesforce/plugin-command-reference/-/plugin-command-reference-3.0.73.tgz#81a3ecb06a2c0ab319e01ce24c1eaab5608c3735"
+  integrity sha512-FkGlvA3H2kH3KrzFxWSQhnPrcgvVLQF1QGig69J/j/Z0rnb2k4rH5gKN0Bg0xcgHXBwmBrlY5otpJltnrpq0PQ==
   dependencies:
-    "@oclif/core" "^3.19.1"
-    "@salesforce/core" "^6.5.3"
+    "@oclif/core" "^3.26.0"
+    "@salesforce/core" "^6.7.3"
     "@salesforce/kit" "^3.0.15"
     "@salesforce/sf-plugins-core" "^5.0.13"
     "@salesforce/ts-types" "^2.0.9"
