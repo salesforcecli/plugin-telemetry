@@ -17,13 +17,13 @@
     "@oclif/plugin-command-snapshot": "^5.0.6",
     "@oclif/plugin-help": "^6.0.18",
     "@salesforce/cli-plugins-testkit": "^5",
-    "@salesforce/dev-scripts": "^8.4.2",
+    "@salesforce/dev-scripts": "^8.4.3",
     "@salesforce/plugin-command-reference": "^3.0.73",
     "@salesforce/ts-sinon": "^1.4.15",
     "@types/debug": "^4.1.12",
     "oclif": "^4.7.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.3"
   },
   "config": {},
   "engines": {
