@@ -1,3 +1,9 @@
+# [3.2.0](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.18...3.2.0) (2024-04-10)
+
+### Features
+
+- core7, jsforce-node ([28ebf30](https://github.com/salesforcecli/plugin-telemetry/commit/28ebf30cbfea3aa972c5bbd3d98e7bf877a55f3d))
+
 ## [3.1.18](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.17...3.1.18) (2024-04-06)
 
 ### Bug Fixes
