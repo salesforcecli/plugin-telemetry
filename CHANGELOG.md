@@ -1,3 +1,9 @@
+# [3.3.0](https://github.com/salesforcecli/plugin-telemetry/compare/3.2.0...3.3.0) (2024-04-12)
+
+### Features
+
+- export telemetryGlobal type ([#608](https://github.com/salesforcecli/plugin-telemetry/issues/608)) ([46a8c25](https://github.com/salesforcecli/plugin-telemetry/commit/46a8c25174f4f5d3b86ccef90cc99c20ab318963))
+
 # [3.2.0](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.18...3.2.0) (2024-04-10)
 
 ### Features
