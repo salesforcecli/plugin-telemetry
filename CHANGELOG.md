@@ -1,3 +1,21 @@
+## [3.3.2](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.1...3.3.2) (2024-04-16)
+
+### Bug Fixes
+
+- spawn with shell:true windows ([#611](https://github.com/salesforcecli/plugin-telemetry/issues/611)) ([fe163e1](https://github.com/salesforcecli/plugin-telemetry/commit/fe163e14a320ae15756388ab8bdd47d305c9be27))
+
+## [3.3.1](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.0...3.3.1) (2024-04-13)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/core from 7.1.0 to 7.2.0 ([1fac361](https://github.com/salesforcecli/plugin-telemetry/commit/1fac361acc0a9dc9a3281c31cb8eeae27503fc46))
+
+# [3.3.0](https://github.com/salesforcecli/plugin-telemetry/compare/3.2.0...3.3.0) (2024-04-12)
+
+### Features
+
+- export telemetryGlobal type ([#608](https://github.com/salesforcecli/plugin-telemetry/issues/608)) ([46a8c25](https://github.com/salesforcecli/plugin-telemetry/commit/46a8c25174f4f5d3b86ccef90cc99c20ab318963))
+
 # [3.2.0](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.18...3.2.0) (2024-04-10)
 
 ### Features
