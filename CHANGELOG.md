@@ -1,3 +1,9 @@
+## [3.3.3](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.2...3.3.3) (2024-04-17)
+
+### Bug Fixes
+
+- only capture errors if id matches ([e10e402](https://github.com/salesforcecli/plugin-telemetry/commit/e10e402d9591daa61c282627795e3f1a8ca9cd03))
+
 ## [3.3.2](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.1...3.3.2) (2024-04-16)
 
 ### Bug Fixes
