@@ -1,3 +1,9 @@
+## [3.3.4](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.3...3.3.4) (2024-04-20)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/sf-plugins-core from 9.0.0 to 9.0.4 ([6a44223](https://github.com/salesforcecli/plugin-telemetry/commit/6a442239afee6d3abb6fd6b2c6cf802b28b11041))
+
 ## [3.3.3](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.2...3.3.3) (2024-04-17)
 
 ### Bug Fixes
