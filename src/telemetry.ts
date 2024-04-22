@@ -228,7 +228,7 @@ export default class Telemetry extends AsyncCreatable {
     if (!telemetryDebug) {
       debug(`Spawning "${nodePath} ${processPath} ${Telemetry.cacheDir} ${this.getTelemetryFilePath()}"`);
       cp.spawn(nodePath, [processPath, Telemetry.cacheDir, this.getTelemetryFilePath()], {
-        ...(process.platform === 'win32' ? { shell: true } : {}),
+        ...(process.platform === 'win32' ? { shell: true, windowsHide: true } : {}),
         detached: true,
         stdio: 'ignore',
       }).unref();
