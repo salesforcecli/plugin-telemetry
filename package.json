@@ -1,29 +1,29 @@
 {
   "name": "@salesforce/plugin-telemetry",
   "description": "Command usage and error telemetry for the Salesforce CLI",
-  "version": "3.1.17",
+  "version": "3.3.4",
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/cli/issues",
   "dependencies": {
-    "@oclif/core": "^3.26.0",
-    "@salesforce/core": "^6.7.3",
-    "@salesforce/kit": "^3.0.15",
-    "@salesforce/sf-plugins-core": "^8.0.1",
-    "@salesforce/telemetry": "^5.0.19",
+    "@oclif/core": "^3.26.2",
+    "@salesforce/core": "^7.2.0",
+    "@salesforce/kit": "^3.1.0",
+    "@salesforce/sf-plugins-core": "^9.0.4",
+    "@salesforce/telemetry": "^6.0.0",
     "@salesforce/ts-types": "^2.0.9",
     "debug": "^4.3.4"
   },
   "devDependencies": {
     "@oclif/plugin-command-snapshot": "^5.0.6",
-    "@oclif/plugin-help": "^6.0.18",
-    "@salesforce/cli-plugins-testkit": "^5",
-    "@salesforce/dev-scripts": "^8.4.2",
-    "@salesforce/plugin-command-reference": "^3.0.67",
+    "@oclif/plugin-help": "^6.0.20",
+    "@salesforce/cli-plugins-testkit": "^5.2.0",
+    "@salesforce/dev-scripts": "^9.0.0",
+    "@salesforce/plugin-command-reference": "^3.0.78",
     "@salesforce/ts-sinon": "^1.4.15",
     "@types/debug": "^4.1.12",
-    "oclif": "^4.6.1",
+    "oclif": "^4.7.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.3"
   },
   "config": {},
   "engines": {

@@ -7,6 +7,6 @@
 
 import Telemetry from './telemetry.js';
 
-export interface TelemetryGlobal extends NodeJS.Global {
+export type TelemetryGlobal = {
   cliTelemetry?: Telemetry;
-}
+} & NodeJS.Global

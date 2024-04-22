@@ -143,8 +143,19 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
     });
 
     // Record failed command executions from commands that extend SfCommand
-    process.on('sfCommandError', (error: SfError) => {
-      errors.push({ error, event: { ...commandExecution.toJson(), eventName: 'COMMAND_ERROR' } });
+    process.on('sfCommandError', (error: SfError, id: string) => {
+      /**
+       * Only record the error if the id matches the command name or if the id is not provided.
+       *
+       * This is to prevent recording duplicate errors when running multiple commands in the same process
+       * (e.g. a `plugins install` of a JIT plugin before running the provided command).
+       *
+       * We still record the error if no id is provided to ensure we capture all errors for plugins that
+       * have not updated @salesforce/sf-plugins-core to the version that includes the id parameter
+       */
+      if (id === commandExecution.getCommandName() || !id) {
+        errors.push({ error, event: { ...commandExecution.toJson(), eventName: 'COMMAND_ERROR' } });
+      }
     });
 
     const commonDataMemoized = (): CommonData => {

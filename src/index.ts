@@ -6,3 +6,4 @@
  */
 
 export * from './telemetry.js';
+export type { TelemetryGlobal } from './telemetryGlobal.js';

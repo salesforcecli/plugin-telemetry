@@ -1,3 +1,45 @@
+## [3.3.4](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.3...3.3.4) (2024-04-20)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/sf-plugins-core from 9.0.0 to 9.0.4 ([6a44223](https://github.com/salesforcecli/plugin-telemetry/commit/6a442239afee6d3abb6fd6b2c6cf802b28b11041))
+
+## [3.3.3](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.2...3.3.3) (2024-04-17)
+
+### Bug Fixes
+
+- only capture errors if id matches ([e10e402](https://github.com/salesforcecli/plugin-telemetry/commit/e10e402d9591daa61c282627795e3f1a8ca9cd03))
+
+## [3.3.2](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.1...3.3.2) (2024-04-16)
+
+### Bug Fixes
+
+- spawn with shell:true windows ([#611](https://github.com/salesforcecli/plugin-telemetry/issues/611)) ([fe163e1](https://github.com/salesforcecli/plugin-telemetry/commit/fe163e14a320ae15756388ab8bdd47d305c9be27))
+
+## [3.3.1](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.0...3.3.1) (2024-04-13)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/core from 7.1.0 to 7.2.0 ([1fac361](https://github.com/salesforcecli/plugin-telemetry/commit/1fac361acc0a9dc9a3281c31cb8eeae27503fc46))
+
+# [3.3.0](https://github.com/salesforcecli/plugin-telemetry/compare/3.2.0...3.3.0) (2024-04-12)
+
+### Features
+
+- export telemetryGlobal type ([#608](https://github.com/salesforcecli/plugin-telemetry/issues/608)) ([46a8c25](https://github.com/salesforcecli/plugin-telemetry/commit/46a8c25174f4f5d3b86ccef90cc99c20ab318963))
+
+# [3.2.0](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.18...3.2.0) (2024-04-10)
+
+### Features
+
+- core7, jsforce-node ([28ebf30](https://github.com/salesforcecli/plugin-telemetry/commit/28ebf30cbfea3aa972c5bbd3d98e7bf877a55f3d))
+
+## [3.1.18](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.17...3.1.18) (2024-04-06)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/core from 6.7.3 to 6.7.6 ([30f06f4](https://github.com/salesforcecli/plugin-telemetry/commit/30f06f4f96d2a85376386bf3de01373e3012299a))
+
 ## [3.1.17](https://github.com/salesforcecli/plugin-telemetry/compare/3.1.16...3.1.17) (2024-03-16)
 
 ### Bug Fixes
