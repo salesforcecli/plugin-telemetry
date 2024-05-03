@@ -1,3 +1,9 @@
+## [3.3.5](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.4...3.3.5) (2024-05-03)
+
+### Bug Fixes
+
+- **deps:** bump ejs from 3.1.9 to 3.1.10 ([25642db](https://github.com/salesforcecli/plugin-telemetry/commit/25642dbfb24de16389706ee75915f402d8dcbe75))
+
 ## [3.3.4](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.3...3.3.4) (2024-04-20)
 
 ### Bug Fixes
