@@ -23,7 +23,7 @@
     "@types/debug": "^4.1.12",
     "oclif": "^4.7.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.5"
   },
   "config": {},
   "engines": {
