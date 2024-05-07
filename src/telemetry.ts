@@ -222,13 +222,11 @@ export default class Telemetry extends AsyncCreatable {
     const processPath = join(dirname(fileURLToPath(import.meta.url)), '..', 'processes', 'upload.js');
 
     const telemetryDebug = env.getBoolean('SF_TELEMETRY_DEBUG', false);
-    const nodePath = process.argv[0];
 
     // Don't spawn if we are in telemetry debug. This allows us to run the process manually with --inspect-brk.
     if (!telemetryDebug) {
-      debug(`Spawning "${nodePath} ${processPath} ${Telemetry.cacheDir} ${this.getTelemetryFilePath()}"`);
-      cp.spawn(nodePath, [processPath, Telemetry.cacheDir, this.getTelemetryFilePath()], {
-        ...(process.platform === 'win32' ? { shell: true } : {}),
+      debug(`Spawning "${process.execPath} ${processPath} ${Telemetry.cacheDir} ${this.getTelemetryFilePath()}"`);
+      cp.spawn(process.execPath, [processPath, Telemetry.cacheDir, this.getTelemetryFilePath()], {
         detached: true,
         stdio: 'ignore',
       }).unref();
