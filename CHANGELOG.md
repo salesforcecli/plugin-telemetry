@@ -1,3 +1,9 @@
+## [3.3.6](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.5...3.3.6) (2024-05-08)
+
+### Bug Fixes
+
+- do not pass shell=true on windows ([d47e585](https://github.com/salesforcecli/plugin-telemetry/commit/d47e5852427dec7cddff14bbca13d0bdbc4ebbb7))
+
 ## [3.3.5](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.4...3.3.5) (2024-05-03)
 
 ### Bug Fixes
