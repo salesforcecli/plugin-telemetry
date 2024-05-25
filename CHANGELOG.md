@@ -1,3 +1,9 @@
+## [3.3.10](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.9...3.3.10) (2024-05-25)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/kit from 3.1.1 to 3.1.2 ([48c47ae](https://github.com/salesforcecli/plugin-telemetry/commit/48c47ae020fbd2cc7472a7a924cb7206934aa62f))
+
 ## [3.3.9](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.8...3.3.9) (2024-05-18)
 
 ### Bug Fixes
