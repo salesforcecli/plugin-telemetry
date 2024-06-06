@@ -6,7 +6,6 @@
  */
 
 import { Config, Command, Flags, Parser } from '@oclif/core';
-import { FlagInput } from '@oclif/core/lib/interfaces/parser.js';
 import { Org } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
 import { isNumber, JsonMap, Optional } from '@salesforce/ts-types';
@@ -137,7 +136,7 @@ export class CommandExecution extends AsyncCreatable {
       this.deprecatedCommandUsed = typedCommand;
     }
 
-    let flags: FlagInput = {};
+    let flags: Parser.FlagInput = {};
     try {
       flags = (
         await Parser.parse(argv, {
@@ -162,7 +161,7 @@ export class CommandExecution extends AsyncCreatable {
     this.determineSpecifiedFlags(argv, flags, flagDefinitions);
   }
 
-  private determineSpecifiedFlags(argv: string[], flags: FlagInput, flagDefinitions: FlagInput): void {
+  private determineSpecifiedFlags(argv: string[], flags: Parser.FlagInput, flagDefinitions: Parser.FlagInput): void {
     // Help won't be in the parsed flags
     const shortHelp = argv.find((arg) => /^-h$/.test(arg));
     const fullHelp = argv.find((arg) => /^--help$/.test(arg));
