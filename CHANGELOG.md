@@ -1,3 +1,5 @@
+## [3.3.13](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.12...3.3.13) (2024-06-06)
+
 ## [3.3.12](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.11...3.3.12) (2024-06-01)
 
 ### Bug Fixes
