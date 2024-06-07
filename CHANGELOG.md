@@ -1,3 +1,9 @@
+# [3.4.0](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.13...3.4.0) (2024-06-07)
+
+### Features
+
+- collect env usage ([#634](https://github.com/salesforcecli/plugin-telemetry/issues/634)) ([961b7a4](https://github.com/salesforcecli/plugin-telemetry/commit/961b7a4d23640c54b0d29d2ae362d6779c210460))
+
 ## [3.3.13](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.12...3.3.13) (2024-06-06)
 
 ## [3.3.12](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.11...3.3.12) (2024-06-01)
