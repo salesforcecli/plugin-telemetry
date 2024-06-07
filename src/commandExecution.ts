@@ -10,6 +10,7 @@ import { Org } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
 import { isNumber, JsonMap, Optional } from '@salesforce/ts-types';
 import { debug } from './debugger.js';
+import { getRelevantEnvs } from './gatherEnvs.js';
 
 export type CommandExecutionOptions = {
   command: Partial<Command.Class>;
@@ -54,7 +55,7 @@ export class CommandExecution extends AsyncCreatable {
 
   public toJson(): JsonMap {
     const pluginInfo = this.getPluginInfo();
-
+    const envs = getRelevantEnvs();
     return {
       eventName: 'COMMAND_EXECUTION',
       // System information
@@ -81,10 +82,9 @@ export class CommandExecution extends AsyncCreatable {
       deprecatedFlagsUsed: this.deprecatedFlagsUsed.join(' '),
       deprecatedCommandUsed: this.deprecatedCommandUsed,
       sfdxEnv: process.env.SFDX_ENV,
-      s3HostOverride: process.env.SFDX_S3_HOST,
-      npmRegistryOverride: process.env.SFDX_NPM_REGISTRY,
+      s3HostOverride: process.env.SF_S3_HOST ?? process.env.SFDX_S3_HOST,
+      npmRegistryOverride: process.env.SF_NPM_REGISTRY ?? process.env.SFDX_NPM_REGISTRY,
       tool: process.env.SFDX_TOOL,
-      interceptorMode: process.env.INTERCEPTOR_MODE,
 
       // Execution information
       date: new Date().toUTCString(),
@@ -97,6 +97,8 @@ export class CommandExecution extends AsyncCreatable {
       devhubId: this.devhubId,
       orgApiVersion: this.orgApiVersion,
       devhubApiVersion: this.devhubApiVersion,
+      specifiedEnvs: envs.specifiedEnvs.join(' '),
+      uniqueEnvs: envs.uniqueEnvs.join(' '),
     };
   }
 
