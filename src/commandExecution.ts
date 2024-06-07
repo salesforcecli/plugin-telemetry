@@ -9,6 +9,7 @@ import { Config, Command, Flags, Parser } from '@oclif/core';
 import { Org } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
 import { isNumber, JsonMap, Optional } from '@salesforce/ts-types';
+import { parseVarArgs } from '@salesforce/sf-plugins-core';
 import { debug } from './debugger.js';
 import { getRelevantEnvs } from './gatherEnvs.js';
 
@@ -37,6 +38,7 @@ export class CommandExecution extends AsyncCreatable {
   private devhubId?: string | null;
   private orgApiVersion?: string | null;
   private devhubApiVersion?: string | null;
+  private argKeys: string[] = [];
 
   public constructor(options: CommandExecutionOptions) {
     super(options);
@@ -99,6 +101,7 @@ export class CommandExecution extends AsyncCreatable {
       devhubApiVersion: this.devhubApiVersion,
       specifiedEnvs: envs.specifiedEnvs.join(' '),
       uniqueEnvs: envs.uniqueEnvs.join(' '),
+      argKeys: this.argKeys.sort().join(' '),
     };
   }
 
@@ -140,14 +143,15 @@ export class CommandExecution extends AsyncCreatable {
 
     let flags: Parser.FlagInput = {};
     try {
-      flags = (
-        await Parser.parse(argv, {
-          flags: flagDefinitions,
-          args: this.command.args,
-          // @ts-expect-error because varargs is not on SfCommand but is on SfdxCommand
-          strict: this.command.strict ?? !this.command.varargs,
-        })
-      ).flags;
+      const parseResult = await Parser.parse(argv, {
+        flags: flagDefinitions,
+        args: this.command.args,
+        // @ts-expect-error because varargs is not on SfCommand but is on SfdxCommand
+        strict: this.command.strict ?? !this.command.varargs,
+      });
+      flags = parseResult.flags;
+
+      this.argKeys = [...new Set(Object.keys(parseVarArgs(parseResult.args, parseResult.argv as string[])))];
     } catch (error) {
       debug('Error parsing flags');
     }
