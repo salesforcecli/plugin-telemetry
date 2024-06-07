@@ -11,6 +11,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { CommandExecution } from '../src/commandExecution.js';
 import { MyCommand } from './helpers/myCommand.js';
+import { MyArgCommand } from './helpers/myArgCommand.js';
 
 describe('toJson', () => {
   const sandbox = sinon.createSandbox();
@@ -91,8 +92,8 @@ describe('toJson', () => {
     const actual = execution.toJson();
 
     expect(actual.deprecatedFlagsUsed).to.equal('i o');
-    expect(actual.specifiedFlags).to.equal('flag valid newflag');
-    expect(actual.specifiedFlagFullNames).to.equal('flag valid newflag');
+    expect(actual.specifiedFlags).to.equal('flag newflag valid');
+    expect(actual.specifiedFlagFullNames).to.equal('flag newflag valid');
   });
 
   it('shows deprecated flags as flags', async () => {
@@ -123,8 +124,9 @@ describe('toJson', () => {
     const actual = execution.toJson();
 
     expect(actual.deprecatedFlagsUsed).to.equal('invalid oldflag');
-    expect(actual.specifiedFlags).to.equal('flag valid newflag');
-    expect(actual.specifiedFlagFullNames).to.equal('flag valid newflag');
+    expect(actual.specifiedFlags).to.equal('flag newflag valid');
+    expect(actual.specifiedFlagFullNames).to.equal('flag newflag valid');
+    expect(actual.argKeys).to.equal('');
   });
 
   it('shows multiple deprecated flags and chars as flags and chars', async () => {
@@ -139,8 +141,8 @@ describe('toJson', () => {
     const actual = execution.toJson();
 
     expect(actual.deprecatedFlagsUsed).to.equal('invalid o');
-    expect(actual.specifiedFlags).to.equal('flag valid newflag');
-    expect(actual.specifiedFlagFullNames).to.equal('flag valid newflag');
+    expect(actual.specifiedFlags).to.equal('flag newflag valid');
+    expect(actual.specifiedFlagFullNames).to.equal('flag newflag valid');
   });
 
   it('shows captures deprecated alias usage', async () => {
@@ -212,6 +214,7 @@ describe('toJson', () => {
     expect(actual.specifiedFlags).to.equal('red');
     expect(actual.specifiedFlagFullNames).to.equal('red');
     expect(actual.deprecatedFlagsUsed).to.equal('');
+    expect(actual.argKeys).to.equal('');
   });
 
   it('shows short help flag', async () => {
@@ -240,5 +243,36 @@ describe('toJson', () => {
 
     expect(actual.specifiedFlags).to.equal('help');
     expect(actual.specifiedFlagFullNames).to.equal('help');
+    expect(actual.argKeys).to.equal('');
+  });
+
+  describe('args', () => {
+    process.env.CI = 'true';
+    const config = stubInterface<Interfaces.Config>(sandbox, {});
+    it('captures args keys', async () => {
+      const execution = await CommandExecution.create({
+        argv: ['--flag', '-t=asdf', 'foo=bar'],
+        command: MyArgCommand,
+        config,
+      });
+      const actual = execution.toJson();
+
+      expect(actual.specifiedFlags).to.equal('flag t');
+      expect(actual.specifiedFlagFullNames).to.equal('flag test');
+      expect(actual.argKeys).to.equal('foo');
+    });
+
+    it('captures multiple arg keys', async () => {
+      const execution = await CommandExecution.create({
+        argv: ['--flag', '-t=asdf', 'foo=bar', 'baz=qux'],
+        command: MyArgCommand,
+        config,
+      });
+      const actual = execution.toJson();
+
+      expect(actual.specifiedFlags).to.equal('flag t');
+      expect(actual.specifiedFlagFullNames).to.equal('flag test');
+      expect(actual.argKeys).to.equal('baz foo');
+    });
   });
 });

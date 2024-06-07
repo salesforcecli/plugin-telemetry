@@ -9,7 +9,9 @@ import { Config, Command, Flags, Parser } from '@oclif/core';
 import { Org } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
 import { isNumber, JsonMap, Optional } from '@salesforce/ts-types';
+import { parseVarArgs } from '@salesforce/sf-plugins-core';
 import { debug } from './debugger.js';
+import { getRelevantEnvs } from './gatherEnvs.js';
 
 export type CommandExecutionOptions = {
   command: Partial<Command.Class>;
@@ -36,6 +38,7 @@ export class CommandExecution extends AsyncCreatable {
   private devhubId?: string | null;
   private orgApiVersion?: string | null;
   private devhubApiVersion?: string | null;
+  private argKeys: string[] = [];
 
   public constructor(options: CommandExecutionOptions) {
     super(options);
@@ -54,7 +57,7 @@ export class CommandExecution extends AsyncCreatable {
 
   public toJson(): JsonMap {
     const pluginInfo = this.getPluginInfo();
-
+    const envs = getRelevantEnvs();
     return {
       eventName: 'COMMAND_EXECUTION',
       // System information
@@ -75,16 +78,15 @@ export class CommandExecution extends AsyncCreatable {
       plugin_version: pluginInfo.version,
       command: this.command.id,
       // As the user specified, including short names
-      specifiedFlags: this.specifiedFlags.join(' '),
+      specifiedFlags: this.specifiedFlags.sort().join(' '),
       // Flags the user specified, only the full names
-      specifiedFlagFullNames: this.specifiedFlagFullNames.join(' '),
-      deprecatedFlagsUsed: this.deprecatedFlagsUsed.join(' '),
+      specifiedFlagFullNames: this.specifiedFlagFullNames.sort().join(' '),
+      deprecatedFlagsUsed: this.deprecatedFlagsUsed.sort().join(' '),
       deprecatedCommandUsed: this.deprecatedCommandUsed,
       sfdxEnv: process.env.SFDX_ENV,
-      s3HostOverride: process.env.SFDX_S3_HOST,
-      npmRegistryOverride: process.env.SFDX_NPM_REGISTRY,
+      s3HostOverride: process.env.SF_S3_HOST ?? process.env.SFDX_S3_HOST,
+      npmRegistryOverride: process.env.SF_NPM_REGISTRY ?? process.env.SFDX_NPM_REGISTRY,
       tool: process.env.SFDX_TOOL,
-      interceptorMode: process.env.INTERCEPTOR_MODE,
 
       // Execution information
       date: new Date().toUTCString(),
@@ -97,6 +99,9 @@ export class CommandExecution extends AsyncCreatable {
       devhubId: this.devhubId,
       orgApiVersion: this.orgApiVersion,
       devhubApiVersion: this.devhubApiVersion,
+      specifiedEnvs: envs.specifiedEnvs.join(' '),
+      uniqueEnvs: envs.uniqueEnvs.join(' '),
+      argKeys: this.argKeys.sort().join(' '),
     };
   }
 
@@ -138,14 +143,15 @@ export class CommandExecution extends AsyncCreatable {
 
     let flags: Parser.FlagInput = {};
     try {
-      flags = (
-        await Parser.parse(argv, {
-          flags: flagDefinitions,
-          args: this.command.args,
-          // @ts-expect-error because varargs is not on SfCommand but is on SfdxCommand
-          strict: this.command.strict ?? !this.command.varargs,
-        })
-      ).flags;
+      const parseResult = await Parser.parse(argv, {
+        flags: flagDefinitions,
+        args: this.command.args,
+        // @ts-expect-error because varargs is not on SfCommand but is on SfdxCommand
+        strict: this.command.strict ?? !this.command.varargs,
+      });
+      flags = parseResult.flags;
+
+      this.argKeys = [...new Set(Object.keys(parseVarArgs(parseResult.args, parseResult.argv as string[])))];
     } catch (error) {
       debug('Error parsing flags');
     }
@@ -191,13 +197,11 @@ export class CommandExecution extends AsyncCreatable {
           // e.g. ['-u', 'test', '--json'] -> [ 'u', undefined, 'json' ]
           const argvFlags = this.argv.map((a) => a.match(/-([a-zA-Z]+)/g)).map((a) => a?.[0].replace('-', ''));
 
-          let possibleAliases = flagDefinitions[flagName].aliases ?? [];
-
-          // charAliases is optional
-          // this check also ensure compatibility with commands using oclif/core < 3 where `charAliases` isn't supported.
-          if (flagDefinitions[flagName].charAliases) {
-            possibleAliases = possibleAliases?.concat(flagDefinitions[flagName].charAliases as string[]);
-          }
+          const possibleAliases = [
+            ...(flagDefinitions[flagName].aliases ?? []),
+            // charAliases is optional.  Ensure compatibility with commands using oclif/core < 3 where `charAliases` isn't supported.
+            ...(flagDefinitions[flagName].charAliases ?? []),
+          ];
 
           // if you have a flag that sets a default value and has aliases
           // this check will ensure it only gets captured if the user specified it using aliases
