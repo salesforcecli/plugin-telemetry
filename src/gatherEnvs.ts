@@ -12,7 +12,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 export const getRelevantEnvs = (): { specifiedEnvs: string[]; uniqueEnvs: string[] } => {
-  const specifiedEnvs = Object.keys(process.env).filter(isOurEnv);
+  const specifiedEnvs = Object.keys(process.env).filter(isOurEnv).sort();
   return {
     specifiedEnvs,
     uniqueEnvs: specifiedEnvs.filter(isNotDuplicatedAcrossCLIs),

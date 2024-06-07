@@ -29,7 +29,7 @@ describe('gatherEnvs', () => {
     process.env.SFDX_TEST = 'test';
     process.env.SF_TEST2 = 'test';
     expect(getRelevantEnvs()).to.deep.equal({
-      specifiedEnvs: ['SF_TEST', 'SFDX_TEST', 'SF_TEST2'],
+      specifiedEnvs: ['SFDX_TEST', 'SF_TEST', 'SF_TEST2'],
       uniqueEnvs: ['SF_TEST', 'SF_TEST2'],
     });
   });

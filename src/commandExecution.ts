@@ -76,10 +76,10 @@ export class CommandExecution extends AsyncCreatable {
       plugin_version: pluginInfo.version,
       command: this.command.id,
       // As the user specified, including short names
-      specifiedFlags: this.specifiedFlags.join(' '),
+      specifiedFlags: this.specifiedFlags.sort().join(' '),
       // Flags the user specified, only the full names
-      specifiedFlagFullNames: this.specifiedFlagFullNames.join(' '),
-      deprecatedFlagsUsed: this.deprecatedFlagsUsed.join(' '),
+      specifiedFlagFullNames: this.specifiedFlagFullNames.sort().join(' '),
+      deprecatedFlagsUsed: this.deprecatedFlagsUsed.sort().join(' '),
       deprecatedCommandUsed: this.deprecatedCommandUsed,
       sfdxEnv: process.env.SFDX_ENV,
       s3HostOverride: process.env.SF_S3_HOST ?? process.env.SFDX_S3_HOST,
