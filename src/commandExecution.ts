@@ -191,13 +191,11 @@ export class CommandExecution extends AsyncCreatable {
           // e.g. ['-u', 'test', '--json'] -> [ 'u', undefined, 'json' ]
           const argvFlags = this.argv.map((a) => a.match(/-([a-zA-Z]+)/g)).map((a) => a?.[0].replace('-', ''));
 
-          let possibleAliases = flagDefinitions[flagName].aliases ?? [];
-
-          // charAliases is optional
-          // this check also ensure compatibility with commands using oclif/core < 3 where `charAliases` isn't supported.
-          if (flagDefinitions[flagName].charAliases) {
-            possibleAliases = possibleAliases?.concat(flagDefinitions[flagName].charAliases as string[]);
-          }
+          const possibleAliases = [
+            ...(flagDefinitions[flagName].aliases ?? []),
+            // charAliases is optional.  Ensure compatibility with commands using oclif/core < 3 where `charAliases` isn't supported.
+            ...(flagDefinitions[flagName].charAliases ?? []),
+          ];
 
           // if you have a flag that sets a default value and has aliases
           // this check will ensure it only gets captured if the user specified it using aliases
