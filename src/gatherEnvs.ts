@@ -15,7 +15,8 @@ export const getRelevantEnvs = (): { specifiedEnvs: string[]; uniqueEnvs: string
 const isOurEnv = (key: string): boolean =>
   key.startsWith('SF_') ||
   key.startsWith('SFDX_') ||
-  key.startsWith('OCLIF' || key.startsWith('JSFORCE_')) ||
+  key.startsWith('OCLIF') ||
+  key.startsWith('JSFORCE_') ||
   key === 'FORCE_OPEN_URL' ||
   key === 'FORCE_SHOW_SPINNER' ||
   key === 'FORCE_SPINNER_DELAY';
