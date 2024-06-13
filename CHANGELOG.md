@@ -1,3 +1,9 @@
+## [3.4.1](https://github.com/salesforcecli/plugin-telemetry/compare/3.4.0...3.4.1) (2024-06-13)
+
+### Bug Fixes
+
+- **deps:** bump braces from 3.0.2 to 3.0.3 ([d6e8159](https://github.com/salesforcecli/plugin-telemetry/commit/d6e8159b4fc1fae956d34ba1aee42cedfeec672a))
+
 # [3.4.0](https://github.com/salesforcecli/plugin-telemetry/compare/3.3.13...3.4.0) (2024-06-07)
 
 ### Features
