@@ -5,8 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-/* eslint-disable no-await-in-loop */
-import { SfError } from '@salesforce/core';
+import { SfError } from '@salesforce/core/sfError';
 import { asString, Dictionary } from '@salesforce/ts-types';
 import Telemetry from './telemetry.js';
 import { debug } from './debugger.js';
@@ -16,7 +15,8 @@ import { TelemetryGlobal } from './telemetryGlobal.js';
 declare const global: TelemetryGlobal;
 
 const PROJECT = 'salesforce-cli';
-const APP_INSIGHTS_KEY = '2ca64abb-6123-4c7b-bd9e-4fe73e71fe9c';
+const APP_INSIGHTS_KEY =
+  'InstrumentationKey=2ca64abb-6123-4c7b-bd9e-4fe73e71fe9c;IngestionEndpoint=https://eastus-1.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/;ApplicationId=ecd8fa7a-0e0d-4109-94db-4d7878ada862';
 
 export class Uploader {
   private constructor(private telemetry: Telemetry, private version: string) {}
