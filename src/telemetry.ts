@@ -14,7 +14,7 @@ import { EOL, tmpdir } from 'node:os';
 import { join } from 'node:path';
 import type { Attributes } from '@salesforce/telemetry';
 import { AsyncCreatable, env } from '@salesforce/kit';
-import { SfError } from '@salesforce/core';
+import { SfError } from '@salesforce/core/sfError';
 import { isBoolean, isNumber, isString, JsonMap } from '@salesforce/ts-types';
 import { debug } from './debugger.js';
 import { guessCISystem } from './guessCI.js';
