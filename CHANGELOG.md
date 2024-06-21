@@ -1,3 +1,9 @@
+# [3.5.0](https://github.com/salesforcecli/plugin-telemetry/compare/3.4.4...3.5.0) (2024-06-21)
+
+### Features
+
+- use connection string ([5b41f01](https://github.com/salesforcecli/plugin-telemetry/commit/5b41f014414d1e1df3846b4e735a5b27c29f9849))
+
 ## [3.4.4](https://github.com/salesforcecli/plugin-telemetry/compare/3.4.3...3.4.4) (2024-06-20)
 
 ### Bug Fixes
