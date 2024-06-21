@@ -1,3 +1,9 @@
+## [3.4.4](https://github.com/salesforcecli/plugin-telemetry/compare/3.4.3...3.4.4) (2024-06-20)
+
+### Bug Fixes
+
+- updates from devScripts ([#644](https://github.com/salesforcecli/plugin-telemetry/issues/644)) ([c8e2510](https://github.com/salesforcecli/plugin-telemetry/commit/c8e251063edb3e38e18571a565b4f678a37c9ee7))
+
 ## [3.4.3](https://github.com/salesforcecli/plugin-telemetry/compare/3.4.2...3.4.3) (2024-06-15)
 
 ### Bug Fixes
