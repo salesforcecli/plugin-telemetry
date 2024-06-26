@@ -11,6 +11,7 @@ import type { JsonMap } from '@salesforce/ts-types';
 import enabledCheck from '@salesforce/telemetry/enabledCheck';
 import type { TelemetryGlobal } from '../telemetryGlobal.js';
 import { debug } from '../debugger.js';
+import { guessCISystem } from '../guessCI.js';
 
 declare const global: TelemetryGlobal;
 
@@ -122,6 +123,7 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
       if (telemetry.firstRun) {
         telemetry.record({
           eventName: 'INSTALL',
+          ci: guessCISystem(),
           installType:
             this.config.binPath?.includes(path.join('sfdx', 'client')) ??
             this.config.binPath?.includes(path.join('sf', 'client'))
