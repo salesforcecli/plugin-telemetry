@@ -1,3 +1,9 @@
+# [3.6.0](https://github.com/salesforcecli/plugin-telemetry/compare/3.5.1...3.6.0) (2024-06-26)
+
+### Features
+
+- guess CI on first-run installs ([ae01edf](https://github.com/salesforcecli/plugin-telemetry/commit/ae01edfd37b3b99b1e4a3f57393116ec0a7434fb))
+
 ## [3.5.1](https://github.com/salesforcecli/plugin-telemetry/compare/3.5.0...3.5.1) (2024-06-22)
 
 ### Bug Fixes
