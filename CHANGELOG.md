@@ -1,3 +1,9 @@
+## [3.6.3](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.2...3.6.3) (2024-07-22)
+
+### Bug Fixes
+
+- add proxy envs to telemetry ([7bb9309](https://github.com/salesforcecli/plugin-telemetry/commit/7bb93096566500d90cebaaecae2b642a63311c16))
+
 ## [3.6.2](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.1...3.6.2) (2024-07-13)
 
 ### Bug Fixes
