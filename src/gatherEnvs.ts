@@ -19,7 +19,11 @@ const isOurEnv = (key: string): boolean =>
   key.startsWith('JSFORCE_') ||
   key === 'FORCE_OPEN_URL' ||
   key === 'FORCE_SHOW_SPINNER' ||
-  key === 'FORCE_SPINNER_DELAY';
+  key === 'FORCE_SPINNER_DELAY' ||
+  key === 'HTTPS_PROXY' ||
+  key === 'HTTP_PROXY' ||
+  key === 'https_proxy' ||
+  key === 'http_proxy';
 
 /** we do some automatic SFDX => SF and we don't want 2 of all of those  */
 const isNotDuplicatedAcrossCLIs = (key: string, index: number, array: string[]): boolean =>
