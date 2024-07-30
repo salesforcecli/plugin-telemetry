@@ -30,7 +30,7 @@ export default class TelemetryGet extends SfCommand<TelemetryGetResult> {
     this.log(`Telemetry tmp directory is ${Telemetry.tmpDir}.`);
     this.log(`Telemetry cache directory is ${this.config.cacheDir}.`);
     this.log();
-    this.log(`Salesforce CLI ID is ${cliId}.`);
+    this.log(`Salesforce CLI ID is ${cliId ?? '<undefined because global.cliTelemetry is undefined>'}.`);
 
     return {
       enabled,
