@@ -11,6 +11,7 @@ import fs from 'node:fs';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { EOL, tmpdir } from 'node:os';
+import { inspect } from 'node:util';
 import { join } from 'node:path';
 import type { Attributes } from '@salesforce/telemetry';
 import { AsyncCreatable, env } from '@salesforce/kit';
@@ -185,6 +186,12 @@ export default class Telemetry extends AsyncCreatable {
     // Also have on custom attributes since app insights might parse differently
     data.errorName = error.name;
     data.errorMessage = error.message;
+    if (error instanceof SfError && error.data) {
+      data.errorData = JSON.stringify(error.data);
+    }
+    if (error.cause) {
+      data.errorCause = inspect(error.cause);
+    }
     data.error = Object.assign(
       {
         name: error.name,
