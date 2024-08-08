@@ -11,7 +11,9 @@ import cp from 'node:child_process';
 import { EOL } from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
+import { inspect } from 'node:util';
 import { stubMethod } from '@salesforce/ts-sinon';
+import { SfError } from '@salesforce/core';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import Telemetry from '../src/telemetry.js';
@@ -185,6 +187,26 @@ describe('telemetry', () => {
       expect(logLine.error.stack).to.deep.equal('testStack');
       expect(logLine.error.additionalErrorInfo).to.deep.equal('testInfo');
       expect(logLine.additionalInfo).to.deep.equal('testing');
+    });
+    it('propagates error.data and error.cause', async () => {
+      const telemetry = await Telemetry.create({ cacheDir: 'test' });
+      const errorCause = new Error('this is the cause of the problem');
+      errorCause.name = 'TheErrorCause';
+      const error = new SfError('top level message', 'TopLevelErrorName', ['take this action'], errorCause);
+      error.data = { clientId: 'asdf1234', grantType: 'authcode' };
+
+      telemetry.recordError(error, { foo: 'bar' });
+
+      expect(writeSyncStub.calledOnce).to.equal(true);
+      const logLine = JSON.parse(writeSyncStub.firstCall.args[1]);
+      expect(logLine.error.name).to.equal('TopLevelErrorName');
+      expect(logLine.error.message).to.equal('top level message');
+      expect(logLine.error.stack).to.be.ok;
+      expect(logLine.errorName).to.equal('TopLevelErrorName');
+      expect(logLine.errorMessage).to.equal('top level message');
+      expect(logLine.errorData).to.equal(JSON.stringify(error.data));
+      expect(logLine.errorCause).to.equal(inspect(errorCause));
+      expect(logLine.foo).to.equal('bar');
     });
   });
 
