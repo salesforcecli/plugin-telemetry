@@ -1,3 +1,9 @@
+## [3.6.5](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.4...3.6.5) (2024-08-08)
+
+### Bug Fixes
+
+- add error.data and error.cause to telemetry data ([#668](https://github.com/salesforcecli/plugin-telemetry/issues/668)) ([27ad91a](https://github.com/salesforcecli/plugin-telemetry/commit/27ad91a3d9d4672e95e4a6501f905e0e23dafe74))
+
 ## [3.6.4](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.3...3.6.4) (2024-07-27)
 
 ### Bug Fixes
