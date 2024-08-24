@@ -1,3 +1,9 @@
+## [3.6.9](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.8...3.6.9) (2024-08-24)
+
+### Bug Fixes
+
+- **deps:** bump micromatch from 4.0.5 to 4.0.8 ([c71cda3](https://github.com/salesforcecli/plugin-telemetry/commit/c71cda3bd42fb6da2cec80c46b53ae69344e23ac))
+
 ## [3.6.8](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.7...3.6.8) (2024-08-24)
 
 ### Bug Fixes
