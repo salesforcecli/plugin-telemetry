@@ -1,3 +1,9 @@
+## [3.6.12](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.11...3.6.12) (2024-09-07)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/core from 8.4.0 to 8.5.4 ([4eb2cde](https://github.com/salesforcecli/plugin-telemetry/commit/4eb2cded372e2b3315bd15afa30f25e3ebfe6e35))
+
 ## [3.6.11](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.10...3.6.11) (2024-09-07)
 
 ### Bug Fixes
