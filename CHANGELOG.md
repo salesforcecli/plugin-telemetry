@@ -1,3 +1,9 @@
+## [3.6.20](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.19...3.6.20) (2024-11-08)
+
+### Bug Fixes
+
+- bump sf-plugins-core ([dfb203f](https://github.com/salesforcecli/plugin-telemetry/commit/dfb203f9354d86a0239f0bfe2d0fd26f749898be))
+
 ## [3.6.19](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.18...3.6.19) (2024-11-02)
 
 ### Bug Fixes
