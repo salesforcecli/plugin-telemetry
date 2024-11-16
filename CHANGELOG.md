@@ -1,3 +1,9 @@
+## [3.6.23](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.22...3.6.23) (2024-11-16)
+
+### Bug Fixes
+
+- **deps:** bump cross-spawn from 7.0.3 to 7.0.5 ([622f087](https://github.com/salesforcecli/plugin-telemetry/commit/622f087f8b3ea32a88cd947d713e6424c85ef385))
+
 ## [3.6.22](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.21...3.6.22) (2024-11-16)
 
 ### Bug Fixes
