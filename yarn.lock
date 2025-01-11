@@ -2044,18 +2044,18 @@
   dependencies:
     "@salesforce/ts-types" "^2.0.12"
 
-"@salesforce/plugin-command-reference@^3.1.33":
-  version "3.1.33"
-  resolved "https://registry.yarnpkg.com/@salesforce/plugin-command-reference/-/plugin-command-reference-3.1.33.tgz#cd8141fa9eb2b29b85bf1c2331740e0e424c3012"
-  integrity sha512-z8APQhlEvwBZXrtQZQz59qamJjkW34sfeAYdKzRAdF5hq7lgs3gFFek5aPStKbh6xereoDhJOj9vKvYXo8U2Rw==
+"@salesforce/plugin-command-reference@^3.1.38":
+  version "3.1.38"
+  resolved "https://registry.yarnpkg.com/@salesforce/plugin-command-reference/-/plugin-command-reference-3.1.38.tgz#aab557143f60a40e8d6324dc78f36c8667a154b7"
+  integrity sha512-4qc5dGyaN40anIWtkGX3Jy9ES2uAytyfpmrVfrKBQlif4OAHZP9wghUuc6mYifPrfXSm28NAPP2v99LR1XO50A==
   dependencies:
     "@oclif/core" "^4"
     "@salesforce/core" "^8.6.4"
     "@salesforce/kit" "^3.2.3"
     "@salesforce/sf-plugins-core" "^11.3.12"
     "@salesforce/ts-types" "^2.0.11"
-    chalk "^5.3.0"
-    debug "^4.3.7"
+    chalk "^5.4.1"
+    debug "^4.4.0"
     handlebars "^4.7.8"
 
 "@salesforce/prettier-config@^0.0.3":
@@ -3994,10 +3994,10 @@ chalk@^4, chalk@^4.0.0, chalk@^4.0.2, chalk@^4.1.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chalk@^5.0.0, chalk@^5.3.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/chalk/-/chalk-5.3.0.tgz#67c20a7ebef70e7f3970a01f90fa210cb6860385"
-  integrity sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==
+chalk@^5.0.0, chalk@^5.3.0, chalk@^5.4.1:
+  version "5.4.1"
+  resolved "https://registry.yarnpkg.com/chalk/-/chalk-5.4.1.tgz#1b48bf0963ec158dce2aacf69c093ae2dd2092d8"
+  integrity sha512-zgVZuo2WcZgfUEmsn6eO3kINexW8RAE4maiQ8QNs8CtpPCSyMiYsULR3HQYkm3w8FIA3SberyMJMSldGsW+U3w==
 
 change-case@^4, change-case@^4.1.2:
   version "4.1.2"
