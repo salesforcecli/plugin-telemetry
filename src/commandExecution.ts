@@ -36,6 +36,7 @@ export class CommandExecution extends AsyncCreatable {
 
   private orgId?: string | null;
   private devhubId?: string | null;
+  private agentPseudoTypeUsed?: boolean | null;
   private orgApiVersion?: string | null;
   private devhubApiVersion?: string | null;
   private argKeys: string[] = [];
@@ -81,6 +82,7 @@ export class CommandExecution extends AsyncCreatable {
       specifiedFlags: this.specifiedFlags.sort().join(' '),
       // Flags the user specified, only the full names
       specifiedFlagFullNames: this.specifiedFlagFullNames.sort().join(' '),
+      agentPseudoTypeUsed: this.agentPseudoTypeUsed ?? false,
       deprecatedFlagsUsed: this.deprecatedFlagsUsed.sort().join(' '),
       deprecatedCommandUsed: this.deprecatedCommandUsed,
       sfdxEnv: process.env.SFDX_ENV,
@@ -150,7 +152,8 @@ export class CommandExecution extends AsyncCreatable {
         strict: this.command.strict ?? !this.command.varargs,
       });
       flags = parseResult.flags;
-
+      this.agentPseudoTypeUsed =
+        (flags['metadata'] as unknown as string[])?.join().trim().toLowerCase().startsWith('agent') ?? false;
       this.argKeys = [...new Set(Object.keys(parseVarArgs(parseResult.args, parseResult.argv as string[])))];
     } catch (error) {
       debug('Error parsing flags');
