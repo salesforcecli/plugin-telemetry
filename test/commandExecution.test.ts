@@ -119,6 +119,16 @@ describe('toJson', () => {
     const actual4 = execution4.toJson();
 
     expect(actual4.agentPseudoTypeUsed).to.be.false;
+
+    // agent used second
+    const execution5 = await CommandExecution.create({
+      argv: ['--metadata', 'ApexClass:myAgent', '--metadata', 'Agent'],
+      command: MyCommand,
+      config,
+    });
+    const actual5 = execution5.toJson();
+
+    expect(actual5.agentPseudoTypeUsed).to.be.true;
   });
 
   it('shows multiple deprecated chars as chars', async () => {

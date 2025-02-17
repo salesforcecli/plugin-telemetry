@@ -153,7 +153,8 @@ export class CommandExecution extends AsyncCreatable {
       });
       flags = parseResult.flags;
       this.agentPseudoTypeUsed =
-        (flags['metadata'] as unknown as string[])?.join().trim().toLowerCase().startsWith('agent') ?? false;
+        (flags['metadata'] as unknown as string[])?.some((metadata) => metadata.toLowerCase().startsWith('agent')) ??
+        false;
       this.argKeys = [...new Set(Object.keys(parseVarArgs(parseResult.args, parseResult.argv as string[])))];
     } catch (error) {
       debug('Error parsing flags');
