@@ -1,3 +1,9 @@
+## [3.6.34](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.33...3.6.34) (2025-02-19)
+
+### Bug Fixes
+
+- add agent psuedo type telemetry ([c69309b](https://github.com/salesforcecli/plugin-telemetry/commit/c69309b4528bfd619997263da815ce314d268de6))
+
 ## [3.6.33](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.32...3.6.33) (2025-02-15)
 
 ### Bug Fixes
