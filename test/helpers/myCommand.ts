@@ -29,6 +29,10 @@ export class MyCommand extends SfCommand<void> {
       charAliases: ['e'],
       char: 'r',
     }),
+    metadata: Flags.string({
+      char: 'm',
+      multiple: true,
+    }),
   };
   public static args = {};
 

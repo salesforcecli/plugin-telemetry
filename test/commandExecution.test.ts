@@ -80,6 +80,57 @@ describe('toJson', () => {
     expect(actual.specifiedFlagFullNames).to.equal('flag valid');
   });
 
+  it('calculated Agent MD used', async () => {
+    process.env.CI = 'true';
+    const config = stubInterface<Interfaces.Config>(sandbox, {});
+    const execution1 = await CommandExecution.create({
+      argv: ['-m', 'Agent:my'],
+      command: MyCommand,
+      config,
+    });
+    const actual1 = execution1.toJson();
+    expect(actual1.agentPseudoTypeUsed).to.be.true;
+    // long flag
+    const execution2 = await CommandExecution.create({
+      argv: ['--metadata', 'Agent:my'],
+      command: MyCommand,
+      config,
+    });
+    const actual2 = execution2.toJson();
+
+    expect(actual2.agentPseudoTypeUsed).to.be.true;
+
+    // no flag = false
+    const execution3 = await CommandExecution.create({
+      argv: [''],
+      command: MyCommand,
+      config,
+    });
+    const actual3 = execution3.toJson();
+
+    expect(actual3.agentPseudoTypeUsed).to.be.false;
+
+    // value = false
+    const execution4 = await CommandExecution.create({
+      argv: ['--metadata', 'ApexClass:myAgent'],
+      command: MyCommand,
+      config,
+    });
+    const actual4 = execution4.toJson();
+
+    expect(actual4.agentPseudoTypeUsed).to.be.false;
+
+    // agent used second
+    const execution5 = await CommandExecution.create({
+      argv: ['--metadata', 'ApexClass:myAgent', '--metadata', 'Agent'],
+      command: MyCommand,
+      config,
+    });
+    const actual5 = execution5.toJson();
+
+    expect(actual5.agentPseudoTypeUsed).to.be.true;
+  });
+
   it('shows multiple deprecated chars as chars', async () => {
     process.env.CI = 'true';
     const config = stubInterface<Interfaces.Config>(sandbox, {});
