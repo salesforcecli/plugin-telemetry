@@ -11,7 +11,7 @@
     "@salesforce/sf-plugins-core": "^12",
     "@salesforce/telemetry": "^6.0.39",
     "@salesforce/ts-types": "^2.0.11",
-    "debug": "^4.3.7"
+    "debug": "^4.4.1"
   },
   "devDependencies": {
     "@oclif/plugin-command-snapshot": "^5.2.40",
