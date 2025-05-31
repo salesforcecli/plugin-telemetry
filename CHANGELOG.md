@@ -1,3 +1,9 @@
+## [3.6.43](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.42...3.6.43) (2025-05-31)
+
+### Bug Fixes
+
+- **deps:** bump debug from 4.4.0 to 4.4.1 ([f435094](https://github.com/salesforcecli/plugin-telemetry/commit/f4350941696d6a724f66f5c65b1416f09359ac03))
+
 ## [3.6.42](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.41...3.6.42) (2025-05-24)
 
 ### Bug Fixes
