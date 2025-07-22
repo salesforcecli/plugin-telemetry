@@ -1,3 +1,9 @@
+## [3.6.50](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.49...3.6.50) (2025-07-22)
+
+### Bug Fixes
+
+- **deps:** bump form-data from 4.0.0 to 4.0.4 ([695bc27](https://github.com/salesforcecli/plugin-telemetry/commit/695bc27d47c38fad6c29cef40c4b50f0d451f2a9))
+
 ## [3.6.49](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.48...3.6.49) (2025-07-19)
 
 ### Bug Fixes
