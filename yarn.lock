@@ -1926,10 +1926,10 @@
     o11y "254.7.0"
     o11y_schema "254.77.0"
 
-"@salesforce/plugin-command-reference@^3.1.58":
-  version "3.1.58"
-  resolved "https://registry.yarnpkg.com/@salesforce/plugin-command-reference/-/plugin-command-reference-3.1.58.tgz#4cef5ee3db0e9e6d6f722c18d627053ff42c73c3"
-  integrity sha512-dr8f7TEhUZ88/euXfiQXlpj488G89XEEl4IrpU+H4qk5lrIGhy9OWuSxLBCc/UHTwxirFq7+H6vRVzNTLYqgXQ==
+"@salesforce/plugin-command-reference@^3.1.61":
+  version "3.1.61"
+  resolved "https://registry.yarnpkg.com/@salesforce/plugin-command-reference/-/plugin-command-reference-3.1.61.tgz#0fc24952dd05f0bf7bd79f27febd4fca4c7caf8a"
+  integrity sha512-puehSjSfqf14W/SvpX+7hGcjVYyVYMs1HSWb9ISVayDVvosDx1gnNLj4fJMpzb0x5upT9E5Gifw9NKiwodnXKw==
   dependencies:
     "@oclif/core" "^4"
     "@salesforce/core" "^8.14.0"
