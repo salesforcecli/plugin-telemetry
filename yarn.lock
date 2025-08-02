@@ -1918,13 +1918,13 @@
   dependencies:
     "@salesforce/ts-types" "^2.0.12"
 
-"@salesforce/o11y-reporter@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@salesforce/o11y-reporter/-/o11y-reporter-1.1.1.tgz#9f54de3400bc9b97ec52309705e8b8dcb400c831"
-  integrity sha512-YWMdtCKycxe/yZN2G/84TMyQKmJ/9iudp4VS/XCpO0fF0Qyx5nzz5kxC4TBSBwpSQowLGLx4+kVy8HYC2p0L6w==
+"@salesforce/o11y-reporter@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@salesforce/o11y-reporter/-/o11y-reporter-1.3.0.tgz#b6897cad5ff70b75e3a53bc0cbf9c5ef967412c3"
+  integrity sha512-LErKlTYt//2GZdG4E4flRDorFTpOylKf7HORgCtPfDjInlENatFUJhDfoYfNm4M1Raved5p1fguGjyR/HTFPmg==
   dependencies:
-    o11y "254.7.0"
-    o11y_schema "254.77.0"
+    o11y "^258.7.0"
+    o11y_schema "256.154.0"
 
 "@salesforce/plugin-command-reference@^3.1.61":
   version "3.1.61"
@@ -1984,14 +1984,14 @@
     cli-progress "^3.12.0"
     terminal-link "^3.0.0"
 
-"@salesforce/telemetry@^6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-6.1.0.tgz#68a05093e41a742fb162b72b4accd9c3921509d4"
-  integrity sha512-jPiJJbkwFISkuPDVFx2IgGAEgqWoXy7BhZIpTcVsFMKdGCa5ZlzekIohD+BCZY14wrxK9ppygWmxKffKBFHHSA==
+"@salesforce/telemetry@^6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-6.2.0.tgz#a06608e887e9262f55b691a50c628b036b2a0032"
+  integrity sha512-wy85s901KqIT2h9/N25m3Jx3Hc0YglaG5YLG2JBB1wQvBJehgXsvkIjCCNM1Hst8MyyY+5pirnm9mOCpIM6nMA==
   dependencies:
     "@salesforce/core" "^8.8.0"
     "@salesforce/kit" "^3.2.3"
-    "@salesforce/o11y-reporter" "1.1.1"
+    "@salesforce/o11y-reporter" "1.3.0"
     applicationinsights "^2.9.6"
     got "^11"
     proxy-agent "^6.5.0"
@@ -6640,24 +6640,24 @@ nyc@^17.0.0:
     test-exclude "^6.0.0"
     yargs "^15.0.2"
 
-o11y@254.7.0:
-  version "254.7.0"
-  resolved "https://registry.yarnpkg.com/o11y/-/o11y-254.7.0.tgz#80797643d6e6e788f675377febef4c4bc135dd83"
-  integrity sha512-f14UcSUQW9+H9syMjcVTyVMTFszcxConVQcgV4d1izkjhT96R0t6cyolFT+S7DGyY8OfGsttxqSr8KnVZHel/g==
+o11y@^258.7.0:
+  version "258.7.0"
+  resolved "https://registry.yarnpkg.com/o11y/-/o11y-258.7.0.tgz#307a7cb39661790f19d9de62698c9117b9ad4fc3"
+  integrity sha512-tcE4H3ytUKQXP5Y0Ta3rfPgYokYGSLVQpJW9KZGYGmcD/jRITWOa7siw3Uo/WcMXzEmwwi/fW3uft8Aon7ef2w==
   dependencies:
     o11y_schema "254.44.0"
-    protobufjs "7.2.4"
-    web-vitals "3.5.2"
+    protobufjs "7.2.6"
+    web-vitals "^4.2.4"
 
 o11y_schema@254.44.0:
   version "254.44.0"
   resolved "https://registry.yarnpkg.com/o11y_schema/-/o11y_schema-254.44.0.tgz#6b283912cca23589a2be78c064672c02ba1f4f65"
   integrity sha512-qcwaZsTyl/NFRoyjXk5ZObfjb773wYM5wxDbHSJNkQDBxX96RjUS/Df0M1rSbsmJWPOuYiV4EkvIOEPMm8V86g==
 
-o11y_schema@254.77.0:
-  version "254.77.0"
-  resolved "https://registry.yarnpkg.com/o11y_schema/-/o11y_schema-254.77.0.tgz#78ac23913f404ea952ac7849477944ff9c7382d1"
-  integrity sha512-HKog5WTKl6hDX3+e6ACBnGbVetTqif++irQMj/AmqbBuNs9NzDhTUgnVqevif6LDKpq4gxw6hr7AC0iP9dyVDw==
+o11y_schema@256.154.0:
+  version "256.154.0"
+  resolved "https://registry.yarnpkg.com/o11y_schema/-/o11y_schema-256.154.0.tgz#1f2f94f1e42d07e62a3e18e09b026345b057dc0c"
+  integrity sha512-czvU/9cibyZptbr0gLJSM70U7zLlhWC2D2L5e9nOG84Wnqmn4F5YzVjrH1ZQzAzDbBbtbeU6WTS3F/SHqtMQ5g==
 
 object-hash@^3.0.0:
   version "3.0.0"
@@ -7122,10 +7122,10 @@ proto-list@~1.2.1:
   resolved "https://registry.yarnpkg.com/proto-list/-/proto-list-1.2.4.tgz#212d5bfe1318306a420f6402b8e26ff39647a849"
   integrity sha512-vtK/94akxsTMhe0/cbfpR+syPuszcuwhqVjJq26CuNDgFGj682oRBXOP5MJpv2r7JtE8MsiepGIqvvOTBwn2vA==
 
-protobufjs@7.2.4:
-  version "7.2.4"
-  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-7.2.4.tgz#3fc1ec0cdc89dd91aef9ba6037ba07408485c3ae"
-  integrity sha512-AT+RJgD2sH8phPmCf7OUZR8xGdcJRga4+1cOaXJ64hvcSkVhNcRHOwIxUatPH15+nj59WAGTDv3LSGZPEQbJaQ==
+protobufjs@7.2.6:
+  version "7.2.6"
+  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-7.2.6.tgz#4a0ccd79eb292717aacf07530a07e0ed20278215"
+  integrity sha512-dgJaEDDL6x8ASUZ1YqWciTRrdOuYNzoOf27oHNfdyvKqHr5i0FV7FSLU+aIeFjyFgVxrpTOtQUi0BLLBymZaBw==
   dependencies:
     "@protobufjs/aspromise" "^1.1.2"
     "@protobufjs/base64" "^1.1.2"
@@ -8432,10 +8432,10 @@ validate-npm-package-name@^5.0.1:
   resolved "https://registry.yarnpkg.com/validate-npm-package-name/-/validate-npm-package-name-5.0.1.tgz#a316573e9b49f3ccd90dbb6eb52b3f06c6d604e8"
   integrity sha512-OljLrQ9SQdOUqTaQxqL5dEfZWrXExyyWsozYlAWFawPVNuD83igl7uJD2RTkNMbniIYgt8l81eCJGIdQF7avLQ==
 
-web-vitals@3.5.2:
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-3.5.2.tgz#5bb58461bbc173c3f00c2ddff8bfe6e680999ca9"
-  integrity sha512-c0rhqNcHXRkY/ogGDJQxZ9Im9D19hDihbzSQJrsioex+KnFgmMzBiy57Z1EjkhX/+OjyBpclDCzz2ITtjokFmg==
+web-vitals@^4.2.4:
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-4.2.4.tgz#1d20bc8590a37769bd0902b289550936069184b7"
+  integrity sha512-r4DIlprAGwJ7YM11VZp4R884m0Vmgr6EAKe3P+kO0PPj3Unqyvv59rczf6UiGcb9Z8QxZVcqKNwv/g0WNdWwsw==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"
