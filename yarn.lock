@@ -1893,7 +1893,7 @@
     strip-ansi "6.0.1"
     ts-retry-promise "^0.8.1"
 
-"@salesforce/core@^8.10.0", "@salesforce/core@^8.15.0", "@salesforce/core@^8.18.5", "@salesforce/core@^8.5.1", "@salesforce/core@^8.8.0":
+"@salesforce/core@^8.10.0", "@salesforce/core@^8.15.0", "@salesforce/core@^8.18.5", "@salesforce/core@^8.19.1", "@salesforce/core@^8.5.1", "@salesforce/core@^8.8.0":
   version "8.19.1"
   resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-8.19.1.tgz#300b37db32e29a7b1055091cc13d04a6ccc4d8c1"
   integrity sha512-HPJxus0W4S1aoT4Qn6mG2s9Ik/mZ59rXNUFc2c+BgEAs28khbZOLR2uiZYexNpXIIZnCrSbb+v1t8IW/idIyCA==
@@ -2028,12 +2028,12 @@
     cli-progress "^3.12.0"
     terminal-link "^3.0.0"
 
-"@salesforce/telemetry@^6.2.0":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-6.2.0.tgz#a06608e887e9262f55b691a50c628b036b2a0032"
-  integrity sha512-wy85s901KqIT2h9/N25m3Jx3Hc0YglaG5YLG2JBB1wQvBJehgXsvkIjCCNM1Hst8MyyY+5pirnm9mOCpIM6nMA==
+"@salesforce/telemetry@^6.2.1":
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-6.2.1.tgz#5a20ee3cd166703129bceaeb682a9f28e7760ff1"
+  integrity sha512-lNNosqgZ0z+5BtM3Y9xhJfv9BKXfMGcW5oQraGmV9Wgns+2qRrdYFXCX0tI2O6wbCRbk37wxfASxLrJn5UWZjA==
   dependencies:
-    "@salesforce/core" "^8.8.0"
+    "@salesforce/core" "^8.19.1"
     "@salesforce/kit" "^3.2.3"
     "@salesforce/o11y-reporter" "1.3.0"
     applicationinsights "^2.9.6"
