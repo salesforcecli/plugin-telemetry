@@ -1,3 +1,9 @@
+## [3.6.55](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.54...3.6.55) (2025-08-19)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/sf-plugins-core from 12.2.2 to 12.2.4 ([a37f15b](https://github.com/salesforcecli/plugin-telemetry/commit/a37f15bb1117b281dbb0b8221a36083712db4c30))
+
 ## [3.6.54](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.53...3.6.54) (2025-08-16)
 
 ### Bug Fixes
