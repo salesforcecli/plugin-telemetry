@@ -1,3 +1,9 @@
+## [3.6.69](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.68...3.6.69) (2025-12-05)
+
+### Bug Fixes
+
+- **deps:** bump jws from 3.2.2 to 3.2.3 ([8f0a024](https://github.com/salesforcecli/plugin-telemetry/commit/8f0a0247b42734f5338930b8c29646a11d1819a8))
+
 ## [3.6.68](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.67...3.6.68) (2025-11-29)
 
 ### Bug Fixes
