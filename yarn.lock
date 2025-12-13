@@ -1695,7 +1695,7 @@
     strip-ansi "6.0.1"
     ts-retry-promise "^0.8.1"
 
-"@salesforce/core@^8.18.7", "@salesforce/core@^8.23.3", "@salesforce/core@^8.23.4", "@salesforce/core@^8.24.0", "@salesforce/core@^8.5.1", "@salesforce/core@^8.8.0":
+"@salesforce/core@^8.18.7", "@salesforce/core@^8.23.3", "@salesforce/core@^8.24.0", "@salesforce/core@^8.5.1", "@salesforce/core@^8.8.0":
   version "8.24.0"
   resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-8.24.0.tgz#13426f9f3b5ed0ec126b8009e5eda68e03db0401"
   integrity sha512-8Ra5RT95bRkmHmaaFgABwkXbnHNSNS7l9gbJzJgO6VQpaEeytGPPyymnAE7TcTM2xp/QwlXn+PgX4biX7Lb7JA==
@@ -1764,10 +1764,10 @@
   dependencies:
     "@salesforce/ts-types" "^2.0.12"
 
-"@salesforce/o11y-reporter@1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@salesforce/o11y-reporter/-/o11y-reporter-1.4.0.tgz#182fbbe294919ad1cec5068e39af354a86be9ad5"
-  integrity sha512-9x6wCVoIO6HarMM8vSvPj0A+aF2Z8XQ5W5t7UeeTymoCNaAyVxQEIe+2iQxaFQbbIiH3ZouySRMSNxui7mqNHQ==
+"@salesforce/o11y-reporter@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@salesforce/o11y-reporter/-/o11y-reporter-1.6.0.tgz#b2c5e538d64337c44b69ce5ec8b43c55d6c409eb"
+  integrity sha512-FAdmfTtRlpuCwXSwPFrpp+mYn8h47EUAaHKL1PpVZYU+DoktVXrDoKTm3MxKRarcqtK1fc4PaO3UOcL5tIT1iA==
   dependencies:
     o11y "^258.7.0"
     o11y_schema "256.154.0"
@@ -1825,14 +1825,14 @@
     cli-progress "^3.12.0"
     terminal-link "^3.0.0"
 
-"@salesforce/telemetry@^6.3.0":
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-6.3.0.tgz#523d6f5617ac8a9e034c5ecd45affe40d418f5a8"
-  integrity sha512-edCfa27JR+zHLzT1GaDfjzw5DbmelGVctu6xRbACu723CQYR0XvvuLp67HK0B30BKfcrUlNcfrJUSh+b6vOkag==
+"@salesforce/telemetry@^6.4.3":
+  version "6.4.3"
+  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-6.4.3.tgz#593c844e992ac1684323a4f27a3e9712f35d5efc"
+  integrity sha512-O2/bkrBxpwm5xIKO6m9eP2N5gyCDj57J5pTmagWCMs3fwMurmi/rW3H8tlHnJBWU+iBDdPcxCY7L6QNrmupAPA==
   dependencies:
-    "@salesforce/core" "^8.23.4"
+    "@salesforce/core" "^8.24.0"
     "@salesforce/kit" "^3.2.4"
-    "@salesforce/o11y-reporter" "1.4.0"
+    "@salesforce/o11y-reporter" "1.6.0"
     applicationinsights "^2.9.8"
     got "^11"
     proxy-agent "^6.5.0"
