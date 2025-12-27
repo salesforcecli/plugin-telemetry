@@ -21,7 +21,7 @@
     "@salesforce/plugin-command-reference": "^3.1.79",
     "@salesforce/ts-sinon": "^1.4.31",
     "@types/debug": "^4.1.12",
-    "oclif": "^4.22.57",
+    "oclif": "^4.22.59",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   },
