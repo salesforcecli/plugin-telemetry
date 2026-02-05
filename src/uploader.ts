@@ -15,6 +15,7 @@
  */
 
 import { SfError } from '@salesforce/core/sfError';
+import type { Attributes } from '@salesforce/telemetry';
 import { asBoolean, asString, Dictionary } from '@salesforce/ts-types';
 import Telemetry from './telemetry.js';
 import { debug } from './debugger.js';
@@ -45,6 +46,7 @@ export class Uploader {
     const { TelemetryReporter } = await import('@salesforce/telemetry');
     let appInsightsReporter: InstanceType<typeof TelemetryReporter>;
     let o11yReporter: InstanceType<typeof TelemetryReporter> | undefined;
+
     try {
       appInsightsReporter = await TelemetryReporter.create({
         project: PROJECT,
@@ -53,7 +55,7 @@ export class Uploader {
         waitForConnection: true,
         enableO11y: false,
         enableAppInsights: true,
-      });      
+      });
     } catch (err) {
       const error = SfError.wrap(err);
       debug(`Error creating reporter: ${error.message}`);
@@ -64,67 +66,64 @@ export class Uploader {
 
     try {
       const events = await this.telemetry.read();
-      for (const event of events) {
-        event.telemetryVersion = this.version;
-        const eventType = asString(event.type) ?? Telemetry.EVENT;
-        const eventName = asString(event.eventName) ?? 'UNKNOWN';
-        const o11yEnabled = asBoolean(event.o11yEnabled) ?? false;
-        const o11yUploadEndpoint = asString(event.o11yUploadEndpoint) ?? '';
-        delete event.type;
-        delete event.eventName;
-        delete event.o11yEnabled;
-        delete event.o11yUploadEndpoint;
+      const { appInsightsEvents, appInsightsErrors, o11yEvents } = this.parseEvents(events);
 
-        if (eventType === Telemetry.EVENT) {
+      // Send AppInsights events
+      if (appInsightsEvents.length > 0) {
+        appInsightsEvents.forEach((event) => {
+          const eventName = asString(event.eventName) ?? 'UNKNOWN';
+          delete event.eventName;
           appInsightsReporter.sendTelemetryEvent(eventName, event);
+        });
+      }
 
-          // Send pdpEvent to O11y if enabled and upload endpoint is set and the event is a COMMAND_EXECUTION event.
-          if (o11yEnabled && o11yUploadEndpoint.length && eventName === 'COMMAND_EXECUTION') {
-            // Only create the o11y reporter if it is not already created.
-            if (!o11yReporter) {
-              try {
-                o11yReporter = await TelemetryReporter.create({
-                  project: PROJECT, 
-                  key: 'not-used',
-                  userId: this.telemetry.getCLIId(),
-                  waitForConnection: true,
-                  enableO11y: true,
-                  enableAppInsights: false,
-                  o11yUploadEndpoint,
-                });
-              } catch (err) {
-                const error = SfError.wrap(err);
-                debug(`Error creating o11y reporter: ${error.message}`);
-              }
-          }
-          if (o11yReporter) {
-            try {
-              o11yReporter.sendPdpEvent({
-                  eventName: 'salesforceCli.executed',
-                  productFeatureId: 'aJCEE0000000mHP4AY',
-                  componentId: `${event.plugin}.${event.command}`,
-                  // eventVolume: event.eventVolume, Not sure we'll need this
-                  contextName: 'orgId::devhubId', // Delimited string of keys
-                  contextValue: `${event.orgId}::${event.devhubId}`, // Delimited string of values
-              });
-            } catch (err) {
-              const error = SfError.wrap(err);
-              debug(`Error sending pdp event: ${error.message}`);
-            }
-          }
-        }
-        } else if (eventType === Telemetry.EXCEPTION) {
+      // Send AppInsights errors
+      if (appInsightsErrors.length > 0) {
+        appInsightsErrors.forEach((event) => {
           const error = new Error();
           // We know this is an object because it is logged as such
           const errorObject = event.error as unknown as Dictionary;
           delete event.error;
+          delete event.eventName;
 
           Object.assign(error, errorObject);
           error.name = asString(errorObject.name) ?? 'Unknown';
           error.message = asString(errorObject.message) ?? 'Unknown';
           error.stack = asString(errorObject.stack) ?? 'Unknown';
           appInsightsReporter.sendTelemetryException(error, event);
+        });
+      }
+
+      // Send PDP events via O11y
+      if (o11yEvents.length > 0) {
+        try {
+          // Get the o11yUploadEndpoint from the first event
+          const o11yUploadEndpoint = asString(o11yEvents[0].o11yUploadEndpoint) ?? '';
+          o11yReporter = await TelemetryReporter.create({
+            project: PROJECT,
+            key: 'not-used',
+            userId: this.telemetry.getCLIId(),
+            waitForConnection: true,
+            enableO11y: true,
+            enableAppInsights: false,
+            o11yUploadEndpoint,
+          });
+        } catch (err) {
+          const error = SfError.wrap(err);
+          debug(`Error creating o11y reporter: ${error.message}`);
         }
+        o11yEvents.forEach((event) => {
+          const pluginName = `${asString(event.plugin) ?? 'unknownPlugin'}`;
+          const commandName = `${asString(event.command) ?? 'unknownCommand'}`;
+          o11yReporter?.sendPdpEvent({
+            eventName: 'salesforceCli.executed',
+            productFeatureId: 'aJCEE0000000mHP4AY',
+            componentId: `${pluginName}.${commandName}`,
+            // eventVolume: event.eventVolume, Not sure we'll need this
+            contextName: 'orgId::devhubId', // Delimited string of keys
+            contextValue: `${event.orgId ?? ''}::${event.devhubId ?? ''}`, // Delimited string of values
+          });
+        });
       }
     } catch (err) {
       const error = SfError.wrap(err);
@@ -144,5 +143,45 @@ export class Uploader {
         await this.telemetry.clear();
       }
     }
+  }
+
+  private parseEvents(events: Attributes[]): {
+    appInsightsEvents: Attributes[];
+    appInsightsErrors: Attributes[];
+    o11yEvents: Attributes[];
+  } {
+    const appInsightsEvents: Attributes[] = [];
+    const appInsightsErrors: Attributes[] = [];
+    const o11yEvents: Attributes[] = [];
+    for (const event of events) {
+      event.telemetryVersion = this.version;
+      const eventType = asString(event.type) ?? Telemetry.EVENT;
+      const eventName = asString(event.eventName) ?? 'UNKNOWN';
+      const o11yEnabled = asBoolean(event.o11yEnabled) ?? false;
+      const o11yUploadEndpoint = asString(event.o11yUploadEndpoint) ?? '';
+      delete event.type;
+      delete event.o11yEnabled;
+      delete event.o11yUploadEndpoint;
+
+      if (eventType === Telemetry.EVENT) {
+        appInsightsEvents.push(event);
+        if (o11yEnabled && o11yUploadEndpoint.length > 0 && eventName === 'COMMAND_EXECUTION') {
+          const pluginName = `${asString(event.plugin) ?? 'unknownPlugin'}`;
+          const commandName = `${asString(event.command) ?? 'unknownCommand'}`;
+          o11yEvents.push({
+            o11yUploadEndpoint, // Needed to create the reporter.
+            eventName: 'salesforceCli.executed',
+            productFeatureId: 'aJCEE0000000mHP4AY',
+            componentId: `${pluginName}.${commandName}`,
+            // eventVolume: event.eventVolume, Not sure we'll need this
+            contextName: 'orgId::devhubId', // Delimited string of keys
+            contextValue: `${event.orgId ?? ''}::${event.devhubId ?? ''}`, // Delimited string of values
+          });
+        }
+      } else if (eventType === Telemetry.EXCEPTION) {
+        appInsightsErrors.push(event);
+      }
+    }
+    return { appInsightsEvents, appInsightsErrors, o11yEvents };
   }
 }
