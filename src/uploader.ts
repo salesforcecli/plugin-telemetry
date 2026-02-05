@@ -15,10 +15,9 @@
  */
 
 import { SfError } from '@salesforce/core/sfError';
-import { asString, Dictionary } from '@salesforce/ts-types';
+import { asBoolean, asString, Dictionary } from '@salesforce/ts-types';
 import Telemetry from './telemetry.js';
 import { debug } from './debugger.js';
-
 import { TelemetryGlobal } from './telemetryGlobal.js';
 
 declare const global: TelemetryGlobal;
@@ -44,16 +43,19 @@ export class Uploader {
    */
   private async sendToTelemetry(): Promise<void> {
     const { TelemetryReporter } = await import('@salesforce/telemetry');
-    let reporter: InstanceType<typeof TelemetryReporter>;
+    let appInsightsReporter: InstanceType<typeof TelemetryReporter>;
+    let o11yReporter: InstanceType<typeof TelemetryReporter> | undefined = undefined;
     try {
-      reporter = await TelemetryReporter.create({
+      appInsightsReporter = await TelemetryReporter.create({
         project: PROJECT,
         key: APP_INSIGHTS_KEY,
         userId: this.telemetry.getCLIId(),
         waitForConnection: true,
-      });
+        enableO11y: false,
+        enableAppInsights: true,
+      });      
     } catch (err) {
-      const error = err as SfError;
+      const error = SfError.wrap(err);
       debug(`Error creating reporter: ${error.message}`);
       // We can't do much without a reporter, so clear the telemetry file and move on.
       await this.telemetry.clear();
@@ -66,11 +68,51 @@ export class Uploader {
         event.telemetryVersion = this.version;
         const eventType = asString(event.type) ?? Telemetry.EVENT;
         const eventName = asString(event.eventName) ?? 'UNKNOWN';
+        const o11yEnabled = asBoolean(event.o11yEnabled) ?? false;
+        const o11yUploadEndpoint = asString(event.o11yUploadEndpoint) ?? '';
         delete event.type;
         delete event.eventName;
+        delete event.o11yEnabled;
+        delete event.o11yUploadEndpoint;
 
         if (eventType === Telemetry.EVENT) {
-          reporter.sendTelemetryEvent(eventName, event);
+          appInsightsReporter.sendTelemetryEvent(eventName, event);
+
+          // Send pdpEvent to O11y if enabled and upload endpoint is set and the event is a COMMAND_EXECUTION event.
+          if (o11yEnabled && o11yUploadEndpoint.length && eventName === 'COMMAND_EXECUTION') {
+            // Only create the o11y reporter if it is not already created.
+            if (!o11yReporter) {
+              try {
+                o11yReporter = await TelemetryReporter.create({
+                  project: PROJECT, 
+                  key: 'not-used',
+                  userId: this.telemetry.getCLIId(),
+                  waitForConnection: true,
+                  enableO11y: true,
+                  enableAppInsights: false,
+                  o11yUploadEndpoint,
+                });
+              } catch (err) {
+                const error = SfError.wrap(err);
+                debug(`Error creating o11y reporter: ${error.message}`);
+              }
+          }
+          if (o11yReporter) {
+            try {
+              o11yReporter.sendPdpEvent({
+                  eventName: 'salesforceCli.executed',
+                  productFeatureId: 'aJCEE0000000mHP4AY',
+                  componentId: `${event.plugin}.${event.command}`,
+                  // eventVolume: event.eventVolume, Not sure we'll need this
+                  contextName: 'orgId::devhubId', // Delimited string of keys
+                  contextValue: `${event.orgId}::${event.devhubId}`, // Delimited string of values
+              });
+            } catch (err) {
+              const error = SfError.wrap(err);
+              debug(`Error sending pdp event: ${error.message}`);
+            }
+          }
+        }
         } else if (eventType === Telemetry.EXCEPTION) {
           const error = new Error();
           // We know this is an object because it is logged as such
@@ -81,18 +123,21 @@ export class Uploader {
           error.name = asString(errorObject.name) ?? 'Unknown';
           error.message = asString(errorObject.message) ?? 'Unknown';
           error.stack = asString(errorObject.stack) ?? 'Unknown';
-          reporter.sendTelemetryException(error, event);
+          appInsightsReporter.sendTelemetryException(error, event);
         }
       }
     } catch (err) {
-      const error = err as SfError;
+      const error = SfError.wrap(err);
       debug(`Error reading or sending telemetry events: ${error.message}`);
     } finally {
       try {
         // We are done sending events
-        reporter.stop();
+        appInsightsReporter.stop();
+        if (o11yReporter) {
+          o11yReporter.stop();
+        }
       } catch (err) {
-        const error = err as SfError;
+        const error = SfError.wrap(err);
         debug(`Error stopping telemetry reporter: ${error.message}`);
       } finally {
         // We always want to clear the file.

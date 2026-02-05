@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { Config, Command, Flags, Parser } from '@oclif/core';
-import { Org } from '@salesforce/core';
+import { Org, SfError } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
 import { isNumber, JsonMap, Optional } from '@salesforce/ts-types';
 import { parseVarArgs } from '@salesforce/sf-plugins-core';
@@ -49,6 +51,8 @@ export class CommandExecution extends AsyncCreatable {
   private orgApiVersion?: string | null;
   private devhubApiVersion?: string | null;
   private argKeys: string[] = [];
+  private enableO11y?: boolean;
+  private o11yUploadEndpoint?: string;
 
   public constructor(options: CommandExecutionOptions) {
     super(options);
@@ -77,6 +81,8 @@ export class CommandExecution extends AsyncCreatable {
       nodeEnv: process.env.NODE_ENV,
       nodeVersion: process.version,
       processUptime: process.uptime() * 1000,
+      enableO11y: this.enableO11y,
+      o11yUploadEndpoint: this.o11yUploadEndpoint,
 
       // CLI information
       version: this.config.version,
@@ -178,6 +184,24 @@ export class CommandExecution extends AsyncCreatable {
       ? (flags['target-dev-hub'] as unknown as Org).getConnection().getApiVersion()
       : null;
     this.determineSpecifiedFlags(argv, flags, flagDefinitions);
+
+    // Read o11y configuration from the plugin's package.json (plugin that owns the command)
+    const pluginRoot = this.command.plugin?.root;
+    if (pluginRoot) {
+      try {
+        const pjsonPath = path.join(pluginRoot, 'package.json');
+        const pjsonContents = await fs.readFile(pjsonPath, 'utf-8');
+        const pjson = JSON.parse(pjsonContents) as Record<string, unknown>;
+        const rawEnableO11y = pjson.enableO11y;
+        this.enableO11y =
+          typeof rawEnableO11y === 'boolean' ? rawEnableO11y : String(rawEnableO11y ?? '').toLowerCase() === 'true';
+        const endpoint = pjson.o11yUploadEndpoint;
+        this.o11yUploadEndpoint = typeof endpoint === 'string' && endpoint.length > 0 ? endpoint : undefined;
+      } catch (err) {
+        const error = SfError.wrap(err);
+        debug('Could not read plugin package.json for o11y config', error.message);
+      }
+    }
   }
 
   private determineSpecifiedFlags(argv: string[], flags: Parser.FlagInput, flagDefinitions: Parser.FlagInput): void {
