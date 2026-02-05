@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, Salesforce, Inc.
+ * Copyright 2026, Salesforce, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ export class Uploader {
   private async sendToTelemetry(): Promise<void> {
     const { TelemetryReporter } = await import('@salesforce/telemetry');
     let appInsightsReporter: InstanceType<typeof TelemetryReporter>;
-    let o11yReporter: InstanceType<typeof TelemetryReporter> | undefined = undefined;
+    let o11yReporter: InstanceType<typeof TelemetryReporter> | undefined;
     try {
       appInsightsReporter = await TelemetryReporter.create({
         project: PROJECT,
