@@ -15,7 +15,7 @@
  */
 
 import { SfError } from '@salesforce/core/sfError';
-import type { Attributes } from '@salesforce/telemetry';
+import type { Attributes, PdpEvent } from '@salesforce/telemetry';
 import { asBoolean, asString, Dictionary } from '@salesforce/ts-types';
 import Telemetry from './telemetry.js';
 import { debug } from './debugger.js';
@@ -28,6 +28,8 @@ const APP_INSIGHTS_KEY =
   'InstrumentationKey=2ca64abb-6123-4c7b-bd9e-4fe73e71fe9c;IngestionEndpoint=https://eastus-1.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/;ApplicationId=ecd8fa7a-0e0d-4109-94db-4d7878ada862';
 
 export class Uploader {
+  private o11yUploadEndpoint: string = '';
+
   private constructor(private telemetry: Telemetry, private version: string) {}
 
   /**
@@ -97,8 +99,6 @@ export class Uploader {
       // Send PDP events via O11y
       if (o11yEvents.length > 0) {
         try {
-          // Get the o11yUploadEndpoint from the first event
-          const o11yUploadEndpoint = asString(o11yEvents[0].o11yUploadEndpoint) ?? '';
           o11yReporter = await TelemetryReporter.create({
             project: PROJECT,
             key: 'not-used',
@@ -106,24 +106,13 @@ export class Uploader {
             waitForConnection: true,
             enableO11y: true,
             enableAppInsights: false,
-            o11yUploadEndpoint,
+            o11yUploadEndpoint: this.o11yUploadEndpoint,
           });
         } catch (err) {
           const error = SfError.wrap(err);
           debug(`Error creating o11y reporter: ${error.message}`);
         }
-        o11yEvents.forEach((event) => {
-          const pluginName = `${asString(event.plugin) ?? 'unknownPlugin'}`;
-          const commandName = `${asString(event.command) ?? 'unknownCommand'}`;
-          o11yReporter?.sendPdpEvent({
-            eventName: 'salesforceCli.executed',
-            productFeatureId: 'aJCEE0000000mHP4AY',
-            componentId: `${pluginName}.${commandName}`,
-            // eventVolume: event.eventVolume, Not sure we'll need this
-            contextName: 'orgId::devhubId', // Delimited string of keys
-            contextValue: `${event.orgId ?? ''}::${event.devhubId ?? ''}`, // Delimited string of values
-          });
-        });
+        o11yEvents.forEach((event) => o11yReporter?.sendPdpEvent(event));
       }
     } catch (err) {
       const error = SfError.wrap(err);
@@ -148,32 +137,30 @@ export class Uploader {
   private parseEvents(events: Attributes[]): {
     appInsightsEvents: Attributes[];
     appInsightsErrors: Attributes[];
-    o11yEvents: Attributes[];
+    o11yEvents: PdpEvent[];
   } {
     const appInsightsEvents: Attributes[] = [];
     const appInsightsErrors: Attributes[] = [];
-    const o11yEvents: Attributes[] = [];
+    const o11yEvents: PdpEvent[] = [];
     for (const event of events) {
       event.telemetryVersion = this.version;
       const eventType = asString(event.type) ?? Telemetry.EVENT;
       const eventName = asString(event.eventName) ?? 'UNKNOWN';
       const o11yEnabled = asBoolean(event.o11yEnabled) ?? false;
-      const o11yUploadEndpoint = asString(event.o11yUploadEndpoint) ?? '';
+      this.o11yUploadEndpoint = asString(event.o11yUploadEndpoint) ?? '';
       delete event.type;
       delete event.o11yEnabled;
       delete event.o11yUploadEndpoint;
 
       if (eventType === Telemetry.EVENT) {
         appInsightsEvents.push(event);
-        if (o11yEnabled && o11yUploadEndpoint.length > 0 && eventName === 'COMMAND_EXECUTION') {
+        if (o11yEnabled && this.o11yUploadEndpoint.length > 0 && eventName === 'COMMAND_EXECUTION') {
           const pluginName = `${asString(event.plugin) ?? 'unknownPlugin'}`;
           const commandName = `${asString(event.command) ?? 'unknownCommand'}`;
           o11yEvents.push({
-            o11yUploadEndpoint, // Needed to create the reporter.
             eventName: 'salesforceCli.executed',
             productFeatureId: 'aJCEE0000000mHP4AY',
             componentId: `${pluginName}.${commandName}`,
-            // eventVolume: event.eventVolume, Not sure we'll need this
             contextName: 'orgId::devhubId', // Delimited string of keys
             contextValue: `${event.orgId ?? ''}::${event.devhubId ?? ''}`, // Delimited string of values
           });
