@@ -53,6 +53,7 @@ export class CommandExecution extends AsyncCreatable {
   private argKeys: string[] = [];
   private enableO11y?: boolean;
   private o11yUploadEndpoint?: string;
+  private productFeatureId?: string;
 
   public constructor(options: CommandExecutionOptions) {
     super(options);
@@ -83,6 +84,7 @@ export class CommandExecution extends AsyncCreatable {
       processUptime: process.uptime() * 1000,
       enableO11y: this.enableO11y,
       o11yUploadEndpoint: this.o11yUploadEndpoint,
+      productFeatureId: this.productFeatureId,
 
       // CLI information
       version: this.config.version,
@@ -188,19 +190,34 @@ export class CommandExecution extends AsyncCreatable {
     // Read o11y configuration from the plugin's package.json (plugin that owns the command)
     const pluginRoot = this.command.plugin?.root;
     if (pluginRoot) {
-      try {
-        const pjsonPath = path.join(pluginRoot, 'package.json');
-        const pjsonContents = await fs.readFile(pjsonPath, 'utf-8');
-        const pjson = JSON.parse(pjsonContents) as Record<string, unknown>;
-        const rawEnableO11y = pjson.enableO11y;
-        this.enableO11y =
-          typeof rawEnableO11y === 'boolean' ? rawEnableO11y : String(rawEnableO11y ?? '').toLowerCase() === 'true';
-        const endpoint = pjson.o11yUploadEndpoint;
-        this.o11yUploadEndpoint = typeof endpoint === 'string' && endpoint.length > 0 ? endpoint : undefined;
-      } catch (err) {
-        const error = SfError.wrap(err);
-        debug('Could not read plugin package.json for o11y config', error.message);
+      await this.setO11yConfig(pluginRoot);
+    }
+  }
+
+  // Get and set the O11y configuration from the plugin's package.json
+  private async setO11yConfig(pluginRoot: string): Promise<void> {
+    try {
+      const pjsonPath = path.join(pluginRoot, 'package.json');
+      const pjsonContents = await fs.readFile(pjsonPath, 'utf-8');
+      const pjson = JSON.parse(pjsonContents) as Record<string, unknown>;
+      const rawEnableO11y = pjson.enableO11y;
+      this.enableO11y =
+        typeof rawEnableO11y === 'boolean' ? rawEnableO11y : String(rawEnableO11y ?? '').toLowerCase() === 'true';
+      const endpoint = pjson.o11yUploadEndpoint;
+      this.o11yUploadEndpoint = typeof endpoint === 'string' && endpoint.length > 0 ? endpoint : undefined;
+      const productFeatureId = pjson.productFeatureId;
+      this.productFeatureId =
+        typeof productFeatureId === 'string' && productFeatureId.length > 0 ? productFeatureId : undefined;
+      if (this.productFeatureId) {
+        if (!this.productFeatureId.startsWith('aJC')) {
+          debug('WARNING: productFeatureId must start with "aJC" prefix.  Found: ${this.productFeatureId}.');
+        } else {
+          debug('O11y PDP Config - productFeatureId overridden in package.json to: ${this.productFeatureId}');
+        }
       }
+    } catch (err) {
+      const error = SfError.wrap(err);
+      debug('Could not read plugin package.json for o11y config', error.message);
     }
   }
 

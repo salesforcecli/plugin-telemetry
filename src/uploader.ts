@@ -146,20 +146,22 @@ export class Uploader {
       event.telemetryVersion = this.version;
       const eventType = asString(event.type) ?? Telemetry.EVENT;
       const eventName = asString(event.eventName) ?? 'UNKNOWN';
-      const o11yEnabled = asBoolean(event.o11yEnabled) ?? false;
+      const enableO11y = asBoolean(event.enableO11y) ?? false;
+      const productFeatureId = asString(event.productFeatureId) ?? 'aJCEE0000000mHP4AY';
       this.o11yUploadEndpoint = asString(event.o11yUploadEndpoint) ?? '';
       delete event.type;
-      delete event.o11yEnabled;
+      delete event.enableO11y;
       delete event.o11yUploadEndpoint;
+      delete event.productFeatureId;
 
       if (eventType === Telemetry.EVENT) {
         appInsightsEvents.push(event);
-        if (o11yEnabled && this.o11yUploadEndpoint.length > 0 && eventName === 'COMMAND_EXECUTION') {
+        if (enableO11y && this.o11yUploadEndpoint.length > 0 && eventName === 'COMMAND_EXECUTION') {
           const pluginName = `${asString(event.plugin) ?? 'unknownPlugin'}`;
           const commandName = `${asString(event.command) ?? 'unknownCommand'}`;
           o11yEvents.push({
             eventName: 'salesforceCli.executed',
-            productFeatureId: 'aJCEE0000000mHP4AY',
+            productFeatureId: productFeatureId as `aJC${string}`,
             componentId: `${pluginName}.${commandName}`,
             contextName: 'orgId::devhubId', // Delimited string of keys
             contextValue: `${event.orgId ?? ''}::${event.devhubId ?? ''}`, // Delimited string of values
