@@ -1745,7 +1745,7 @@
     ts-retry-promise "^0.8.1"
     zod "^4.1.12"
 
-"@salesforce/core@^8.25.0":
+"@salesforce/core@^8.25.1":
   version "8.25.1"
   resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-8.25.1.tgz#7646025598bb59b6f95b3656baf8eb0b63a43052"
   integrity sha512-Jon0a9uZpp+mNa5PiY+y8dTjaPcsMaxXEkswdzWotrdrZ4g84MmPKSEv+Q/LtXw3uc9i4RmqBJBUXSIvZhgrjg==
@@ -1814,10 +1814,10 @@
   dependencies:
     "@salesforce/ts-types" "^2.0.12"
 
-"@salesforce/o11y-reporter@1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@salesforce/o11y-reporter/-/o11y-reporter-1.7.0.tgz#9ad4877ab4df18a80e904be564a2063b4563bbe2"
-  integrity sha512-K4kY3yf2RD2T/RYIID3Ucrlbi9cdR57Lak58o1KLhl4gO+LHMatuk5FJbYpEIuaOqE83G5/pIJ1dOps0BVBcVA==
+"@salesforce/o11y-reporter@1.7.3":
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/@salesforce/o11y-reporter/-/o11y-reporter-1.7.3.tgz#14e58bc511fa3529077eff7e6712182574c52a1c"
+  integrity sha512-Krd2EgHYrTW1j1Wo5q+4kya6F7WjGvJsD4oUKzefLRw92Pb5b7aMorLFsKMEvLTZSGmTZZClLmQMap0gLOV6qw==
   dependencies:
     o11y "^258.7.0"
     o11y_schema "256.154.0"
@@ -1875,16 +1875,17 @@
     cli-progress "^3.12.0"
     terminal-link "^3.0.0"
 
-"@salesforce/telemetry@^6.5.0":
-  version "6.5.0"
-  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-6.5.0.tgz#eeb35245882d12d81cc327d8956b530176b4b719"
-  integrity sha512-8Om+GOa3J8Qnb3QE3eAMa0k2+G0kroKZ1ln+3uAyjFsLxhaibzgd0LE79SfQO3uoDuOYGQGZ+qeKOC3eedf1pg==
+"@salesforce/telemetry@^6.6.0":
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-6.6.0.tgz#84fe9ae5da29fe002db977fe794b9865090e9f56"
+  integrity sha512-frFgpPKEdDuoHyOmhKwxOarULBhkyZSt0sQof7jC08uJe3XQlgET93HhHALhnYkLgoMCfdCmTAyRIgCRknJttQ==
   dependencies:
-    "@salesforce/core" "^8.25.0"
+    "@salesforce/core" "^8.25.1"
     "@salesforce/kit" "^3.2.4"
-    "@salesforce/o11y-reporter" "1.7.0"
+    "@salesforce/o11y-reporter" "1.7.3"
     applicationinsights "^2.9.8"
     got "^11"
+    o11y_schema "^260.41.0"
     proxy-agent "^6.5.0"
 
 "@salesforce/ts-sinon@^1.4.31":
@@ -6513,6 +6514,11 @@ o11y_schema@256.154.0:
   version "256.154.0"
   resolved "https://registry.yarnpkg.com/o11y_schema/-/o11y_schema-256.154.0.tgz#1f2f94f1e42d07e62a3e18e09b026345b057dc0c"
   integrity sha512-czvU/9cibyZptbr0gLJSM70U7zLlhWC2D2L5e9nOG84Wnqmn4F5YzVjrH1ZQzAzDbBbtbeU6WTS3F/SHqtMQ5g==
+
+o11y_schema@^260.41.0:
+  version "260.42.0"
+  resolved "https://registry.yarnpkg.com/o11y_schema/-/o11y_schema-260.42.0.tgz#7cbfa43590f4bdfaa30789c527fa02217ad6d41b"
+  integrity sha512-EV7Vwoh+S4S2p42sTG1mUWnt9ZdMGHeZAuypnV7u1MFp/f5VSWu6N9W/dsgC5TnWFrA1CE7+Va5S4evydjrqaw==
 
 object-hash@^3.0.0:
   version "3.0.0"
