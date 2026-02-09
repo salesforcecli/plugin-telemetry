@@ -1,3 +1,13 @@
+# [3.7.0](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.71...3.7.0) (2026-02-09)
+
+### Bug Fixes
+
+- allow productFeatureId override from pjson ([33e6e04](https://github.com/salesforcecli/plugin-telemetry/commit/33e6e04adfbf7873c12f921d4e43329706e29389))
+
+### Features
+
+- add support for sending PDP event data via O11yReporter ([cd1d3c0](https://github.com/salesforcecli/plugin-telemetry/commit/cd1d3c027a0f16d5d893495b3939d4c7f90f6986))
+
 ## [3.6.71](https://github.com/salesforcecli/plugin-telemetry/compare/3.6.70...3.6.71) (2025-12-13)
 
 ### Bug Fixes
