@@ -1412,6 +1412,22 @@
     node-fetch "^2.6.1"
     xml2js "^0.6.2"
 
+"@jsforce/jsforce-node@^3.10.13":
+  version "3.10.13"
+  resolved "https://registry.yarnpkg.com/@jsforce/jsforce-node/-/jsforce-node-3.10.13.tgz#d1e832178e2e74646c75b952e629ac5b8ceff7d0"
+  integrity sha512-Ft42/lp3WaVxijcX88Rb3yIxujk/u3LwL3913OTcB4WCpwjB9xTqP6jkVTKt2riXg+ZlNiS62SMpQeC3U1Efkw==
+  dependencies:
+    "@sindresorhus/is" "^4"
+    base64url "^3.0.1"
+    csv-parse "^5.5.2"
+    csv-stringify "^6.6.0"
+    faye "^1.4.0"
+    form-data "^4.0.4"
+    https-proxy-agent "^5.0.0"
+    multistream "^3.1.0"
+    node-fetch "^2.6.1"
+    xml2js "^0.6.2"
+
 "@jsonjoy.com/base64@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@jsonjoy.com/base64/-/base64-1.1.2.tgz#cf8ea9dcb849b81c95f14fc0aaa151c6b54d2578"
@@ -1704,12 +1720,37 @@
     strip-ansi "6.0.1"
     ts-retry-promise "^0.8.1"
 
-"@salesforce/core@^8.18.7", "@salesforce/core@^8.23.3", "@salesforce/core@^8.24.0", "@salesforce/core@^8.5.1", "@salesforce/core@^8.8.0":
+"@salesforce/core@^8.18.7", "@salesforce/core@^8.23.3", "@salesforce/core@^8.5.1", "@salesforce/core@^8.8.0":
   version "8.24.0"
   resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-8.24.0.tgz#13426f9f3b5ed0ec126b8009e5eda68e03db0401"
   integrity sha512-8Ra5RT95bRkmHmaaFgABwkXbnHNSNS7l9gbJzJgO6VQpaEeytGPPyymnAE7TcTM2xp/QwlXn+PgX4biX7Lb7JA==
   dependencies:
     "@jsforce/jsforce-node" "^3.10.10"
+    "@salesforce/kit" "^3.2.4"
+    "@salesforce/ts-types" "^2.0.12"
+    ajv "^8.17.1"
+    change-case "^4.1.2"
+    fast-levenshtein "^3.0.0"
+    faye "^1.4.1"
+    form-data "^4.0.4"
+    js2xmlparser "^4.0.1"
+    jsonwebtoken "9.0.3"
+    jszip "3.10.1"
+    memfs "^4.30.1"
+    pino "^9.7.0"
+    pino-abstract-transport "^1.2.0"
+    pino-pretty "^11.3.0"
+    proper-lockfile "^4.1.2"
+    semver "^7.7.3"
+    ts-retry-promise "^0.8.1"
+    zod "^4.1.12"
+
+"@salesforce/core@^8.25.1":
+  version "8.25.1"
+  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-8.25.1.tgz#7646025598bb59b6f95b3656baf8eb0b63a43052"
+  integrity sha512-Jon0a9uZpp+mNa5PiY+y8dTjaPcsMaxXEkswdzWotrdrZ4g84MmPKSEv+Q/LtXw3uc9i4RmqBJBUXSIvZhgrjg==
+  dependencies:
+    "@jsforce/jsforce-node" "^3.10.13"
     "@salesforce/kit" "^3.2.4"
     "@salesforce/ts-types" "^2.0.12"
     ajv "^8.17.1"
@@ -1773,10 +1814,10 @@
   dependencies:
     "@salesforce/ts-types" "^2.0.12"
 
-"@salesforce/o11y-reporter@1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@salesforce/o11y-reporter/-/o11y-reporter-1.6.0.tgz#b2c5e538d64337c44b69ce5ec8b43c55d6c409eb"
-  integrity sha512-FAdmfTtRlpuCwXSwPFrpp+mYn8h47EUAaHKL1PpVZYU+DoktVXrDoKTm3MxKRarcqtK1fc4PaO3UOcL5tIT1iA==
+"@salesforce/o11y-reporter@1.7.3":
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/@salesforce/o11y-reporter/-/o11y-reporter-1.7.3.tgz#14e58bc511fa3529077eff7e6712182574c52a1c"
+  integrity sha512-Krd2EgHYrTW1j1Wo5q+4kya6F7WjGvJsD4oUKzefLRw92Pb5b7aMorLFsKMEvLTZSGmTZZClLmQMap0gLOV6qw==
   dependencies:
     o11y "^258.7.0"
     o11y_schema "256.154.0"
@@ -1834,16 +1875,17 @@
     cli-progress "^3.12.0"
     terminal-link "^3.0.0"
 
-"@salesforce/telemetry@^6.4.3":
-  version "6.4.3"
-  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-6.4.3.tgz#593c844e992ac1684323a4f27a3e9712f35d5efc"
-  integrity sha512-O2/bkrBxpwm5xIKO6m9eP2N5gyCDj57J5pTmagWCMs3fwMurmi/rW3H8tlHnJBWU+iBDdPcxCY7L6QNrmupAPA==
+"@salesforce/telemetry@^6.6.0":
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-6.6.0.tgz#84fe9ae5da29fe002db977fe794b9865090e9f56"
+  integrity sha512-frFgpPKEdDuoHyOmhKwxOarULBhkyZSt0sQof7jC08uJe3XQlgET93HhHALhnYkLgoMCfdCmTAyRIgCRknJttQ==
   dependencies:
-    "@salesforce/core" "^8.24.0"
+    "@salesforce/core" "^8.25.1"
     "@salesforce/kit" "^3.2.4"
-    "@salesforce/o11y-reporter" "1.6.0"
+    "@salesforce/o11y-reporter" "1.7.3"
     applicationinsights "^2.9.8"
     got "^11"
+    o11y_schema "^260.41.0"
     proxy-agent "^6.5.0"
 
 "@salesforce/ts-sinon@^1.4.31":
@@ -6472,6 +6514,11 @@ o11y_schema@256.154.0:
   version "256.154.0"
   resolved "https://registry.yarnpkg.com/o11y_schema/-/o11y_schema-256.154.0.tgz#1f2f94f1e42d07e62a3e18e09b026345b057dc0c"
   integrity sha512-czvU/9cibyZptbr0gLJSM70U7zLlhWC2D2L5e9nOG84Wnqmn4F5YzVjrH1ZQzAzDbBbtbeU6WTS3F/SHqtMQ5g==
+
+o11y_schema@^260.41.0:
+  version "260.42.0"
+  resolved "https://registry.yarnpkg.com/o11y_schema/-/o11y_schema-260.42.0.tgz#7cbfa43590f4bdfaa30789c527fa02217ad6d41b"
+  integrity sha512-EV7Vwoh+S4S2p42sTG1mUWnt9ZdMGHeZAuypnV7u1MFp/f5VSWu6N9W/dsgC5TnWFrA1CE7+Va5S4evydjrqaw==
 
 object-hash@^3.0.0:
   version "3.0.0"

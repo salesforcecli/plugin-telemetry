@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, Salesforce, Inc.
+ * Copyright 2026, Salesforce, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ describe('uploader', () => {
   let createStub: sinon.SinonStub;
   let sendTelemetryEventStub: sinon.SinonStub;
   let sendTelemetryExceptionStub: sinon.SinonStub;
+  let sendPdpEventStub: sinon.SinonStub;
   let stopStub: sinon.SinonStub;
   let readStub: sinon.SinonStub;
   let clearStub: sinon.SinonStub;
@@ -34,17 +35,25 @@ describe('uploader', () => {
   beforeEach(() => {
     sandbox = sinon.createSandbox();
     sendTelemetryEventStub = sandbox.stub();
-    sendTelemetryExceptionStub = sandbox.stub(); // stubMethod(sandbox, TelemetryReporter.prototype, 'sendTelemetryException');
-    stopStub = sandbox.stub(); // stubMethod(sandbox, TelemetryReporter.prototype, 'stop');
+    sendTelemetryExceptionStub = sandbox.stub();
+    sendPdpEventStub = sandbox.stub();
+    stopStub = sandbox.stub();
     readStub = sandbox.stub();
     clearStub = sandbox.stub();
     getCliIdStub = sandbox.stub().returns('testId');
 
-    createStub = stubMethod(sandbox, TelemetryReporter.default, 'create').callsFake(async () => ({
-      sendTelemetryEvent: sendTelemetryEventStub,
-      sendTelemetryException: sendTelemetryExceptionStub,
-      stop: stopStub,
-    }));
+    createStub = stubMethod(sandbox, TelemetryReporter.default, 'create').callsFake(
+      async (options: { enableO11y?: boolean }) => {
+        if (options?.enableO11y === true) {
+          return { sendPdpEvent: sendPdpEventStub, stop: stopStub };
+        }
+        return {
+          sendTelemetryEvent: sendTelemetryEventStub,
+          sendTelemetryException: sendTelemetryExceptionStub,
+          stop: stopStub,
+        };
+      }
+    );
     stubMethod(sandbox, Telemetry, 'create').callsFake(async () => ({
       getCLIId: getCliIdStub,
       read: readStub,
@@ -104,6 +113,71 @@ describe('uploader', () => {
   it('clears telemetry file', async () => {
     readStub.resolves([]);
     await Uploader.upload('test', 'test', '1.0.0');
+    expect(clearStub.called).to.equal(true);
+  });
+
+  it('sends PDP events when COMMAND_EXECUTION has enableO11y and o11yUploadEndpoint', async () => {
+    readStub.resolves([
+      {
+        eventName: 'COMMAND_EXECUTION',
+        type: Telemetry.EVENT,
+        enableO11y: true,
+        o11yUploadEndpoint: 'https://o11y.example.com',
+        productFeatureId: 'aJCEE0000000mHP4AY',
+        plugin: 'myPlugin',
+        command: 'myCommand',
+        orgId: 'org1',
+        devhubId: 'hub1',
+      },
+    ]);
+
+    await Uploader.upload('test', 'test', '1.0.0');
+
+    expect(createStub.calledTwice).to.equal(true);
+    expect(sendPdpEventStub.calledOnce).to.equal(true);
+    const pdpEvent = sendPdpEventStub.firstCall.args[0];
+    expect(pdpEvent.eventName).to.equal('salesforceCli.executed');
+    expect(pdpEvent.productFeatureId).to.equal('aJCEE0000000mHP4AY');
+    expect(pdpEvent.componentId).to.equal('myPlugin.myCommand');
+    expect(pdpEvent.contextName).to.equal('orgId::devhubId');
+    expect(pdpEvent.contextValue).to.equal('org1::hub1');
+  });
+
+  it('does not create O11y reporter or call sendPdpEvent when no COMMAND_EXECUTION has enableO11y', async () => {
+    readStub.resolves([
+      {
+        eventName: 'COMMAND_EXECUTION',
+        type: Telemetry.EVENT,
+        enableO11y: false,
+        o11yUploadEndpoint: 'https://o11y.example.com',
+        plugin: 'myPlugin',
+        command: 'myCommand',
+      },
+    ]);
+
+    await Uploader.upload('test', 'test', '1.0.0');
+
+    expect(createStub.calledOnce).to.equal(true);
+    expect(sendPdpEventStub.called).to.equal(false);
+  });
+
+  it('when O11y reporter create fails, does not throw and does not call sendPdpEvent', async () => {
+    readStub.resolves([
+      {
+        eventName: 'COMMAND_EXECUTION',
+        type: Telemetry.EVENT,
+        enableO11y: true,
+        o11yUploadEndpoint: 'https://o11y.example.com',
+        productFeatureId: 'aJCEE0000000mHP4AY',
+        plugin: 'myPlugin',
+        command: 'myCommand',
+      },
+    ]);
+    createStub.onSecondCall().rejects(new Error('O11y create failed'));
+
+    await Uploader.upload('test', 'test', '1.0.0');
+
+    expect(sendPdpEventStub.called).to.equal(false);
     expect(clearStub.called).to.equal(true);
   });
 });

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025, Salesforce, Inc.
+ * Copyright 2026, Salesforce, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import type { Command } from '@oclif/core';
 import { Interfaces, Performance } from '@oclif/core';
 import { stubInterface, stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
@@ -333,6 +336,99 @@ describe('toJson', () => {
       expect(actual.specifiedFlags).to.equal('flag t');
       expect(actual.specifiedFlagFullNames).to.equal('flag test');
       expect(actual.argKeys).to.equal('baz foo');
+    });
+  });
+
+  describe('O11y / PDP config', () => {
+    const pluginRoot = path.join('/tmp', 'plugin-telemetry-test-o11y');
+
+    it('toJson includes O11y fields when plugin has root and package.json has O11y config', async () => {
+      process.env.CI = 'true';
+      const readFileStub = sandbox.stub(fs, 'readFile').resolves(
+        JSON.stringify({
+          enableO11y: true,
+          o11yUploadEndpoint: 'https://example.com',
+          productFeatureId: 'aJCEE0000000mHP4AY',
+        })
+      );
+      const config = stubInterface<Interfaces.Config>(sandbox, {});
+      const commandWithPlugin = {
+        ...MyCommand,
+        plugin: { name: 'testPlugin', version: '1.0.0', root: pluginRoot },
+      } as unknown as Partial<Command.Class>;
+      const execution = await CommandExecution.create({
+        argv: [],
+        command: commandWithPlugin,
+        config,
+      });
+      const actual = execution.toJson();
+
+      expect(readFileStub.calledOnce).to.be.true;
+      expect(readFileStub.firstCall.args[0]).to.equal(path.join(pluginRoot, 'package.json'));
+      expect(actual.enableO11y).to.equal(true);
+      expect(actual.o11yUploadEndpoint).to.equal('https://example.com');
+      expect(actual.productFeatureId).to.equal('aJCEE0000000mHP4AY');
+    });
+
+    it('toJson includes productFeatureId override from package.json', async () => {
+      process.env.CI = 'true';
+      const customProductFeatureId = 'aJCcustomPlugin123';
+      sandbox.stub(fs, 'readFile').resolves(
+        JSON.stringify({
+          enableO11y: true,
+          o11yUploadEndpoint: 'https://custom.example.com',
+          productFeatureId: customProductFeatureId,
+        })
+      );
+      const config = stubInterface<Interfaces.Config>(sandbox, {});
+      const commandWithPlugin = {
+        ...MyCommand,
+        plugin: { name: 'testPlugin', version: '1.0.0', root: pluginRoot },
+      } as unknown as Partial<Command.Class>;
+      const execution = await CommandExecution.create({
+        argv: [],
+        command: commandWithPlugin,
+        config,
+      });
+      const actual = execution.toJson();
+
+      expect(actual.productFeatureId).to.equal(customProductFeatureId);
+      expect(actual.o11yUploadEndpoint).to.equal('https://custom.example.com');
+    });
+
+    it('toJson omits or has undefined O11y fields when plugin has no root', async () => {
+      process.env.CI = 'true';
+      const config = stubInterface<Interfaces.Config>(sandbox, {});
+      const execution = await CommandExecution.create({
+        argv: [],
+        command: MyCommand,
+        config,
+      });
+      const actual = execution.toJson();
+
+      expect(actual.enableO11y).to.equal(undefined);
+      expect(actual.o11yUploadEndpoint).to.equal(undefined);
+      expect(actual.productFeatureId).to.equal(undefined);
+    });
+
+    it('toJson does not throw and O11y fields remain undefined when package.json read fails', async () => {
+      process.env.CI = 'true';
+      sandbox.stub(fs, 'readFile').rejects(new Error('ENOENT'));
+      const config = stubInterface<Interfaces.Config>(sandbox, {});
+      const commandWithPlugin = {
+        ...MyCommand,
+        plugin: { name: 'testPlugin', version: '1.0.0', root: pluginRoot },
+      } as unknown as Partial<Command.Class>;
+      const execution = await CommandExecution.create({
+        argv: [],
+        command: commandWithPlugin,
+        config,
+      });
+      const actual = execution.toJson();
+
+      expect(actual.enableO11y).to.equal(undefined);
+      expect(actual.o11yUploadEndpoint).to.equal(undefined);
+      expect(actual.productFeatureId).to.equal(undefined);
     });
   });
 });
