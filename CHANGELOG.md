@@ -1,3 +1,9 @@
+## [3.7.2](https://github.com/salesforcecli/plugin-telemetry/compare/3.7.1...3.7.2) (2026-02-11)
+
+### Bug Fixes
+
+- enable PDP events via o11y for PFT ([4c46fb1](https://github.com/salesforcecli/plugin-telemetry/commit/4c46fb1d4b898765240bc5a890180f26373f0fa2))
+
 ## [3.7.1](https://github.com/salesforcecli/plugin-telemetry/compare/3.7.0...3.7.1) (2026-02-10)
 
 ### Bug Fixes
