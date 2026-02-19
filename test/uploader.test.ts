@@ -180,4 +180,26 @@ describe('uploader', () => {
     expect(sendPdpEventStub.called).to.equal(false);
     expect(clearStub.called).to.equal(true);
   });
+
+  it('when COMMAND_EXECUTION has targetOrgUsername and enableO11y, creates O11y reporter with getConnectionFn in options', async () => {
+    readStub.resolves([
+      {
+        eventName: 'COMMAND_EXECUTION',
+        type: Telemetry.EVENT,
+        enableO11y: true,
+        o11yUploadEndpoint: 'https://o11y.example.com',
+        productFeatureId: 'aJCEE0000000mHP4AY',
+        plugin: 'myPlugin',
+        command: 'myCommand',
+        orgId: 'org1',
+        devhubId: 'hub1',
+        targetOrgUsername: 'user@example.com',
+      },
+    ]);
+
+    await Uploader.upload('test', 'test', '1.0.0');
+
+    expect(createStub.calledTwice).to.equal(true);
+    expect(createStub.secondCall.args[0].getConnectionFn).to.be.a('function');
+  });
 });

@@ -54,6 +54,7 @@ export class CommandExecution extends AsyncCreatable {
   private enableO11y?: boolean;
   private o11yUploadEndpoint?: string;
   private productFeatureId?: string;
+  private targetOrgUsername?: string | null;
 
   public constructor(options: CommandExecutionOptions) {
     super(options);
@@ -115,6 +116,7 @@ export class CommandExecution extends AsyncCreatable {
 
       // Salesforce Information
       orgId: this.orgId,
+      targetOrgUsername: this.targetOrgUsername,
       devhubId: this.devhubId,
       orgApiVersion: this.orgApiVersion,
       devhubApiVersion: this.devhubApiVersion,
@@ -176,15 +178,14 @@ export class CommandExecution extends AsyncCreatable {
     } catch (error) {
       debug('Error parsing flags');
     }
+    const targetOrg = flags['target-org'] ? (flags['target-org'] as unknown as Org) : null;
+    const targetDevHub = flags['target-dev-hub'] ? (flags['target-dev-hub'] as unknown as Org) : null;
 
-    this.orgId = flags['target-org'] ? (flags['target-org'] as unknown as Org).getOrgId() : null;
-    this.devhubId = flags['target-dev-hub'] ? (flags['target-dev-hub'] as unknown as Org).getOrgId() : null;
-    this.orgApiVersion = flags['target-org']
-      ? (flags['target-org'] as unknown as Org).getConnection().getApiVersion()
-      : null;
-    this.devhubApiVersion = flags['target-dev-hub']
-      ? (flags['target-dev-hub'] as unknown as Org).getConnection().getApiVersion()
-      : null;
+    this.orgId = targetOrg ? targetOrg.getOrgId() : null;
+    this.targetOrgUsername = targetOrg ? targetOrg.getUsername() : null;
+    this.devhubId = targetDevHub ? targetDevHub.getOrgId() : null;
+    this.orgApiVersion = targetOrg ? targetOrg.getConnection().getApiVersion() : null;
+    this.devhubApiVersion = targetDevHub ? targetDevHub.getConnection().getApiVersion() : null;
     this.determineSpecifiedFlags(argv, flags, flagDefinitions);
 
     // Read o11y configuration from the plugin's package.json (plugin that owns the command)
