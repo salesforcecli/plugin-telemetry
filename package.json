@@ -11,7 +11,7 @@
     "@salesforce/core": "^8.25.1",
     "@salesforce/kit": "^3.2.4",
     "@salesforce/sf-plugins-core": "^12",
-    "@salesforce/telemetry": "^6.6.0",
+    "@salesforce/telemetry": "^6.6.4",
     "@salesforce/ts-types": "^2.0.12",
     "debug": "^4.4.3"
   },
