@@ -45,16 +45,16 @@ export class CommandExecution extends AsyncCreatable {
   private readonly argv: string[];
   private config: Partial<Config>;
 
-  private orgId?: string | null;
-  private devhubId?: string | null;
-  private agentPseudoTypeUsed?: boolean | null;
-  private orgApiVersion?: string | null;
-  private devhubApiVersion?: string | null;
+  private orgId?: string;
+  private devhubId?: string;
+  private agentPseudoTypeUsed?: boolean;
+  private orgApiVersion?: string;
+  private devhubApiVersion?: string;
   private argKeys: string[] = [];
   private enableO11y?: boolean;
   private o11yUploadEndpoint?: string;
   private productFeatureId?: string;
-  private targetOrgUsername?: string | null;
+  private targetOrgUsername?: string;
 
   public constructor(options: CommandExecutionOptions) {
     super(options);
@@ -178,14 +178,14 @@ export class CommandExecution extends AsyncCreatable {
     } catch (error) {
       debug('Error parsing flags');
     }
-    const targetOrg = flags['target-org'] ? (flags['target-org'] as unknown as Org) : null;
-    const targetDevHub = flags['target-dev-hub'] ? (flags['target-dev-hub'] as unknown as Org) : null;
+    const targetOrg = flags['target-org'] ? (flags['target-org'] as unknown as Org) : undefined;
+    const targetDevHub = flags['target-dev-hub'] ? (flags['target-dev-hub'] as unknown as Org) : undefined;
 
-    this.orgId = targetOrg ? targetOrg.getOrgId() : null;
-    this.targetOrgUsername = targetOrg ? targetOrg.getUsername() : null;
-    this.devhubId = targetDevHub ? targetDevHub.getOrgId() : null;
-    this.orgApiVersion = targetOrg ? targetOrg.getConnection().getApiVersion() : null;
-    this.devhubApiVersion = targetDevHub ? targetDevHub.getConnection().getApiVersion() : null;
+    this.orgId = targetOrg ? targetOrg.getOrgId() : undefined;
+    this.targetOrgUsername = targetOrg ? targetOrg.getUsername() : undefined;
+    this.devhubId = targetDevHub ? targetDevHub.getOrgId() : undefined;
+    this.orgApiVersion = targetOrg ? targetOrg.getConnection().getApiVersion() : undefined;
+    this.devhubApiVersion = targetDevHub ? targetDevHub.getConnection().getApiVersion() : undefined;
     this.determineSpecifiedFlags(argv, flags, flagDefinitions);
 
     // Read o11y configuration from the plugin's package.json (plugin that owns the command)

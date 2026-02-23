@@ -113,6 +113,9 @@ export class Uploader {
                 enableO11y: true,
                 enableAppInsights: false,
                 o11yUploadEndpoint: this.o11yUploadEndpoint,
+                // We shouldn't batch events from the plugin since it uses a 30 second
+                // timer and will keep the uploader process alive.
+                o11yBatching: { enableAutoBatching: false },
               };
               if (event.targetOrgUsername) {
                 telemetryReporterOptions.getConnectionFn = async (): Promise<Connection> =>
