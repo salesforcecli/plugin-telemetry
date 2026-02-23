@@ -1,7 +1,7 @@
 {
   "name": "@salesforce/plugin-telemetry",
   "description": "Command usage and error telemetry for the Salesforce CLI",
-  "version": "3.7.2",
+  "version": "3.7.3",
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/cli/issues",
   "enableO11y": true,
@@ -20,7 +20,7 @@
     "@oclif/plugin-help": "^6.2.36",
     "@salesforce/cli-plugins-testkit": "^5.3.41",
     "@salesforce/dev-scripts": "^11.0.4",
-    "@salesforce/plugin-command-reference": "^3.1.79",
+    "@salesforce/plugin-command-reference": "^3.1.80",
     "@salesforce/ts-sinon": "^1.4.31",
     "@types/debug": "^4.1.12",
     "oclif": "^4.22.77",
