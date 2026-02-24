@@ -143,6 +143,26 @@ describe('uploader', () => {
     expect(pdpEvent.contextValue).to.equal('org1::hub1');
   });
 
+  it('creates O11y reporter for PDP events with o11yBatching disabled', async () => {
+    readStub.resolves([
+      {
+        eventName: 'COMMAND_EXECUTION',
+        type: Telemetry.EVENT,
+        enableO11y: true,
+        o11yUploadEndpoint: 'https://o11y.example.com',
+        productFeatureId: 'aJCEE0000000mHP4AY',
+        plugin: 'myPlugin',
+        command: 'myCommand',
+      },
+    ]);
+
+    await Uploader.upload('test', 'test', '1.0.0');
+
+    expect(createStub.calledTwice).to.equal(true);
+    const o11yReporterOptions = createStub.secondCall.args[0];
+    expect(o11yReporterOptions.o11yBatching).to.deep.equal({ enableAutoBatching: false });
+  });
+
   it('does not create O11y reporter or call sendPdpEvent when no COMMAND_EXECUTION has enableO11y', async () => {
     readStub.resolves([
       {
@@ -179,5 +199,36 @@ describe('uploader', () => {
 
     expect(sendPdpEventStub.called).to.equal(false);
     expect(clearStub.called).to.equal(true);
+  });
+
+  it('when AppInsights reporter creation fails, clears telemetry file in outer finally block', async () => {
+    readStub.resolves([]);
+    createStub.onFirstCall().rejects(new Error('AppInsights create failed'));
+
+    await Uploader.upload('test', 'test', '1.0.0');
+
+    expect(clearStub.called).to.equal(true);
+  });
+
+  it('when COMMAND_EXECUTION has targetOrgUsername and enableO11y, creates O11y reporter with getConnectionFn in options', async () => {
+    readStub.resolves([
+      {
+        eventName: 'COMMAND_EXECUTION',
+        type: Telemetry.EVENT,
+        enableO11y: true,
+        o11yUploadEndpoint: 'https://o11y.example.com',
+        productFeatureId: 'aJCEE0000000mHP4AY',
+        plugin: 'myPlugin',
+        command: 'myCommand',
+        orgId: 'org1',
+        devhubId: 'hub1',
+        targetOrgUsername: 'user@example.com',
+      },
+    ]);
+
+    await Uploader.upload('test', 'test', '1.0.0');
+
+    expect(createStub.calledTwice).to.equal(true);
+    expect(createStub.secondCall.args[0].getConnectionFn).to.be.a('function');
   });
 });
