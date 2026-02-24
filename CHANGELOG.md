@@ -1,3 +1,14 @@
+# [3.8.0](https://github.com/salesforcecli/plugin-telemetry/compare/3.7.3...3.8.0) (2026-02-24)
+
+### Bug Fixes
+
+- do not batch PDPEvents and bump telemetry lib version ([a14f858](https://github.com/salesforcecli/plugin-telemetry/commit/a14f85883254c94128cd48b6fdbe5d5e401b7c7f))
+- do not clear telemetry data on reporter creation failure ([2c6f369](https://github.com/salesforcecli/plugin-telemetry/commit/2c6f36964fae3b138b38a97b29ab9679bdc2e3d6))
+
+### Features
+
+- create O11yReporter with getOrgConnection function when event has target org username ([37f32b0](https://github.com/salesforcecli/plugin-telemetry/commit/37f32b0fe425e35b2c69408d2996e4a4368d98bc))
+
 ## [3.7.3](https://github.com/salesforcecli/plugin-telemetry/compare/3.7.2...3.7.3) (2026-02-21)
 
 ### Bug Fixes
