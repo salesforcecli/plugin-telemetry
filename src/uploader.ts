@@ -48,7 +48,7 @@ export class Uploader {
    */
   private async sendToTelemetry(): Promise<void> {
     const { TelemetryReporter } = await import('@salesforce/telemetry');
-    let appInsightsReporter: InstanceType<typeof TelemetryReporter>;
+    let appInsightsReporter: InstanceType<typeof TelemetryReporter> | undefined;
     const o11yReporterMap: Map<string, InstanceType<typeof TelemetryReporter>> = new Map();
 
     try {
@@ -62,10 +62,7 @@ export class Uploader {
       });
     } catch (err) {
       const error = SfError.wrap(err);
-      debug(`Error creating reporter: ${error.message}`);
-      // We can't do much without a reporter, so clear the telemetry file and move on.
-      await this.telemetry.clear();
-      return;
+      debug(`Error creating app insightsreporter: ${error.message}`);
     }
 
     try {
@@ -73,7 +70,7 @@ export class Uploader {
       const { appInsightsEvents, appInsightsErrors, o11yEvents } = this.parseEvents(events);
 
       // Send AppInsights events
-      if (appInsightsEvents.length > 0) {
+      if (appInsightsReporter && appInsightsEvents.length > 0) {
         appInsightsEvents.forEach((event) => {
           const eventName = asString(event.eventName) ?? 'UNKNOWN';
           delete event.eventName;
@@ -82,7 +79,7 @@ export class Uploader {
       }
 
       // Send AppInsights errors
-      if (appInsightsErrors.length > 0) {
+      if (appInsightsReporter && appInsightsErrors.length > 0) {
         appInsightsErrors.forEach((event) => {
           const error = new Error();
           // We know this is an object because it is logged as such
@@ -141,7 +138,7 @@ export class Uploader {
     } finally {
       try {
         // We are done sending events
-        appInsightsReporter.stop();
+        appInsightsReporter?.stop();
         if (o11yReporterMap.size > 0) {
           for (const reporter of o11yReporterMap.values()) {
             reporter.stop();
