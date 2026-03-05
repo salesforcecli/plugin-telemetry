@@ -1846,6 +1846,31 @@
     ts-retry-promise "^0.8.1"
     zod "^4.1.12"
 
+"@salesforce/core@^8.26.3":
+  version "8.26.3"
+  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-8.26.3.tgz#0b2502cacca8977f2ae95283d944771040eb7869"
+  integrity sha512-lPNFHjHFeC4V3KuH88xuVLGhAqmtM8meUcvyejNh8bQ5w642APKRTGDZ0pOnWHJAe5SQy7cSQ1WqvO3V73ouQw==
+  dependencies:
+    "@jsforce/jsforce-node" "^3.10.13"
+    "@salesforce/kit" "^3.2.4"
+    "@salesforce/ts-types" "^2.0.12"
+    ajv "^8.18.0"
+    change-case "^4.1.2"
+    fast-levenshtein "^3.0.0"
+    faye "^1.4.1"
+    form-data "^4.0.4"
+    js2xmlparser "^4.0.1"
+    jsonwebtoken "9.0.3"
+    jszip "3.10.1"
+    memfs "^4.30.1"
+    pino "^9.7.0"
+    pino-abstract-transport "^1.2.0"
+    pino-pretty "^11.3.0"
+    proper-lockfile "^4.1.2"
+    semver "^7.7.3"
+    ts-retry-promise "^0.8.1"
+    zod "^4.1.12"
+
 "@salesforce/dev-config@^4.3.1":
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/@salesforce/dev-config/-/dev-config-4.3.2.tgz#10047e2b8d289c93f157ab4243a1b1de57f2d6a2"
@@ -1951,17 +1976,17 @@
     cli-progress "^3.12.0"
     terminal-link "^3.0.0"
 
-"@salesforce/telemetry@^6.7.0":
-  version "6.7.0"
-  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-6.7.0.tgz#1485c08ff90ff1d77e875e0f33ab1f1f5bd59176"
-  integrity sha512-kXORutBjNGzahq98qjDFaxW7kKRlb0ErcxjQhY/2yvuXmmv3zdtT1NTljVAQHfHl3Y7TDREDNbTFT+ZEFBk8sw==
+"@salesforce/telemetry@^6.8.0":
+  version "6.8.0"
+  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-6.8.0.tgz#37cc1badf112374580ef717b86080bf2f7a8343c"
+  integrity sha512-iUT4Svyqr7dPqHJZqK52XQT/prNnutRT/KmElihb39iQ6Kw7cDyH/OuKBF8I72s1vCeHMyc66DzoJ0XT/TFTrA==
   dependencies:
-    "@salesforce/core" "^8.26.2"
+    "@salesforce/core" "^8.26.3"
     "@salesforce/kit" "^3.2.4"
     "@salesforce/o11y-reporter" "1.8.1"
     applicationinsights "^2.9.8"
     got "^11"
-    o11y_schema "^260.46.0"
+    o11y_schema "^260.47.0"
     proxy-agent "^6.5.0"
 
 "@salesforce/ts-sinon@^1.4.31":

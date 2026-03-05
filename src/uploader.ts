@@ -110,9 +110,10 @@ export class Uploader {
                 enableO11y: true,
                 enableAppInsights: false,
                 o11yUploadEndpoint: this.o11yUploadEndpoint,
-                // We shouldn't batch events from the plugin since it uses a 30 second
-                // timer and will keep the uploader process alive.
-                o11yBatching: { enableAutoBatching: false },
+                o11yBatching: {
+                  enableAutoBatching: true,
+                  enableShutdownHook: true,
+                },
               };
               if (event.targetOrgUsername) {
                 telemetryReporterOptions.getConnectionFn = async (): Promise<Connection> =>
@@ -140,9 +141,7 @@ export class Uploader {
         // We are done sending events
         appInsightsReporter?.stop();
         if (o11yReporterMap.size > 0) {
-          for (const reporter of o11yReporterMap.values()) {
-            reporter.stop();
-          }
+          await Promise.all(Array.from(o11yReporterMap.values(), (reporter) => reporter.stopAsync()));
         }
       } catch (err) {
         const error = SfError.wrap(err);
