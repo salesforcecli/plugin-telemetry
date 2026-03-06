@@ -1,3 +1,10 @@
+## [3.8.2](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.1...3.8.2) (2026-03-06)
+
+### Bug Fixes
+
+- @W-21438157 - stopAsync and o11y batching cleanup ([2cdd149](https://github.com/salesforcecli/plugin-telemetry/commit/2cdd14993e76aceac48ec6a0666e52407681eac4))
+- @W-21438157 - update uploader tests for stopAsync and o11y batching ([62d006f](https://github.com/salesforcecli/plugin-telemetry/commit/62d006f62652c69ada4bb7c9f37bf78ee6c08f0d))
+
 ## [3.8.1](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.0...3.8.1) (2026-02-26)
 
 ### Bug Fixes

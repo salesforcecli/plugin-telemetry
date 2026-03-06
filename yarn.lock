@@ -1821,7 +1821,7 @@
     strip-ansi "6.0.1"
     ts-retry-promise "^0.8.1"
 
-"@salesforce/core@^8.18.7", "@salesforce/core@^8.23.3", "@salesforce/core@^8.25.1", "@salesforce/core@^8.26.2", "@salesforce/core@^8.5.1", "@salesforce/core@^8.8.0":
+"@salesforce/core@^8.18.7", "@salesforce/core@^8.23.3", "@salesforce/core@^8.25.1", "@salesforce/core@^8.5.1", "@salesforce/core@^8.8.0":
   version "8.26.2"
   resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-8.26.2.tgz#1b82f7bc8e8598ba1ed8779759a5188b74841445"
   integrity sha512-P1otybl1d+sXg5FORl3PD82TzaOOP5aH1j0UVkpGf1p4BLw6VD0mJekS4mDc0pz6UKK2iIt0CFxXAEMKa/YtBA==
@@ -6946,10 +6946,10 @@ o11y_schema@256.154.0:
   resolved "https://registry.yarnpkg.com/o11y_schema/-/o11y_schema-256.154.0.tgz#1f2f94f1e42d07e62a3e18e09b026345b057dc0c"
   integrity sha512-czvU/9cibyZptbr0gLJSM70U7zLlhWC2D2L5e9nOG84Wnqmn4F5YzVjrH1ZQzAzDbBbtbeU6WTS3F/SHqtMQ5g==
 
-o11y_schema@^260.46.0:
-  version "260.46.0"
-  resolved "https://registry.yarnpkg.com/o11y_schema/-/o11y_schema-260.46.0.tgz#e8cbbc8bdd02c719b9ba8cf6ab553e5cfd8bcf02"
-  integrity sha512-bTj57h7Pgww07IzdlPeIz2Ee5Zaf4VxcKa3hBxJkOetNTIFsXO2QyL1ZCB5xLhDguSqQIAvwt/A9IpuWndOZoQ==
+o11y_schema@^260.47.0:
+  version "260.49.0"
+  resolved "https://registry.yarnpkg.com/o11y_schema/-/o11y_schema-260.49.0.tgz#5e57e9362fd9a1dc07f8f2f144e756b493239f40"
+  integrity sha512-eUlKSYHvYrQHqcZDTaAKXy0ciStXS8D8qg35J2G8VahAEV1YCjmeWsXnXc0hLO2d8E++FPurhZ/ITn4dpKjiGA==
 
 object-hash@^3.0.0:
   version "3.0.0"
