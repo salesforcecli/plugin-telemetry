@@ -28,6 +28,7 @@ describe('uploader', () => {
   let sendTelemetryExceptionStub: sinon.SinonStub;
   let sendPdpEventStub: sinon.SinonStub;
   let stopStub: sinon.SinonStub;
+  let stopAsyncStub: sinon.SinonStub;
   let readStub: sinon.SinonStub;
   let clearStub: sinon.SinonStub;
   let getCliIdStub: sinon.SinonStub;
@@ -38,6 +39,7 @@ describe('uploader', () => {
     sendTelemetryExceptionStub = sandbox.stub();
     sendPdpEventStub = sandbox.stub();
     stopStub = sandbox.stub();
+    stopAsyncStub = sandbox.stub().resolves();
     readStub = sandbox.stub();
     clearStub = sandbox.stub();
     getCliIdStub = sandbox.stub().returns('testId');
@@ -45,7 +47,7 @@ describe('uploader', () => {
     createStub = stubMethod(sandbox, TelemetryReporter.default, 'create').callsFake(
       async (options: { enableO11y?: boolean }) => {
         if (options?.enableO11y === true) {
-          return { sendPdpEvent: sendPdpEventStub, stop: stopStub };
+          return { sendPdpEvent: sendPdpEventStub, stop: stopStub, stopAsync: stopAsyncStub };
         }
         return {
           sendTelemetryEvent: sendTelemetryEventStub,
@@ -141,9 +143,10 @@ describe('uploader', () => {
     expect(pdpEvent.componentId).to.equal('myPlugin.myCommand');
     expect(pdpEvent.contextName).to.equal('orgId::devhubId');
     expect(pdpEvent.contextValue).to.equal('org1::hub1');
+    expect(stopAsyncStub.calledOnce).to.equal(true);
   });
 
-  it('creates O11y reporter for PDP events with o11yBatching disabled', async () => {
+  it('creates O11y reporter for PDP events with o11yBatching enabled', async () => {
     readStub.resolves([
       {
         eventName: 'COMMAND_EXECUTION',
@@ -160,7 +163,10 @@ describe('uploader', () => {
 
     expect(createStub.calledTwice).to.equal(true);
     const o11yReporterOptions = createStub.secondCall.args[0];
-    expect(o11yReporterOptions.o11yBatching).to.deep.equal({ enableAutoBatching: false });
+    expect(o11yReporterOptions.o11yBatching).to.deep.equal({
+      enableAutoBatching: true,
+      enableShutdownHook: true,
+    });
   });
 
   it('does not create O11y reporter or call sendPdpEvent when no COMMAND_EXECUTION has enableO11y', async () => {
