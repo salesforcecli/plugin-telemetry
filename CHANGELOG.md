@@ -1,3 +1,9 @@
+## [3.8.5](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.4...3.8.5) (2026-03-21)
+
+### Bug Fixes
+
+- **deps:** bump flatted from 3.3.3 to 3.4.2 ([f8338fb](https://github.com/salesforcecli/plugin-telemetry/commit/f8338fbc5fbd065912b9f6513d65a8455953aca4))
+
 ## [3.8.4](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.3...3.8.4) (2026-03-21)
 
 ### Bug Fixes
