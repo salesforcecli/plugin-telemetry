@@ -1,3 +1,9 @@
+## [3.8.6](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.5...3.8.6) (2026-03-27)
+
+### Bug Fixes
+
+- **deps:** bump handlebars from 4.7.8 to 4.7.9 ([523b90a](https://github.com/salesforcecli/plugin-telemetry/commit/523b90aaf2b49250cae20cfc20d8a5aaeb4d9c4f))
+
 ## [3.8.5](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.4...3.8.5) (2026-03-21)
 
 ### Bug Fixes
