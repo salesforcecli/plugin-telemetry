@@ -1,3 +1,9 @@
+## [3.8.8](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.7...3.8.8) (2026-04-04)
+
+### Bug Fixes
+
+- **deps:** bump lodash from 4.17.23 to 4.18.1 ([027a11c](https://github.com/salesforcecli/plugin-telemetry/commit/027a11ca629699b37fd3f842e4be132fd6ae7255))
+
 ## [3.8.7](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.6...3.8.7) (2026-03-28)
 
 ### Bug Fixes
