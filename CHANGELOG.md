@@ -1,3 +1,9 @@
+## [3.8.11](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.10...3.8.11) (2026-04-11)
+
+### Bug Fixes
+
+- **deps:** bump basic-ftp from 5.2.1 to 5.2.2 ([f87bf21](https://github.com/salesforcecli/plugin-telemetry/commit/f87bf213bdbb4664b048379386b70fe51bc51fdb))
+
 ## [3.8.10](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.9...3.8.10) (2026-04-09)
 
 ### Bug Fixes
