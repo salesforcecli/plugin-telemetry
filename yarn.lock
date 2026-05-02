@@ -1732,10 +1732,10 @@
     strip-ansi "6.0.1"
     ts-retry-promise "^0.8.1"
 
-"@salesforce/core@^8.18.7", "@salesforce/core@^8.23.3", "@salesforce/core@^8.27.1", "@salesforce/core@^8.28.3", "@salesforce/core@^8.5.1", "@salesforce/core@^8.8.0":
-  version "8.28.4"
-  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-8.28.4.tgz#98920d62c2b2a7fa025af38c74bdf6687d91b0a8"
-  integrity sha512-XQ0BBSetdW9cu36pu8ig5ZBX3oAbDSSH4djHkSU3iAzjLdTygEPIBVtKNeyj1++GmCy0rRiLr/yqoFYr21+GuQ==
+"@salesforce/core@^8.18.7", "@salesforce/core@^8.23.3", "@salesforce/core@^8.27.1", "@salesforce/core@^8.28.4", "@salesforce/core@^8.5.1", "@salesforce/core@^8.8.0":
+  version "8.29.0"
+  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-8.29.0.tgz#d75d1afe06962e10c466bdf670fa8512bd683882"
+  integrity sha512-q6xDNLPbbZW1n4X4YK1iM8jZvwvJRiwbJxdeF5iHuETxmMka16FoCVi+WziK/Rh5EP0yW08FYyiynwPlgz5RBw==
   dependencies:
     "@jsforce/jsforce-node" "^3.10.13"
     "@salesforce/kit" "^3.2.4"
@@ -1801,13 +1801,13 @@
   dependencies:
     "@salesforce/ts-types" "^2.0.12"
 
-"@salesforce/o11y-reporter@1.8.3":
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/@salesforce/o11y-reporter/-/o11y-reporter-1.8.3.tgz#bc52de911e49a7154fb183601763897190fe1350"
-  integrity sha512-m9LY3gQ8WFeB38NHmQRie9WtiaeUr+Lvy45RthbSSFwe6PDzfiD8jknpsSNTce0GRPZLly46wqrOXyyMSb8yxg==
+"@salesforce/o11y-reporter@1.8.4":
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/@salesforce/o11y-reporter/-/o11y-reporter-1.8.4.tgz#3bd67e995b5727388541fe0d41b2f0c8bc5a9164"
+  integrity sha512-lI2QKKs1idr5aZW6caeSnd+jO1+/JFT/k1BTJ1jbK9P0Juo+FaSu8E7Wuz64Zd2mUIEasT55bC9q+pX3JSbSpw==
   dependencies:
-    o11y "^258.7.0"
-    o11y_schema "256.154.0"
+    o11y "^264.5.0"
+    o11y_schema "260.5.0"
 
 "@salesforce/plugin-command-reference@^3.1.81":
   version "3.1.81"
@@ -1862,14 +1862,14 @@
     cli-progress "^3.12.0"
     terminal-link "^3.0.0"
 
-"@salesforce/telemetry@^6.8.17":
-  version "6.8.17"
-  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-6.8.17.tgz#85a2cbeec712d4f08b9c2b3a9d7e568efc8d3662"
-  integrity sha512-5hLIgGkoRjuCTH3YpyF6vvUJu0QRYyhpDcaRZg8ragizdnWFMuRjV6O5x/OE0f2EeztKAjduqb9Ybt8QEq4wCw==
+"@salesforce/telemetry@^6.8.19":
+  version "6.8.19"
+  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-6.8.19.tgz#21bb570ab3c47b868cdc83aa1207650b36546894"
+  integrity sha512-XWEf6vzOaoNhqwEXQfxE9LQY0vimefrJ7+Ebj002b5qjXJwIRNcEdHIPyuwCh/AnlhzKFIe19+Mdu6xOZSuxoA==
   dependencies:
-    "@salesforce/core" "^8.28.3"
+    "@salesforce/core" "^8.28.4"
     "@salesforce/kit" "^3.2.6"
-    "@salesforce/o11y-reporter" "1.8.3"
+    "@salesforce/o11y-reporter" "1.8.4"
     applicationinsights "^2.9.8"
     got "^11"
     o11y_schema "^260.63.0"
@@ -6795,24 +6795,19 @@ nyc@^17.0.0:
     test-exclude "^6.0.0"
     yargs "^15.0.2"
 
-o11y@^258.7.0:
-  version "258.22.0"
-  resolved "https://registry.yarnpkg.com/o11y/-/o11y-258.22.0.tgz#3640221f324c24a3355a92d3d6a609b742d945e7"
-  integrity sha512-HVWyrTgv1Tx0mk7XtZp2IE/ZaiBxcL07g62ptMDLFaTwAbvKnemveX8llcF4PmK66kZdZwD8E5Jd4fQvkNJBSw==
+o11y@^264.5.0:
+  version "264.5.0"
+  resolved "https://registry.yarnpkg.com/o11y/-/o11y-264.5.0.tgz#78cb4b7bd88347340285441f678a672de67ee6aa"
+  integrity sha512-3eTE13TMBi8b4E9bK0yz1P4RIaGlR9asNhwBjSxCLiuPK8Z6daee/9PnWXDXW40agy72sIT9dWNn4prk87kdxg==
   dependencies:
-    o11y_schema "254.44.0"
-    protobufjs "7.2.6"
-    web-vitals "3.5.2"
+    o11y_schema "260.5.0"
+    protobufjs "7.5.5"
+    web-vitals "^5.1.0"
 
-o11y_schema@254.44.0:
-  version "254.44.0"
-  resolved "https://registry.yarnpkg.com/o11y_schema/-/o11y_schema-254.44.0.tgz#6b283912cca23589a2be78c064672c02ba1f4f65"
-  integrity sha512-qcwaZsTyl/NFRoyjXk5ZObfjb773wYM5wxDbHSJNkQDBxX96RjUS/Df0M1rSbsmJWPOuYiV4EkvIOEPMm8V86g==
-
-o11y_schema@256.154.0:
-  version "256.154.0"
-  resolved "https://registry.yarnpkg.com/o11y_schema/-/o11y_schema-256.154.0.tgz#1f2f94f1e42d07e62a3e18e09b026345b057dc0c"
-  integrity sha512-czvU/9cibyZptbr0gLJSM70U7zLlhWC2D2L5e9nOG84Wnqmn4F5YzVjrH1ZQzAzDbBbtbeU6WTS3F/SHqtMQ5g==
+o11y_schema@260.5.0:
+  version "260.5.0"
+  resolved "https://registry.yarnpkg.com/o11y_schema/-/o11y_schema-260.5.0.tgz#f16ac37aaa9f27afad697744d3b510e7be5bb15c"
+  integrity sha512-0qrtqE394CODoPovUBdQQ2efHls6Z2xP6jvLitEGKSEj1KcCyeBLx2dHwTUtv66zwZTKjSp27QLFF4PZhengEQ==
 
 o11y_schema@^260.63.0:
   version "260.63.0"
@@ -7326,10 +7321,10 @@ proto-list@~1.2.1:
   resolved "https://registry.yarnpkg.com/proto-list/-/proto-list-1.2.4.tgz#212d5bfe1318306a420f6402b8e26ff39647a849"
   integrity sha512-vtK/94akxsTMhe0/cbfpR+syPuszcuwhqVjJq26CuNDgFGj682oRBXOP5MJpv2r7JtE8MsiepGIqvvOTBwn2vA==
 
-protobufjs@7.2.6:
-  version "7.2.6"
-  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-7.2.6.tgz#4a0ccd79eb292717aacf07530a07e0ed20278215"
-  integrity sha512-dgJaEDDL6x8ASUZ1YqWciTRrdOuYNzoOf27oHNfdyvKqHr5i0FV7FSLU+aIeFjyFgVxrpTOtQUi0BLLBymZaBw==
+protobufjs@7.5.5:
+  version "7.5.5"
+  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-7.5.5.tgz#b7089ca4410374c75150baf277353ef76db69f96"
+  integrity sha512-3wY1AxV+VBNW8Yypfd1yQY9pXnqTAN+KwQxL8iYm3/BjKYMNg4i0owhEe26PWDOMaIrzeeF98Lqd5NGz4omiIg==
   dependencies:
     "@protobufjs/aspromise" "^1.1.2"
     "@protobufjs/base64" "^1.1.2"
@@ -8801,10 +8796,10 @@ vfile@^6.0.0:
     "@types/unist" "^3.0.0"
     vfile-message "^4.0.0"
 
-web-vitals@3.5.2:
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-3.5.2.tgz#5bb58461bbc173c3f00c2ddff8bfe6e680999ca9"
-  integrity sha512-c0rhqNcHXRkY/ogGDJQxZ9Im9D19hDihbzSQJrsioex+KnFgmMzBiy57Z1EjkhX/+OjyBpclDCzz2ITtjokFmg==
+web-vitals@^5.1.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-5.2.0.tgz#5de39106a652228bb5c40021d62b669d213e6e17"
+  integrity sha512-i2z98bEmaCqSDiHEDu+gHl/dmR4Q+TxFmG3/13KkMO+o8UxQzCqWaDRCiLgEa41nlO4VpXSI0ASa1xWmO9sBlA==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"
