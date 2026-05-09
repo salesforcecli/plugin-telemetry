@@ -1,3 +1,9 @@
+## [3.8.19](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.18...3.8.19) (2026-05-09)
+
+### Bug Fixes
+
+- **deps:** bump fast-xml-builder from 1.1.4 to 1.2.0 ([4d68a2b](https://github.com/salesforcecli/plugin-telemetry/commit/4d68a2bd3d52392fffd9bd69db095c7f50f2533e))
+
 ## [3.8.18](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.17...3.8.18) (2026-05-09)
 
 ### Bug Fixes
