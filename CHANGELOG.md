@@ -1,3 +1,9 @@
+## [3.8.21](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.20...3.8.21) (2026-05-13)
+
+### Bug Fixes
+
+- **deps:** bump @protobufjs/utf8 from 1.1.0 to 1.1.1 ([0431c1a](https://github.com/salesforcecli/plugin-telemetry/commit/0431c1a81fd9bf7bb70ee8be8dc8cb74da25b6c0))
+
 ## [3.8.20](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.19...3.8.20) (2026-05-09)
 
 ### Bug Fixes
