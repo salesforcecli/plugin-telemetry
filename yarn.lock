@@ -1732,10 +1732,10 @@
     strip-ansi "6.0.1"
     ts-retry-promise "^0.8.1"
 
-"@salesforce/core@^8.18.7", "@salesforce/core@^8.23.3", "@salesforce/core@^8.27.1", "@salesforce/core@^8.28.4", "@salesforce/core@^8.5.1", "@salesforce/core@^8.8.0":
-  version "8.29.0"
-  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-8.29.0.tgz#d75d1afe06962e10c466bdf670fa8512bd683882"
-  integrity sha512-q6xDNLPbbZW1n4X4YK1iM8jZvwvJRiwbJxdeF5iHuETxmMka16FoCVi+WziK/Rh5EP0yW08FYyiynwPlgz5RBw==
+"@salesforce/core@^8.18.7", "@salesforce/core@^8.23.3", "@salesforce/core@^8.27.1", "@salesforce/core@^8.31.0", "@salesforce/core@^8.5.1", "@salesforce/core@^8.8.0":
+  version "8.31.0"
+  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-8.31.0.tgz#153beb193af8fce73d31cc39afee794c4c1ee1c0"
+  integrity sha512-TXQoR7Bs0Dk5AuNY8eaNRhMeLDLcpJ8su7LVxn7VVfnRxITrRh4gkSuOAXdBKAqx0WcjRONDs1twedaOE7Xu4Q==
   dependencies:
     "@jsforce/jsforce-node" "^3.10.13"
     "@salesforce/kit" "^3.2.4"
@@ -1744,7 +1744,7 @@
     change-case "^4.1.2"
     fast-levenshtein "^3.0.0"
     faye "^1.4.1"
-    form-data "^4.0.4"
+    form-data "^4.0.5"
     js2xmlparser "^4.0.1"
     jsonwebtoken "9.0.3"
     jszip "3.10.1"
@@ -1753,7 +1753,7 @@
     pino-abstract-transport "^1.2.0"
     pino-pretty "^11.3.0"
     proper-lockfile "^4.1.2"
-    semver "^7.7.3"
+    semver "^7.8.0"
     ts-retry-promise "^0.8.1"
     zod "^4.1.12"
 
@@ -1862,17 +1862,17 @@
     cli-progress "^3.12.0"
     terminal-link "^3.0.0"
 
-"@salesforce/telemetry@^6.8.19":
-  version "6.8.19"
-  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-6.8.19.tgz#21bb570ab3c47b868cdc83aa1207650b36546894"
-  integrity sha512-XWEf6vzOaoNhqwEXQfxE9LQY0vimefrJ7+Ebj002b5qjXJwIRNcEdHIPyuwCh/AnlhzKFIe19+Mdu6xOZSuxoA==
+"@salesforce/telemetry@^6.8.27":
+  version "6.8.27"
+  resolved "https://registry.yarnpkg.com/@salesforce/telemetry/-/telemetry-6.8.27.tgz#1507166c9dbf3aa6fe276e83ed448bade53ee1ec"
+  integrity sha512-Z17vjS/OcUGb1BNFLi+Ey2dnXCW2fwEAw2BPKJGjQKfhUuc9Q8uHCGO0DYU6wllf8ctOQ5k0/JGq8aQNb4WvwA==
   dependencies:
-    "@salesforce/core" "^8.28.4"
+    "@salesforce/core" "^8.31.0"
     "@salesforce/kit" "^3.2.6"
     "@salesforce/o11y-reporter" "1.8.4"
     applicationinsights "^2.9.8"
     got "^11"
-    o11y_schema "^260.63.0"
+    o11y_schema "^260.65.0"
     proxy-agent "^6.5.0"
 
 "@salesforce/ts-sinon@^1.4.34":
@@ -4765,7 +4765,7 @@ form-data-encoder@^2.1.2:
   resolved "https://registry.yarnpkg.com/form-data-encoder/-/form-data-encoder-2.1.4.tgz#261ea35d2a70d48d30ec7a9603130fa5515e9cd5"
   integrity sha512-yDYSgNMraqvnxiEXO4hi88+YZxaHC6QKzb5N84iRCTDeRO7ZALpir/lVmf/uXUhnwUr2O4HU8s/n6x+yNjQkHw==
 
-form-data@^4.0.4:
+form-data@^4.0.4, form-data@^4.0.5:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/form-data/-/form-data-4.0.5.tgz#b49e48858045ff4cbf6b03e1805cebcad3679053"
   integrity sha512-8RipRLol37bNs2bhoV67fiTEvdTrbMUYcFTiy3+wuuOnUog2QBHCZWXDRijWQfAkhBj2Uf5UnVaiWwA5vdd82w==
@@ -6810,10 +6810,10 @@ o11y_schema@260.5.0:
   resolved "https://registry.yarnpkg.com/o11y_schema/-/o11y_schema-260.5.0.tgz#f16ac37aaa9f27afad697744d3b510e7be5bb15c"
   integrity sha512-0qrtqE394CODoPovUBdQQ2efHls6Z2xP6jvLitEGKSEj1KcCyeBLx2dHwTUtv66zwZTKjSp27QLFF4PZhengEQ==
 
-o11y_schema@^260.63.0:
-  version "260.63.0"
-  resolved "https://registry.yarnpkg.com/o11y_schema/-/o11y_schema-260.63.0.tgz#b6bef10ad82e84b75bbd057861f7c9189d17ee14"
-  integrity sha512-hRLP3mysaQ6Qi/NO+ceHLOz5DYvgpxKk2mVrTeCtMngsnU4/T3+vsBCOX73rS6YM469tDmBYYHcnXQseXyxqcg==
+o11y_schema@^260.65.0:
+  version "260.65.0"
+  resolved "https://registry.yarnpkg.com/o11y_schema/-/o11y_schema-260.65.0.tgz#7e0a79aa28be6eaec027709f3a978f2cc158b064"
+  integrity sha512-F3VWPhiDHH+L170X4Tt2cfqzlpXGbtowWPz+Npam3yB3KGBUIHA9paRG7FWZKv9wNcxrtQXgIZemmffVQTm3jg==
 
 object-hash@^3.0.0:
   version "3.0.0"
