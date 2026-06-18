@@ -1,3 +1,9 @@
+## [3.8.27](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.26...3.8.27) (2026-06-18)
+
+### Bug Fixes
+
+- **deps:** bump markdown-it from 14.1.1 to 14.2.0 ([88d69ad](https://github.com/salesforcecli/plugin-telemetry/commit/88d69ad987ee13ee4cef8111111854efbf01777f))
+
 ## [3.8.26](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.25...3.8.26) (2026-06-13)
 
 ### Bug Fixes
