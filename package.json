@@ -52,7 +52,7 @@
     "commands": "./lib/commands",
     "bin": "sf",
     "hooks": {
-      "prerun": "./lib/hooks/telemetryPrerun.js"
+      "prerun": "./lib/hooks/telemetryPrerun"
     },
     "devPlugins": [
       "@oclif/plugin-help",

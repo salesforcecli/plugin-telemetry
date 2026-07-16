@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/TelemetryGetResult",
+  "definitions": {
+    "TelemetryGetResult": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "cliId": {
+          "type": "string"
+        },
+        "tmpDir": {
+          "type": "string"
+        },
+        "cacheDir": {
+          "type": "string"
+        }
+      },
+      "required": ["enabled", "tmpDir", "cacheDir"],
+      "additionalProperties": false
+    }
+  }
+}
