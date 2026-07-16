@@ -1,3 +1,21 @@
+## [3.8.30](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.29...3.8.30) (2026-07-16)
+
+### Bug Fixes
+
+- **deps:** bump form-data from 4.0.5 to 4.0.6 ([5da6ae7](https://github.com/salesforcecli/plugin-telemetry/commit/5da6ae7a9288e6d9693c99433a6ac1170e73e57b))
+
+## [3.8.29](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.28...3.8.29) (2026-07-16)
+
+### Bug Fixes
+
+- **deps:** bump @babel/core from 7.29.0 to 7.29.7 ([8042899](https://github.com/salesforcecli/plugin-telemetry/commit/8042899d02a4d3203785103e70030f8ce9801432))
+
+## [3.8.28](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.27...3.8.28) (2026-07-16)
+
+### Bug Fixes
+
+- **deps:** bump websocket-driver from 0.7.4 to 0.7.5 ([f333b42](https://github.com/salesforcecli/plugin-telemetry/commit/f333b42503e08c0373474a47ce05c6c9b38f1a66))
+
 ## [3.8.27](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.26...3.8.27) (2026-06-18)
 
 ### Bug Fixes
