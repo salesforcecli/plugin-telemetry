@@ -1,3 +1,9 @@
+## [3.8.29](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.28...3.8.29) (2026-07-16)
+
+### Bug Fixes
+
+- **deps:** bump @babel/core from 7.29.0 to 7.29.7 ([8042899](https://github.com/salesforcecli/plugin-telemetry/commit/8042899d02a4d3203785103e70030f8ce9801432))
+
 ## [3.8.28](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.27...3.8.28) (2026-07-16)
 
 ### Bug Fixes
