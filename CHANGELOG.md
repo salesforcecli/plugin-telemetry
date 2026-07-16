@@ -1,3 +1,9 @@
+## [3.8.28](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.27...3.8.28) (2026-07-16)
+
+### Bug Fixes
+
+- **deps:** bump websocket-driver from 0.7.4 to 0.7.5 ([f333b42](https://github.com/salesforcecli/plugin-telemetry/commit/f333b42503e08c0373474a47ce05c6c9b38f1a66))
+
 ## [3.8.27](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.26...3.8.27) (2026-06-18)
 
 ### Bug Fixes
