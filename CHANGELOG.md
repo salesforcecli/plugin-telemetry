@@ -1,3 +1,9 @@
+## [3.8.31](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.30...3.8.31) (2026-07-18)
+
+### Bug Fixes
+
+- **deps:** bump @oclif/core from 4.11.4 to 4.11.14 ([2ed2ade](https://github.com/salesforcecli/plugin-telemetry/commit/2ed2adead6d61723cbbcb7bc46a0cede0271091a))
+
 ## [3.8.30](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.29...3.8.30) (2026-07-16)
 
 ### Bug Fixes
