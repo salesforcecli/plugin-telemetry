@@ -1,3 +1,9 @@
+## [3.8.32](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.31...3.8.32) (2026-07-24)
+
+### Bug Fixes
+
+- **deps:** bump linkify-it from 5.0.1 to 5.0.2 ([7a77d95](https://github.com/salesforcecli/plugin-telemetry/commit/7a77d95020c0925f48ca16fbedab02c256bd6ef1))
+
 ## [3.8.31](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.30...3.8.31) (2026-07-18)
 
 ### Bug Fixes
