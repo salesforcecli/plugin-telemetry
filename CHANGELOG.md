@@ -1,3 +1,11 @@
+# [4.0.0](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.33...4.0.0) (2026-07-30)
+
+- feat!: require Node >=22, drop EOL Node versions @W-23480655@ ([59dad6d](https://github.com/salesforcecli/plugin-telemetry/commit/59dad6d588edc8710d57d6963a62118b83d7e408))
+
+### BREAKING CHANGES
+
+- engines.node raised to >=22.0.0, dropping support for Node 18 and 20
+
 ## [3.8.33](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.32...3.8.33) (2026-07-25)
 
 ### Bug Fixes
