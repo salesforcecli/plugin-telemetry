@@ -1,3 +1,9 @@
+## [4.0.1](https://github.com/salesforcecli/plugin-telemetry/compare/4.0.0...4.0.1) (2026-08-01)
+
+### Bug Fixes
+
+- **deps:** bump @oclif/core from 4.11.14 to 4.13.2 ([865ca16](https://github.com/salesforcecli/plugin-telemetry/commit/865ca1695a1ecd0a9783506721846bf8247d0739))
+
 # [4.0.0](https://github.com/salesforcecli/plugin-telemetry/compare/3.8.33...4.0.0) (2026-07-30)
 
 - feat!: require Node >=22, drop EOL Node versions @W-23480655@ ([59dad6d](https://github.com/salesforcecli/plugin-telemetry/commit/59dad6d588edc8710d57d6963a62118b83d7e408))
