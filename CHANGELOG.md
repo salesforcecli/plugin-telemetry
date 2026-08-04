@@ -1,3 +1,9 @@
+## [4.0.2](https://github.com/salesforcecli/plugin-telemetry/compare/4.0.1...4.0.2) (2026-08-04)
+
+### Bug Fixes
+
+- **deps:** bump ip-address from 10.2.0 to 10.4.0 ([e945b79](https://github.com/salesforcecli/plugin-telemetry/commit/e945b79b5a76476966086e789ff2fed09f6ae7ff))
+
 ## [4.0.1](https://github.com/salesforcecli/plugin-telemetry/compare/4.0.0...4.0.1) (2026-08-01)
 
 ### Bug Fixes
