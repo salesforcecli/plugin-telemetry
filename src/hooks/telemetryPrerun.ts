@@ -27,7 +27,7 @@ declare const global: TelemetryGlobal;
 type CommonData = {
   nodeVersion: string;
   plugin?: string;
-  // eslint-disable-next-line camelcase
+   
   plugin_version?: string;
   command?: string;
 };
