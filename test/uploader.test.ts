@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 import TelemetryReporter from '@salesforce/telemetry';
 import { stubMethod } from '@salesforce/ts-sinon';

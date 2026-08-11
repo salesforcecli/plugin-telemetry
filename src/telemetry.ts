@@ -129,7 +129,7 @@ export default class Telemetry extends AsyncCreatable {
 
     try {
       this.cliId = fs.readFileSync(cliIdPath, 'utf8');
-    } catch (err) {
+    } catch {
       debug('Unique CLI ID not found, generating and writing new ID to ', cliIdPath);
       this.cliId = generateRandomId();
       fs.writeFileSync(cliIdPath, this.cliId, 'utf8');
@@ -158,9 +158,7 @@ export default class Telemetry extends AsyncCreatable {
       return map;
     }, {});
 
-    if (!dataToRecord.type) {
-      dataToRecord.type = Telemetry.EVENT;
-    }
+    dataToRecord.type ??= Telemetry.EVENT;
 
     if (!dataToRecord.eventName) {
       // This would mean a consumer forgot to set this.

@@ -46,11 +46,11 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
 
   try {
     const [path, Performance, Lifecycle, Telemetry, CommandExecution] = await Promise.all([
-      await import('node:path'),
-      (await import('@oclif/core')).Performance,
-      (await import('@salesforce/core')).Lifecycle,
-      (await import('../telemetry.js')).default,
-      (await import('../commandExecution.js')).CommandExecution,
+      import('node:path'),
+      import('@oclif/core').then((m) => m.Performance),
+      import('@salesforce/core').then((m) => m.Lifecycle),
+      import('../telemetry.js').then((m) => m.default),
+      import('../commandExecution.js').then((m) => m.CommandExecution),
     ]);
 
     const errors: Array<{ event: JsonMap; error: SfError }> = [];

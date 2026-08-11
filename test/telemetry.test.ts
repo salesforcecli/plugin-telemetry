@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument */
 
 import cp from 'node:child_process';
 import { EOL } from 'node:os';

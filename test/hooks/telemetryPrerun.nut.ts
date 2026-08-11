@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
 
 import fs from 'node:fs';
 import { assert, expect, config } from 'chai';
