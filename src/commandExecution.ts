@@ -175,7 +175,7 @@ export class CommandExecution extends AsyncCreatable {
         (flags['metadata'] as unknown as string[])?.some((metadata) => metadata.toLowerCase().startsWith('agent')) ??
         false;
       this.argKeys = [...new Set(Object.keys(parseVarArgs(parseResult.args, parseResult.argv as string[])))];
-    } catch (error) {
+    } catch {
       debug('Error parsing flags');
     }
     const targetOrg = flags['target-org'] ? (flags['target-org'] as unknown as Org) : undefined;
@@ -203,7 +203,7 @@ export class CommandExecution extends AsyncCreatable {
       const pjson = JSON.parse(pjsonContents) as Record<string, unknown>;
       const rawEnableO11y = pjson.enableO11y;
       this.enableO11y =
-        typeof rawEnableO11y === 'boolean' ? rawEnableO11y : String(rawEnableO11y ?? '').toLowerCase() === 'true';
+        typeof rawEnableO11y === 'boolean' ? rawEnableO11y : String(rawEnableO11y ?? '').toLowerCase() === 'true'; // eslint-disable-line @typescript-eslint/no-base-to-string
       const endpoint = pjson.o11yUploadEndpoint;
       this.o11yUploadEndpoint = typeof endpoint === 'string' && endpoint.length > 0 ? endpoint : undefined;
       const productFeatureId = pjson.productFeatureId;
