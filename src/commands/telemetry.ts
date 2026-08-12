@@ -33,7 +33,7 @@ export default class TelemetryGet extends SfCommand<TelemetryGetResult> {
 
   public async run(): Promise<TelemetryGetResult> {
     const enabled = await isEnabled();
-    const cliId = global.cliTelemetry?.getCLIId();
+    const cliId: string | undefined = global.cliTelemetry?.getCLIId();
 
     this.log(`Telemetry is ${enabled ? 'enabled' : 'disabled'}.`);
     this.log(`Telemetry tmp directory is ${Telemetry.tmpDir}.`);
