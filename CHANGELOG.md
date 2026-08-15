@@ -1,3 +1,9 @@
+## [4.0.4](https://github.com/salesforcecli/plugin-telemetry/compare/4.0.3...4.0.4) (2026-08-15)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/ts-types from 3.0.0 to 3.0.1 ([b55f433](https://github.com/salesforcecli/plugin-telemetry/commit/b55f43372a59555ef255b65671ee7e4f239e1a1e))
+
 ## [4.0.3](https://github.com/salesforcecli/plugin-telemetry/compare/4.0.2...4.0.3) (2026-08-08)
 
 ### Bug Fixes
