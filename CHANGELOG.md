@@ -1,3 +1,9 @@
+## [4.0.6](https://github.com/salesforcecli/plugin-telemetry/compare/4.0.5...4.0.6) (2026-08-21)
+
+### Bug Fixes
+
+- update global type ([549fc46](https://github.com/salesforcecli/plugin-telemetry/commit/549fc46a9b7c708c34607fd5f09a21724586922c))
+
 ## [4.0.5](https://github.com/salesforcecli/plugin-telemetry/compare/4.0.4...4.0.5) (2026-08-15)
 
 ### Bug Fixes
