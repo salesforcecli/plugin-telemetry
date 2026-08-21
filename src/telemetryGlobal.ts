@@ -18,4 +18,4 @@ import Telemetry from './telemetry.js';
 
 export type TelemetryGlobal = {
   cliTelemetry?: Telemetry;
-} & NodeJS.Global
+} & typeof globalThis;
