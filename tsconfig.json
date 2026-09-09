@@ -4,7 +4,8 @@
     "outDir": "lib",
     "rootDir": "src",
     "skipLibCheck": true,
-    "moduleResolution": "node16"
+    "moduleResolution": "node16",
+    "types": ["node", "mocha"]
   },
   "include": ["./src/**/*.ts"]
 }
