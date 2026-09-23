@@ -17,7 +17,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { Config, Command, Flags, Parser } from '@oclif/core';
-import { Org, SfError } from '@salesforce/core';
+import { Org, SfError, matchesJwtAccessToken, matchesOpaqueAccessToken } from '@salesforce/core';
 import { AsyncCreatable } from '@salesforce/kit';
 import { isNumber, JsonMap, Optional } from '@salesforce/ts-types';
 import { parseVarArgs } from '@salesforce/sf-plugins-core';
@@ -35,6 +35,37 @@ type PluginInfo = {
   version: Optional<string>;
 };
 
+export type AccessTokenType = 'jwt' | 'opaque' | 'unknown';
+
+export const classifyAccessToken = (token: string | undefined): AccessTokenType | undefined => {
+  if (!token) return undefined;
+  if (matchesJwtAccessToken(token)) return 'jwt';
+  if (matchesOpaqueAccessToken(token)) return 'opaque';
+  return 'unknown';
+};
+
+/**
+ * Salesforce-owned OAuth client IDs we intentionally surface in telemetry, mapped
+ * to the stable label reported on the event. Anything not in this map (a customer's
+ * own connected app) is reported as `undefined` so a customer consumer key is never
+ * emitted. This mirrors core's log filter, which leaves `PlatformCLI` visible and
+ * redacts every other clientId.
+ *
+ * `'PlatformCLI'` and `'CodeBuilder'` are core's `DEFAULT_CONNECTED_APP_INFO.clientId`
+ * and `CODE_BUILDER_CONNECTED_APP_INFO.clientId`; those constants are not re-exported
+ * from `@salesforce/core`, so the (stable, public) literals are used here. Add the
+ * Global ECA framework client id once its value is confirmed.
+ */
+export type KnownClientId = 'PlatformCLI' | 'CodeBuilder';
+
+const KNOWN_CLIENT_IDS: Record<string, KnownClientId> = {
+  PlatformCLI: 'PlatformCLI',
+  CodeBuilder: 'CodeBuilder',
+};
+
+export const classifyKnownClientId = (clientId: string | undefined): KnownClientId | undefined =>
+  clientId ? KNOWN_CLIENT_IDS[clientId] : undefined;
+
 export class CommandExecution extends AsyncCreatable {
   public status?: number;
   private specifiedFlags: string[] = [];
@@ -50,6 +81,10 @@ export class CommandExecution extends AsyncCreatable {
   private agentPseudoTypeUsed?: boolean;
   private orgApiVersion?: string;
   private devhubApiVersion?: string;
+  private orgAccessTokenType?: AccessTokenType;
+  private devhubAccessTokenType?: AccessTokenType;
+  private orgKnownClientId?: KnownClientId;
+  private devhubKnownClientId?: KnownClientId;
   private argKeys: string[] = [];
   private enableO11y?: boolean;
   private o11yUploadEndpoint?: string;
@@ -120,6 +155,10 @@ export class CommandExecution extends AsyncCreatable {
       devhubId: this.devhubId,
       orgApiVersion: this.orgApiVersion,
       devhubApiVersion: this.devhubApiVersion,
+      orgAccessTokenType: this.orgAccessTokenType,
+      devhubAccessTokenType: this.devhubAccessTokenType,
+      orgKnownClientId: this.orgKnownClientId,
+      devhubKnownClientId: this.devhubKnownClientId,
       specifiedEnvs: envs.specifiedEnvs.join(' '),
       uniqueEnvs: envs.uniqueEnvs.join(' '),
       argKeys: this.argKeys.sort().join(' '),
@@ -186,6 +225,8 @@ export class CommandExecution extends AsyncCreatable {
     this.devhubId = targetDevHub ? targetDevHub.getOrgId() : undefined;
     this.orgApiVersion = targetOrg ? targetOrg.getConnection().getApiVersion() : undefined;
     this.devhubApiVersion = targetDevHub ? targetDevHub.getConnection().getApiVersion() : undefined;
+    this.setAccessTokenTypes(targetOrg, targetDevHub);
+    this.setKnownClientIds(targetOrg, targetDevHub);
     this.determineSpecifiedFlags(argv, flags, flagDefinitions);
 
     // Read o11y configuration from the plugin's package.json (plugin that owns the command)
@@ -193,6 +234,21 @@ export class CommandExecution extends AsyncCreatable {
     if (pluginRoot) {
       await this.setO11yConfig(pluginRoot);
     }
+  }
+
+  // Classify the in-memory access token format for the resolved target org and target dev hub.
+  private setAccessTokenTypes(targetOrg: Optional<Org>, targetDevHub: Optional<Org>): void {
+    this.orgAccessTokenType = classifyAccessToken(targetOrg?.getConnection().getConnectionOptions().accessToken);
+    this.devhubAccessTokenType = classifyAccessToken(targetDevHub?.getConnection().getConnectionOptions().accessToken);
+  }
+
+  // Report only Salesforce-owned OAuth client IDs (see KNOWN_CLIENT_IDS); a custom
+  // connected app resolves to undefined so no customer consumer key is emitted.
+  // Reads the already-in-memory auth fields (no extra disk read, no decrypt: clientId
+  // is stored in plaintext) off the same connection used above.
+  private setKnownClientIds(targetOrg: Optional<Org>, targetDevHub: Optional<Org>): void {
+    this.orgKnownClientId = classifyKnownClientId(targetOrg?.getConnection().getAuthInfoFields()?.clientId);
+    this.devhubKnownClientId = classifyKnownClientId(targetDevHub?.getConnection().getAuthInfoFields()?.clientId);
   }
 
   // Get and set the O11y configuration from the plugin's package.json
