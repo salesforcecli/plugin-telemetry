@@ -1,3 +1,9 @@
+# [4.1.0](https://github.com/salesforcecli/plugin-telemetry/compare/4.0.7...4.1.0) (2026-09-23)
+
+### Features
+
+- add ca and at telem ([023b7bc](https://github.com/salesforcecli/plugin-telemetry/commit/023b7bc185d7cf10e50f89eedfabd59c9031c3dd))
+
 ## [4.0.7](https://github.com/salesforcecli/plugin-telemetry/compare/4.0.6...4.0.7) (2026-09-01)
 
 ### Bug Fixes
