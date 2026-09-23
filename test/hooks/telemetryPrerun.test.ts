@@ -164,6 +164,18 @@ describe('parseTraceParent', () => {
     expect(parseTraceParent('ff-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01')).to.deep.equal({});
   });
 
+  it('rejects uppercase version FF', () => {
+    expect(parseTraceParent('FF-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01')).to.deep.equal({});
+  });
+
+  it('rejects all-zero trace-id', () => {
+    expect(parseTraceParent('00-00000000000000000000000000000000-b7ad6b7169203331-01')).to.deep.equal({});
+  });
+
+  it('rejects all-zero parent-id', () => {
+    expect(parseTraceParent('00-0af7651916cd43dd8448eb211c80319c-0000000000000000-01')).to.deep.equal({});
+  });
+
   it('handles uppercase hex by normalizing to lowercase', () => {
     const result = parseTraceParent('00-0AF7651916CD43DD8448EB211C80319C-B7AD6B7169203331-01');
     expect(result).to.deep.equal({

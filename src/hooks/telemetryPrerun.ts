@@ -40,8 +40,11 @@ const TRACEPARENT_RE = /^([0-9a-f]{2})-([0-9a-f]{32})-([0-9a-f]{16})-([0-9a-f]{2
 export function parseTraceParent(raw: string | undefined): Pick<CommonData, 'traceId' | 'parentSpanId' | 'traceFlags'> {
   if (!raw) return {};
   const match = TRACEPARENT_RE.exec(raw.trim());
-  if (!match || match[1] === 'ff') return {};
-  return { traceId: match[2].toLowerCase(), parentSpanId: match[3].toLowerCase(), traceFlags: match[4].toLowerCase() };
+  if (!match || match[1].toLowerCase() === 'ff') return {};
+  const traceId = match[2].toLowerCase();
+  const parentSpanId = match[3].toLowerCase();
+  if (/^0+$/.test(traceId) || /^0+$/.test(parentSpanId)) return {};
+  return { traceId, parentSpanId, traceFlags: match[4].toLowerCase() };
 }
 
 /**
