@@ -1,3 +1,10 @@
+## [4.1.2](https://github.com/salesforcecli/plugin-telemetry/compare/4.1.1...4.1.2) (2026-10-07)
+
+### Bug Fixes
+
+- **deps:** bump fast-uri from 3.1.5 to 3.1.8 ([f0dff5f](https://github.com/salesforcecli/plugin-telemetry/commit/f0dff5fca4181e9481fa23861e3dbcb77594b962))
+- **deps:** bump undici from 8.9.0 to 8.11.2 ([075055d](https://github.com/salesforcecli/plugin-telemetry/commit/075055d9dd648494b764c216af4514518ce6eac2))
+
 ## [4.1.1](https://github.com/salesforcecli/plugin-telemetry/compare/4.1.0...4.1.1) (2026-10-02)
 
 ### Bug Fixes
