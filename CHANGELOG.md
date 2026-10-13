@@ -1,3 +1,28 @@
+## [4.1.3](https://github.com/salesforcecli/plugin-telemetry/compare/4.1.2...4.1.3) (2026-10-11)
+
+### Bug Fixes
+
+- **deps:** bump handlebars from 4.7.9 to 4.7.10 ([6cb647c](https://github.com/salesforcecli/plugin-telemetry/commit/6cb647c3c877c3dcf953c2b4ac5e735b9593acd7))
+
+## [4.1.2](https://github.com/salesforcecli/plugin-telemetry/compare/4.1.1...4.1.2) (2026-10-07)
+
+### Bug Fixes
+
+- **deps:** bump fast-uri from 3.1.5 to 3.1.8 ([f0dff5f](https://github.com/salesforcecli/plugin-telemetry/commit/f0dff5fca4181e9481fa23861e3dbcb77594b962))
+- **deps:** bump undici from 8.9.0 to 8.11.2 ([075055d](https://github.com/salesforcecli/plugin-telemetry/commit/075055d9dd648494b764c216af4514518ce6eac2))
+
+## [4.1.1](https://github.com/salesforcecli/plugin-telemetry/compare/4.1.0...4.1.1) (2026-10-02)
+
+### Bug Fixes
+
+- **deps:** bump ip-address from 10.4.0 to 10.7.3 ([487f5c3](https://github.com/salesforcecli/plugin-telemetry/commit/487f5c36b1bc98bfd48ad5544e9d5b7654618587))
+
+# [4.1.0](https://github.com/salesforcecli/plugin-telemetry/compare/4.0.7...4.1.0) (2026-09-23)
+
+### Features
+
+- add ca and at telem ([023b7bc](https://github.com/salesforcecli/plugin-telemetry/commit/023b7bc185d7cf10e50f89eedfabd59c9031c3dd))
+
 ## [4.0.7](https://github.com/salesforcecli/plugin-telemetry/compare/4.0.6...4.0.7) (2026-09-01)
 
 ### Bug Fixes

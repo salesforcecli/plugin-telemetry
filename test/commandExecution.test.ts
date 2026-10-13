@@ -18,12 +18,14 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import type { Command } from '@oclif/core';
 import { Interfaces, Performance } from '@oclif/core';
+import type { Connection, Org } from '@salesforce/core';
 import { stubInterface, stubMethod } from '@salesforce/ts-sinon';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { CommandExecution } from '../src/commandExecution.js';
+import { classifyAccessToken, classifyKnownClientId, CommandExecution } from '../src/commandExecution.js';
 import { MyCommand } from './helpers/myCommand.js';
 import { MyArgCommand } from './helpers/myArgCommand.js';
+import { MyOrgCommand, orgFlagState } from './helpers/myOrgCommand.js';
 
 describe('toJson', () => {
   const sandbox = sinon.createSandbox();
@@ -429,6 +431,273 @@ describe('toJson', () => {
       expect(actual.enableO11y).to.equal(undefined);
       expect(actual.o11yUploadEndpoint).to.equal(undefined);
       expect(actual.productFeatureId).to.equal(undefined);
+    });
+  });
+
+  describe('classifyAccessToken', () => {
+    it('classifies a JWT-shaped access token as jwt', () => {
+      expect(
+        classifyAccessToken(
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNTE2MjM5MDIyfQ.signaturepart'
+        )
+      ).to.equal('jwt');
+    });
+
+    it('classifies an opaque access token as opaque', () => {
+      expect(classifyAccessToken('00D5f000000abcd!AQEAQxyz.longtail')).to.equal('opaque');
+    });
+
+    it('classifies a non-matching string as unknown', () => {
+      expect(classifyAccessToken('this-is-not-a-real-token')).to.equal('unknown');
+    });
+
+    it('returns undefined for an empty string', () => {
+      expect(classifyAccessToken('')).to.equal(undefined);
+    });
+
+    it('returns undefined for undefined', () => {
+      expect(classifyAccessToken(undefined)).to.equal(undefined);
+    });
+  });
+
+  describe('orgAccessTokenType / devhubAccessTokenType', () => {
+    afterEach(() => {
+      orgFlagState.targetOrg = undefined;
+      orgFlagState.targetDevHub = undefined;
+    });
+
+    const fakeOrgWithToken = (accessToken: string): Org => {
+      const connection = stubInterface<Connection>(sandbox, {
+        getConnectionOptions: () => ({ accessToken }),
+        getApiVersion: () => '62.0',
+      });
+      return stubInterface<Org>(sandbox, {
+        getConnection: () => connection,
+        getOrgId: () => '00D000000000000EAA',
+        getUsername: () => 'me@example.com',
+      }) as unknown as Org;
+    };
+
+    it('sets orgAccessTokenType to jwt when the target-org token is JWT-shaped', async () => {
+      process.env.CI = 'true';
+      orgFlagState.targetOrg = fakeOrgWithToken(
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNTE2MjM5MDIyfQ.signaturepart'
+      );
+      const config = stubInterface<Interfaces.Config>(sandbox, {});
+      const execution = await CommandExecution.create({
+        argv: ['--target-org', 'myOrg'],
+        command: MyOrgCommand,
+        config,
+      });
+      const actual = execution.toJson();
+
+      expect(actual.orgAccessTokenType).to.equal('jwt');
+    });
+
+    it('sets orgAccessTokenType to opaque when the target-org token is opaque', async () => {
+      process.env.CI = 'true';
+      orgFlagState.targetOrg = fakeOrgWithToken('00D5f000000abcd!AQEAQxyz.longtail');
+      const config = stubInterface<Interfaces.Config>(sandbox, {});
+      const execution = await CommandExecution.create({
+        argv: ['--target-org', 'myOrg'],
+        command: MyOrgCommand,
+        config,
+      });
+      const actual = execution.toJson();
+
+      expect(actual.orgAccessTokenType).to.equal('opaque');
+    });
+
+    it('sets devhubAccessTokenType to jwt when the target-dev-hub token is JWT-shaped', async () => {
+      process.env.CI = 'true';
+      orgFlagState.targetDevHub = fakeOrgWithToken(
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWF0IjoxNTE2MjM5MDIyfQ.signaturepart'
+      );
+      const config = stubInterface<Interfaces.Config>(sandbox, {});
+      const execution = await CommandExecution.create({
+        argv: ['--target-dev-hub', 'myHub'],
+        command: MyOrgCommand,
+        config,
+      });
+      const actual = execution.toJson();
+
+      expect(actual.devhubAccessTokenType).to.equal('jwt');
+    });
+
+    it('sets devhubAccessTokenType to opaque when the target-dev-hub token is opaque', async () => {
+      process.env.CI = 'true';
+      orgFlagState.targetDevHub = fakeOrgWithToken('00D5f000000abcd!AQEAQxyz.longtail');
+      const config = stubInterface<Interfaces.Config>(sandbox, {});
+      const execution = await CommandExecution.create({
+        argv: ['--target-dev-hub', 'myHub'],
+        command: MyOrgCommand,
+        config,
+      });
+      const actual = execution.toJson();
+
+      expect(actual.devhubAccessTokenType).to.equal('opaque');
+    });
+
+    it('leaves orgAccessTokenType and devhubAccessTokenType undefined when there is no resolved org/dev-hub', async () => {
+      process.env.CI = 'true';
+      const config = stubInterface<Interfaces.Config>(sandbox, {});
+      const execution = await CommandExecution.create({
+        argv: [],
+        command: MyOrgCommand,
+        config,
+      });
+      const actual = execution.toJson();
+
+      expect(actual.orgAccessTokenType).to.equal(undefined);
+      expect(actual.devhubAccessTokenType).to.equal(undefined);
+    });
+
+    it('leaves orgAccessTokenType undefined when the resolved org has no access token in memory', async () => {
+      process.env.CI = 'true';
+      const connection = stubInterface<Connection>(sandbox, {
+        getConnectionOptions: () => ({}),
+        getApiVersion: () => '62.0',
+      });
+      orgFlagState.targetOrg = stubInterface<Org>(sandbox, {
+        getConnection: () => connection,
+        getOrgId: () => '00D000000000000EAA',
+        getUsername: () => 'me@example.com',
+      }) as unknown as Org;
+      const config = stubInterface<Interfaces.Config>(sandbox, {});
+      const execution = await CommandExecution.create({
+        argv: ['--target-org', 'myOrg'],
+        command: MyOrgCommand,
+        config,
+      });
+      const actual = execution.toJson();
+
+      expect(actual.orgAccessTokenType).to.equal(undefined);
+    });
+  });
+
+  describe('classifyKnownClientId', () => {
+    it('maps the PlatformCLI client id to PlatformCLI', () => {
+      expect(classifyKnownClientId('PlatformCLI')).to.equal('PlatformCLI');
+    });
+
+    it('maps the CodeBuilder client id to CodeBuilder', () => {
+      expect(classifyKnownClientId('CodeBuilder')).to.equal('CodeBuilder');
+    });
+
+    it('returns undefined for a custom (non-allowlisted) client id', () => {
+      expect(classifyKnownClientId('3MVG9custom.connected.app.consumer.key')).to.equal(undefined);
+    });
+
+    it('returns undefined for an empty string', () => {
+      expect(classifyKnownClientId('')).to.equal(undefined);
+    });
+
+    it('returns undefined for undefined', () => {
+      expect(classifyKnownClientId(undefined)).to.equal(undefined);
+    });
+  });
+
+  describe('orgKnownClientId / devhubKnownClientId', () => {
+    afterEach(() => {
+      orgFlagState.targetOrg = undefined;
+      orgFlagState.targetDevHub = undefined;
+    });
+
+    const fakeOrgWithClientId = (clientId?: string): Org => {
+      const connection = stubInterface<Connection>(sandbox, {
+        getConnectionOptions: () => ({}),
+        getAuthInfoFields: () => (clientId ? { clientId } : {}),
+        getApiVersion: () => '62.0',
+      });
+      return stubInterface<Org>(sandbox, {
+        getConnection: () => connection,
+        getOrgId: () => '00D000000000000EAA',
+        getUsername: () => 'me@example.com',
+      }) as unknown as Org;
+    };
+
+    it('sets orgKnownClientId to PlatformCLI when the target-org uses the default CLI connected app', async () => {
+      process.env.CI = 'true';
+      orgFlagState.targetOrg = fakeOrgWithClientId('PlatformCLI');
+      const config = stubInterface<Interfaces.Config>(sandbox, {});
+      const execution = await CommandExecution.create({
+        argv: ['--target-org', 'myOrg'],
+        command: MyOrgCommand,
+        config,
+      });
+      const actual = execution.toJson();
+
+      expect(actual.orgKnownClientId).to.equal('PlatformCLI');
+    });
+
+    it('sets orgKnownClientId to CodeBuilder when the target-org uses the Code Builder connected app', async () => {
+      process.env.CI = 'true';
+      orgFlagState.targetOrg = fakeOrgWithClientId('CodeBuilder');
+      const config = stubInterface<Interfaces.Config>(sandbox, {});
+      const execution = await CommandExecution.create({
+        argv: ['--target-org', 'myOrg'],
+        command: MyOrgCommand,
+        config,
+      });
+      const actual = execution.toJson();
+
+      expect(actual.orgKnownClientId).to.equal('CodeBuilder');
+    });
+
+    it('leaves orgKnownClientId undefined when the target-org uses a custom connected app', async () => {
+      process.env.CI = 'true';
+      orgFlagState.targetOrg = fakeOrgWithClientId('3MVG9custom.connected.app.consumer.key');
+      const config = stubInterface<Interfaces.Config>(sandbox, {});
+      const execution = await CommandExecution.create({
+        argv: ['--target-org', 'myOrg'],
+        command: MyOrgCommand,
+        config,
+      });
+      const actual = execution.toJson();
+
+      expect(actual.orgKnownClientId).to.equal(undefined);
+    });
+
+    it('sets devhubKnownClientId to PlatformCLI when the target-dev-hub uses the default CLI connected app', async () => {
+      process.env.CI = 'true';
+      orgFlagState.targetDevHub = fakeOrgWithClientId('PlatformCLI');
+      const config = stubInterface<Interfaces.Config>(sandbox, {});
+      const execution = await CommandExecution.create({
+        argv: ['--target-dev-hub', 'myHub'],
+        command: MyOrgCommand,
+        config,
+      });
+      const actual = execution.toJson();
+
+      expect(actual.devhubKnownClientId).to.equal('PlatformCLI');
+    });
+
+    it('leaves orgKnownClientId and devhubKnownClientId undefined when there is no resolved org/dev-hub', async () => {
+      process.env.CI = 'true';
+      const config = stubInterface<Interfaces.Config>(sandbox, {});
+      const execution = await CommandExecution.create({
+        argv: [],
+        command: MyOrgCommand,
+        config,
+      });
+      const actual = execution.toJson();
+
+      expect(actual.orgKnownClientId).to.equal(undefined);
+      expect(actual.devhubKnownClientId).to.equal(undefined);
+    });
+
+    it('leaves orgKnownClientId undefined when the resolved org has no clientId in memory', async () => {
+      process.env.CI = 'true';
+      orgFlagState.targetOrg = fakeOrgWithClientId();
+      const config = stubInterface<Interfaces.Config>(sandbox, {});
+      const execution = await CommandExecution.create({
+        argv: ['--target-org', 'myOrg'],
+        command: MyOrgCommand,
+        config,
+      });
+      const actual = execution.toJson();
+
+      expect(actual.orgKnownClientId).to.equal(undefined);
     });
   });
 });
