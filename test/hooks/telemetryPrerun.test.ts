@@ -23,7 +23,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import Telemetry from '../../src/telemetry.js';
 import { CommandExecution } from '../../src/commandExecution.js';
-import hook from '../../src/hooks/telemetryPrerun.js';
+import hook, { parseTraceParent } from '../../src/hooks/telemetryPrerun.js';
 import { MyCommand } from '../helpers/myCommand.js';
 
 const args = { argv: [], Command: MyCommand, config: {} as Config, context: {} as Hook.Context };
@@ -134,6 +134,63 @@ describe('telemetry prerun hook', () => {
       expect(uploadStub.called).to.equal(true);
 
       expect(recordErrorStub.called).to.equal(false);
+    });
+  });
+});
+
+describe('parseTraceParent', () => {
+  it('returns trace fields for a valid traceparent', () => {
+    const result = parseTraceParent('00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01');
+    expect(result).to.deep.equal({
+      traceId: '0af7651916cd43dd8448eb211c80319c',
+      parentSpanId: 'b7ad6b7169203331',
+      traceFlags: '01',
+    });
+  });
+
+  it('returns empty object for undefined', () => {
+    expect(parseTraceParent(undefined)).to.deep.equal({});
+  });
+
+  it('returns empty object for empty string', () => {
+    expect(parseTraceParent('')).to.deep.equal({});
+  });
+
+  it('returns empty object for invalid format', () => {
+    expect(parseTraceParent('not-valid')).to.deep.equal({});
+  });
+
+  it('rejects version ff', () => {
+    expect(parseTraceParent('ff-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01')).to.deep.equal({});
+  });
+
+  it('rejects uppercase version FF', () => {
+    expect(parseTraceParent('FF-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01')).to.deep.equal({});
+  });
+
+  it('rejects all-zero trace-id', () => {
+    expect(parseTraceParent('00-00000000000000000000000000000000-b7ad6b7169203331-01')).to.deep.equal({});
+  });
+
+  it('rejects all-zero parent-id', () => {
+    expect(parseTraceParent('00-0af7651916cd43dd8448eb211c80319c-0000000000000000-01')).to.deep.equal({});
+  });
+
+  it('handles uppercase hex by normalizing to lowercase', () => {
+    const result = parseTraceParent('00-0AF7651916CD43DD8448EB211C80319C-B7AD6B7169203331-01');
+    expect(result).to.deep.equal({
+      traceId: '0af7651916cd43dd8448eb211c80319c',
+      parentSpanId: 'b7ad6b7169203331',
+      traceFlags: '01',
+    });
+  });
+
+  it('trims whitespace', () => {
+    const result = parseTraceParent('  00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01  ');
+    expect(result).to.deep.equal({
+      traceId: '0af7651916cd43dd8448eb211c80319c',
+      parentSpanId: 'b7ad6b7169203331',
+      traceFlags: '01',
     });
   });
 });

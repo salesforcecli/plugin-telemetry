@@ -27,10 +27,26 @@ declare const global: TelemetryGlobal;
 type CommonData = {
   nodeVersion: string;
   plugin?: string;
-   
+
   plugin_version?: string;
   command?: string;
+  traceId?: string;
+  parentSpanId?: string;
+  traceFlags?: string;
 };
+
+const TRACEPARENT_RE = /^([0-9a-f]{2})-([0-9a-f]{32})-([0-9a-f]{16})-([0-9a-f]{2})$/i;
+
+export function parseTraceParent(raw: string | undefined): Pick<CommonData, 'traceId' | 'parentSpanId' | 'traceFlags'> {
+  if (!raw) return {};
+  const match = TRACEPARENT_RE.exec(raw.trim());
+  if (!match || match[1].toLowerCase() === 'ff') return {};
+  const traceId = match[2].toLowerCase();
+  const parentSpanId = match[3].toLowerCase();
+  if (/^0+$/.test(traceId) || /^0+$/.test(parentSpanId)) return {};
+  return { traceId, parentSpanId, traceFlags: match[4].toLowerCase() };
+}
+
 /**
  * A hook that runs before every command that:
  * 1. Warns the user about command usage data collection the CLI does unless they have already acknowledged the warning.
@@ -178,6 +194,7 @@ const hook: Hook.Prerun = async function (options): Promise<void> {
           // eslint-disable-next-line camelcase
           plugin_version: pluginInfo.version,
           command: commandExecution.getCommandName(),
+          ...parseTraceParent(process.env.TRACEPARENT),
         };
       }
       return commonData;
