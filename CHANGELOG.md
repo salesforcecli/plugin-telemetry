@@ -1,3 +1,9 @@
+# [4.2.0](https://github.com/salesforcecli/plugin-telemetry/compare/4.1.3...4.2.0) (2026-10-13)
+
+### Features
+
+- attach W3C trace context (TRACEPARENT) to telemetry events @W-24279635@ ([#914](https://github.com/salesforcecli/plugin-telemetry/issues/914)) ([0fc106d](https://github.com/salesforcecli/plugin-telemetry/commit/0fc106de67043703f52370bdbae69d8d9966d346))
+
 ## [4.1.3](https://github.com/salesforcecli/plugin-telemetry/compare/4.1.2...4.1.3) (2026-10-11)
 
 ### Bug Fixes
