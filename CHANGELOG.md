@@ -1,3 +1,9 @@
+## [4.2.1](https://github.com/salesforcecli/plugin-telemetry/compare/4.2.0...4.2.1) (2026-10-14)
+
+### Bug Fixes
+
+- **deps:** bump fast-copy from 3.0.2 to 3.1.0 ([295bf12](https://github.com/salesforcecli/plugin-telemetry/commit/295bf12ebff2d21f7afd6708d435c03968a2a04e))
+
 # [4.2.0](https://github.com/salesforcecli/plugin-telemetry/compare/4.1.3...4.2.0) (2026-10-13)
 
 ### Features
