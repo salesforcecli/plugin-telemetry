@@ -1,3 +1,9 @@
+## [4.2.3](https://github.com/salesforcecli/plugin-telemetry/compare/4.2.2...4.2.3) (2026-10-22)
+
+### Bug Fixes
+
+- **deps:** bump source-map-js from 1.2.1 to 1.2.2 ([970c77e](https://github.com/salesforcecli/plugin-telemetry/commit/970c77e181c4a16fa80507a8ad7e7026d4237c15))
+
 ## [4.2.2](https://github.com/salesforcecli/plugin-telemetry/compare/4.2.1...4.2.2) (2026-10-22)
 
 ### Bug Fixes
