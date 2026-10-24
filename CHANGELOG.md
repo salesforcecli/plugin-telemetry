@@ -1,3 +1,9 @@
+## [4.2.4](https://github.com/salesforcecli/plugin-telemetry/compare/4.2.3...4.2.4) (2026-10-24)
+
+### Bug Fixes
+
+- **deps:** bump undici from 8.11.2 to 8.12.3 ([6eebfa9](https://github.com/salesforcecli/plugin-telemetry/commit/6eebfa9a937e5f0ff6136d9561dd5addeeb2344c))
+
 ## [4.2.3](https://github.com/salesforcecli/plugin-telemetry/compare/4.2.2...4.2.3) (2026-10-22)
 
 ### Bug Fixes
