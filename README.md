@@ -25,8 +25,7 @@ To build the plugin locally, make sure to have yarn installed and run the follow
 git clone git@github.com:salesforcecli/plugin-telemetry
 
 # Install the dependencies and compile
-yarn install
-yarn build
+yarn && yarn build
 ```
 
 To use your plugin, run using the local `./bin/dev.js` or `./bin/dev.cmd` file.
@@ -39,7 +38,7 @@ To use your plugin, run using the local `./bin/dev.js` or `./bin/dev.cmd` file.
 There should be no differences when running via the Salesforce CLI or using the local run file. However, it can be useful to link the plugin to do some additional testing or run your commands from anywhere on your machine.
 
 ```bash
-# Link your plugin to the sfdx cli
+# Link your plugin to the sf cli
 sf plugins link .
 # To verify
 sf plugins
