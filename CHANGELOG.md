@@ -1,3 +1,9 @@
+## [4.2.7](https://github.com/salesforcecli/plugin-telemetry/compare/4.2.6...4.2.7) (2026-11-12)
+
+### Bug Fixes
+
+- **deps:** bump js-yaml from 3.14.2 to 3.15.2 ([3626d1f](https://github.com/salesforcecli/plugin-telemetry/commit/3626d1fc4ea82d78c070e6148f6de2aaba979040))
+
 ## [4.2.6](https://github.com/salesforcecli/plugin-telemetry/compare/4.2.5...4.2.6) (2026-11-12)
 
 ### Bug Fixes
