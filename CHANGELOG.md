@@ -1,3 +1,9 @@
+## [4.2.5](https://github.com/salesforcecli/plugin-telemetry/compare/4.2.4...4.2.5) (2026-11-12)
+
+### Bug Fixes
+
+- **deps:** bump brace-expansion from 1.1.12 to 1.1.22 ([39498b7](https://github.com/salesforcecli/plugin-telemetry/commit/39498b72d53d648298d710ac52038ecd52634e33))
+
 ## [4.2.4](https://github.com/salesforcecli/plugin-telemetry/compare/4.2.3...4.2.4) (2026-10-24)
 
 ### Bug Fixes
