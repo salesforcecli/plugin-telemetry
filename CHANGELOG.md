@@ -1,3 +1,9 @@
+## [4.2.8](https://github.com/salesforcecli/plugin-telemetry/compare/4.2.7...4.2.8) (2026-11-13)
+
+### Bug Fixes
+
+- **deps:** bump zod from 4.3.6 to 4.6.7 ([b901ddf](https://github.com/salesforcecli/plugin-telemetry/commit/b901ddf4902497474b02ce3ede676f14d7d8cf5a))
+
 ## [4.2.7](https://github.com/salesforcecli/plugin-telemetry/compare/4.2.6...4.2.7) (2026-11-12)
 
 ### Bug Fixes
