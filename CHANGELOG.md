@@ -1,3 +1,9 @@
+## [4.2.9](https://github.com/salesforcecli/plugin-telemetry/compare/4.2.8...4.2.9) (2026-11-13)
+
+### Bug Fixes
+
+- **deps:** bump fast-uri from 3.1.8 to 3.1.9 ([5963958](https://github.com/salesforcecli/plugin-telemetry/commit/596395851578b1bcd459324d50d3a5157bc68884))
+
 ## [4.2.8](https://github.com/salesforcecli/plugin-telemetry/compare/4.2.7...4.2.8) (2026-11-13)
 
 ### Bug Fixes
