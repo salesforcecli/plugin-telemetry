@@ -1,3 +1,9 @@
+## [4.2.11](https://github.com/salesforcecli/plugin-telemetry/compare/4.2.10...4.2.11) (2026-11-21)
+
+### Bug Fixes
+
+- **deps:** bump @salesforce/kit from 4.0.0 to 4.0.10 ([08e94a8](https://github.com/salesforcecli/plugin-telemetry/commit/08e94a847c9c3ad80fac9e52e2f3522e61764e6c))
+
 ## [4.2.10](https://github.com/salesforcecli/plugin-telemetry/compare/4.2.9...4.2.10) (2026-11-14)
 
 ### Bug Fixes
